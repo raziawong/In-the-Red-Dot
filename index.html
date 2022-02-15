@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In the Red Dot</title>
+    <link rel="stylesheet" href="https://unpkg.com/cirrus-ui" />
+    <link rel="stylesheet" href="assets/style/custom.css">
+</head>
+
+<body class="ctbody">
+    <!-- header + navbar -->
+    <header class="header header-fixed u-unselectable header-animated">
+        <div class="header-brand">
+            <nav class="nav-item no-hover">
+                <a href="index.html">
+                    <img src="assets/media/logo_sgmap.svg" alt="SG Map Logo" id="logo" />
+                </a>
+            </nav>
+            <!-- <div class="nav-item">
+                <a href="#">
+                    <span class="icon">
+                        <i class="fab fa-wrapper fa-github"></i>
+                    </span>
+                </a>
+            </div> -->
+            <div class="nav-item nav-btn" id="header-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="header-nav nav-center" id="header-menu">
+            <nav class="nav-item">
+                <a class="nav-dropdown-link" href="#general">Population Structure</a>
+            </nav>
+            <nav class="nav-item">
+                <a class="nav-dropdown-link" href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="ctcontent">
+        <!-- hero -->
+        <section id="hero">
+            <div class="u-center" id="hero-overlay">
+                <h1>In the Red Dot</h1>
+            </div>
+        </section>
+
+        <!-- charts and graphs-->
+        <section id="structure">
+
+        </section>
+    </main>
+
+    <!-- footer -->
+    <footer>
+
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+    <script src="assets/scripts/data.js"></script>
+    <script src="assets/scripts/main.js"></script>
+</body>
+
+</html>
