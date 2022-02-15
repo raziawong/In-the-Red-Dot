@@ -6,6 +6,10 @@
     max-height: 9vh;
 }
 
+.chart {
+    min-height: 70vh;
+}
+
 @media screen and (max-width:767px) {
     #logo {
         max-height: 6vh;
