@@ -3,8 +3,6 @@ const MAP_ZOOM_INITIAL = 11;
 function main() {
 
     function init() {
-        initHeader();
-
         window.addEventListener('DOMContentLoaded', async function() {
             let censusSeries = await initCensus();
             let censusYearsArr = Object.keys(censusSeries);
@@ -72,16 +70,6 @@ function main() {
             }
             const chart = new ApexCharts(document.getElementById('total'), totalOpt);
             chart.render();
-        });
-    }
-
-    function initHeader() {
-        let navBtn = document.getElementById('header-btn');
-
-        navBtn.addEventListener('click', function() {
-            let dropDownMenu = document.getElementById('header-menu');
-            navBtn.classList.toggle('active');
-            dropDownMenu.classList.toggle('active');
         });
     }
 

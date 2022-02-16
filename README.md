@@ -47,6 +47,7 @@ Census collection in Singapore are done every 10 years, academics and policy mak
 ---
 
 ## Media and Other External Sources
+1. [Singapore Map Vectors by seabranddesign, downloaded from Vecteezy](https://www.vecteezy.com/vector-art/145837-free-singapore-map-vectors)
 
 ---
 

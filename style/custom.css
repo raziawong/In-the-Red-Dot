@@ -1,17 +1,47 @@
-.ctbody .header {
+.ct-body {
+    background-color: #FFF6F5;
+}
+
+.ct-body a {
+    color: #57423F;
+}
+
+header .icon {
+    transform: translate(-40%);
+    border-radius: 0 0 9vw 0;
+    background-color: #F3EED9;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    width: 10vw;
+}
+
+header {
     z-index: 400000;
 }
 
-#logo {
-    max-height: 9vh;
+header .content {
+    margin: 0 0 1.5rem;
+}
+
+#sidebar {
+    background-color: #F3EED9;
+}
+
+#sidebar .content a.row {
+    justify-content: center;
+    align-items: center;
+}
+
+#sidebar .content a h6 {
+    text-transform: uppercase;
+}
+
+#sidebar img {
+    max-width: 9vw;
 }
 
 .chart {
     min-height: 70vh;
 }
 
-@media screen and (max-width:767px) {
-    #logo {
-        max-height: 6vh;
-    }
-}
+@media screen and (max-width:767px) {}

@@ -5,74 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In the Red Dot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="https://unpkg.com/cirrus-ui" />
     <link rel="stylesheet" href="style/custom.css">
 </head>
 
-<body class="ctbody">
+<body class="ct-body">
     <!-- header + navbar -->
-    <header class="header header-fixed u-unselectable header-animated">
-        <div class="header-brand">
-            <nav class="nav-item no-hover">
-                <a href="index.html">
-                    <img src="assets/media/logo_sgmap.svg" alt="SG Map Logo" id="logo" />
-                </a>
-            </nav>
-            <!-- <div class="nav-item">
-                <a href="#">
+    <div class="tree-nav-body">
+        <header>
+            <div>
+                <a href="#sidebar" class="u-none-md">
                     <span class="icon">
-                        <i class="fab fa-wrapper fa-github"></i>
+                        <img class="col" src="assets/media/logo_sgmap.svg" alt="Menu Icon"/>
                     </span>
                 </a>
-            </div> -->
-            <div class="nav-item nav-btn" id="header-btn">
-                <span></span>
-                <span></span>
-                <span></span>
             </div>
+
+            <div class="tree-nav" id="sidebar">
+                <div class="content">
+                    <a class="row" href="index.html">
+                        <img class="col" src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" />
+                        <h6 class="col">In the red dot</h6>
+                    </a>
+                </div>
+                <div class="tree-nav-container">
+                    <div class="tree">
+                        <div class="tree-item">
+                            <input type="checkbox" id="web" class="u-none" name="webTree">
+                            <label class="tree-item-header" for="web">
+                                <a href="#structure">Population Structure</a>
+                            </label>
+                            <!--<div class="tree-item-body">
+                            <ul class="menu">
+                                <li class="menu-item"><a>The Web</a></li>
+                                <li class="menu-item"><a>The World Wide Web</a></li>
+                                <li class="menu-item"><a>The Web Browser</a></li>
+                            </ul>
+                        </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#sidebar-close" id="sidebar-close" class="tree-nav-close"></a>
+        </header>
+
+        <div class="tree-nav-content">
+            <main class="ct-content">
+                <section id="structure">
+                    <h2>Population Structure</h2>
+                    <div class="row">
+                        <div class="col-4 chart">
+                            <div id="pie-race"></div>
+                        </div>
+                        <div class="col-4 chart">
+                            <div id="pie-gender"></div>
+                        </div>
+                        <div class="col-4 chart">
+                            <div id="pie-residency"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="total"></div>
+                        </div>
+                    </div>
+                </section>
+            </main>
         </div>
-        <div class="header-nav nav-center" id="header-menu">
-            <nav class="nav-item">
-                <a class="nav-dropdown-link" href="#structure">Population Structure</a>
-            </nav>
-            <nav class="nav-item">
-                <a class="nav-dropdown-link" href="about.html">About</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="ctcontent">
-        <!-- hero -->
-        <section id="hero">
-            <div class="u-center" id="hero-overlay">
-                <h1>In the Red Dot</h1>
-            </div>
-        </section>
-
-        <!-- charts and graphs-->
-        <section id="structure">
-            <h2>Population Structure</h2>
-            <div class="row">
-                <div class="col-4 chart">
-                    <div id="pie-race"></div>
-                </div>
-                <div class="col-4 chart">
-                    <div id="pie-gender"></div>
-                </div>
-                <div class="col-4 chart">
-                    <div id="pie-residency"></div>
-                </div>
-                <div class="col-12 chart">
-                    <div id="total"></div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- footer -->
-    <footer>
-
-    </footer>
+    </div>
 
     <!-- external  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
