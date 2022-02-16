@@ -14,13 +14,18 @@ header .content {
     margin: 0 0 1.5rem;
 }
 
-.sidebar-toggle .icon {
+#sidebar-toggle .icon {
     transform: translate(-40%);
     border-radius: 0 0 9vw 0;
     background-color: #F3EED9;
     writing-mode: vertical-rl;
     text-orientation: upright;
     width: 10vw;
+}
+
+#sidebar-close .icon {
+    width: 100%;
+    text-align: right;
 }
 
 #sidebar {
@@ -40,11 +45,6 @@ header .content {
 
 #sidebar img {
     width: 9vw;
-}
-
-#sidebar-close .icon {
-    width: 100%;
-    text-align: right;
 }
 
 .chart {
