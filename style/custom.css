@@ -6,15 +6,6 @@
     color: #57423F;
 }
 
-header .icon {
-    transform: translate(-40%);
-    border-radius: 0 0 9vw 0;
-    background-color: #F3EED9;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    width: 10vw;
-}
-
 header {
     z-index: 400000;
 }
@@ -23,8 +14,18 @@ header .content {
     margin: 0 0 1.5rem;
 }
 
+.sidebar-toggle .icon {
+    transform: translate(-40%);
+    border-radius: 0 0 9vw 0;
+    background-color: #F3EED9;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    width: 10vw;
+}
+
 #sidebar {
     background-color: #F3EED9;
+    padding-top: 2vh;
 }
 
 #sidebar .content a.row {
@@ -33,11 +34,17 @@ header .content {
 }
 
 #sidebar .content a h6 {
+    color: #E73340;
     text-transform: uppercase;
 }
 
 #sidebar img {
-    max-width: 9vw;
+    width: 9vw;
+}
+
+#sidebar-close .icon {
+    width: 100%;
+    text-align: right;
 }
 
 .chart {
