@@ -10,6 +10,12 @@ function main() {
         });
     }
 
+    async function initPopulation() {
+        let rawData = await getAnnualPopulationData();
+        let populationSeries = transformAnnualPopulationData(rawData);
+        return populationSeries;
+    }
+
     async function initCensus() {
         let rawData = await getAllCensusData();
         let censusSeries = transformCensusData(rawData);
