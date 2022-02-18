@@ -7,6 +7,9 @@ function main() {
         window.addEventListener('DOMContentLoaded', async function() {
             let censusSeries = await initCensus();
             displayCensusCharts(censusSeries);
+
+            let populationSeries = await initPopulation();
+            displayAnnualPopulationChart(populationSeries);
         });
     }
 
