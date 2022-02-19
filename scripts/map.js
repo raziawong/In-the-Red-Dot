@@ -1,3 +1,16 @@
+function getHeatMapColor(highestNum, num) {
+    let percentage = (highestNum - num) / highestNum * 100;
+    return percentage > 90 ? '#ffffe5' :
+        percentage > 80 ? '#fff7bc' :
+        percentage > 70 ? '#fee391' :
+        percentage > 50 ? '#fec44f' :
+        percentage > 40 ? '#fe9929' :
+        percentage > 30 ? '#ec7014' :
+        percentage > 20 ? '#cc4c02' :
+        percentage > 10 ? '#993404' :
+        '#662506';
+}
+
 function toggleMapView(map, viewLayers, value) {
     let planAreaGroup = viewLayers.areas;
     let subzoneGroup = viewLayers.subzones;
@@ -16,7 +29,7 @@ function toggleMapView(map, viewLayers, value) {
         map.addLayer(subzoneGroup);
     }
 }
-
+let populationNum = [];
 async function handleMapLayers(map, geoDistriSeries) {
     let viewSelectEle = document.getElementById('map-view-select');
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
@@ -35,11 +48,22 @@ async function handleMapLayers(map, geoDistriSeries) {
                     }
                 }
             }
+            properties['population'] = properties['ageGroup']['Total'] || properties['ethnicGroup']['Total'];
+            populationNum.push(properties.population);
             properties['display_name'] = areaName;
 
+            layer.setStyle({
+                fillColor: getHeatMapColor(geoDistriSeries.highestPopulationCount, properties['population']),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            });
 
-            //layer.bindPopup(`<div><ul><li>Path Name: ${pathName}</li><li>Agency: ${agency}</li><ul></div>`);
-            //console.log(layer.feature.properties.area_name);
+            // TODO:
+            // 1. Hover effect to show area name and respective data
+            // 2. Heat Map Color Region
         });
     });
 

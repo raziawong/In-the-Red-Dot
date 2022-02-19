@@ -115,24 +115,27 @@ function transformGeoDistributionData(rawData) {
     let dataByArea = {
         dwellingType: {},
         ageGroup: {},
-        ethnicGroup: {}
+        ethnicGroup: {},
+        highestPopulationCount: 0
     };
 
     for (let row of rawData.dwellingType) {
         let areaName = row.rowText;
 
-        for (let col of row.columns) {
-            let dataKey = col['key'];
-            let value = col.hasOwnProperty('value') ? col['value'] : (col['columns'].find(hdb => hdb['key'].toLowerCase() === 'total'))['value'];
-
-            if (dataByArea.dwellingType.hasOwnProperty(areaName)) {
-                Object.assign(dataByArea.dwellingType[areaName], {
-                    [dataKey]: UTIL.convertToNumber(value)
-                });
-            } else {
-                dataByArea.dwellingType[areaName] = {
-                    [dataKey]: UTIL.convertToNumber(value)
-                };
+        for (let dwellingObj of row.columns) {
+            let dataKey = dwellingObj['key'];
+            let value = dwellingObj.hasOwnProperty('value') ? dwellingObj['value'] : (dwellingObj['columns'].find(hdb => hdb['key'].toLowerCase() === 'total'))['value'];
+            value = UTIL.convertToNumber(value);
+            if (dataKey.toLowerCase() !== 'total') {
+                if (dataByArea.dwellingType.hasOwnProperty(areaName)) {
+                    Object.assign(dataByArea.dwellingType[areaName], {
+                        [dataKey]: value
+                    });
+                } else {
+                    dataByArea.dwellingType[areaName] = {
+                        [dataKey]: value
+                    };
+                }
             }
         }
     }
@@ -141,17 +144,21 @@ function transformGeoDistributionData(rawData) {
     for (let row of ageGroupByArea) {
         let areaName = UTIL.convertToTitleCase(row.rowText.toLowerCase().replace('- total', '').trim());
 
-        for (let totalAG of row.columns[0].columns) {
-            let dataKey = totalAG['key'];
-            let value = totalAG['value'];
+        for (let ageGroupObj of row.columns[0].columns) {
+            let dataKey = ageGroupObj['key'];
+            let value = UTIL.convertToNumber(ageGroupObj['value']);
+
+            if (areaName.toLowerCase() !== 'total' && dataKey.toLowerCase() == 'total' && value > dataByArea.highestPopulationCount) {
+                dataByArea.highestPopulationCount = value;
+            }
 
             if (dataByArea.ageGroup.hasOwnProperty(areaName)) {
                 Object.assign(dataByArea.ageGroup[areaName], {
-                    [dataKey]: UTIL.convertToNumber(value)
+                    [dataKey]: value
                 });
             } else {
                 dataByArea.ageGroup[areaName] = {
-                    [dataKey]: UTIL.convertToNumber(value)
+                    [dataKey]: value
                 };
             }
         }
@@ -163,15 +170,19 @@ function transformGeoDistributionData(rawData) {
 
         for (let ethnicObj of row.columns) {
             let dataKey = ethnicObj['key'];
-            let value = ethnicObj.columns[0].value;
+            let value = UTIL.convertToNumber(ethnicObj.columns[0].value);
+
+            if (areaName.toLowerCase() !== 'total' && dataKey.toLowerCase() == 'total' && value > dataByArea.highestPopulationCount) {
+                dataByArea.highestPopulationCount = value;
+            }
 
             if (dataByArea.ethnicGroup.hasOwnProperty(areaName)) {
                 Object.assign(dataByArea.ethnicGroup[areaName], {
-                    [dataKey]: UTIL.convertToNumber(value)
+                    [dataKey]: value
                 });
             } else {
                 dataByArea.ethnicGroup[areaName] = {
-                    [dataKey]: UTIL.convertToNumber(value)
+                    [dataKey]: value
                 };
             }
         }
