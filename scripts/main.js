@@ -9,7 +9,8 @@ function main() {
             let censusSeries = await initCensus();
             displayCensusCharts(censusSeries);
 
-            await handleMapLayers(map);
+            let geoDistriSeries = await initGeoDistribution();
+            await handleMapLayers(map, geoDistriSeries);
         });
     }
 
@@ -41,6 +42,12 @@ function main() {
         map.options.zoomControl = true;
 
         return map;
+    }
+
+    async function initGeoDistribution() {
+        let rawData = await getGeoDistributionData();
+        let populationSeries = transformGeoDistributionData(rawData);
+        return populationSeries;
     }
 
     async function initPopulation() {

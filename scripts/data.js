@@ -3,8 +3,9 @@ const DOS_TABLE_API = {
     STORE_URL: 'assets/data/temp/',
     ANNUAL_POP_ID: 'M810001',
     GEO_DISTRI_IDS: {
-        AreaAndDwelling: '17574',
-        AreaAndAgeGroup: '17560'
+        dwellingType: '17574',
+        ageGroup: '17560',
+        ethnicGroup: '17561'
     },
     CENSUS_IDS: {
         2020: '17394',
@@ -16,7 +17,6 @@ const DOS_TABLE_API = {
 const DATA_GOV_API = {
     STORE_URL: 'assets/data/map'
 }
-
 async function getSubzoneLayerData() {
     try {
         let resp = await axios.get(DATA_GOV_API.STORE_URL + '/2019_subzone.geojson');
@@ -56,7 +56,7 @@ async function getGeoDistributionData() {
         });
     });
 
-    console.log("Geographical Distribution:\n", data);
+    //console.log("Geographical Distribution Response:\n", data);
     return data;
 }
 
@@ -74,7 +74,7 @@ async function getAnnualPopulationData() {
         });
     });
 
-    console.log("Annual Population Data Response:\n", data);
+    //console.log("Annual Population Data Response:\n", data);
     return data;
 }
 
@@ -107,12 +107,78 @@ async function getAllCensusData() {
         });
     });
 
-    console.log("Census Data Response:\n", data);
+    //console.log("Census Data Response:\n", data);
     return data;
 }
 
 function transformGeoDistributionData(rawData) {
-    let dataByArea = {};
+    let dataByArea = {
+        dwellingType: {},
+        ageGroup: {},
+        ethnicGroup: {}
+    };
+
+    for (let row of rawData.dwellingType) {
+        let areaName = row.rowText;
+
+        for (let col of row.columns) {
+            let dataKey = col['key'];
+            let value = col.hasOwnProperty('value') ? col['value'] : (col['columns'].find(hdb => hdb['key'].toLowerCase() === 'total'))['value'];
+
+            if (dataByArea.dwellingType.hasOwnProperty(areaName)) {
+                Object.assign(dataByArea.dwellingType[areaName], {
+                    [dataKey]: UTIL.convertToNumber(value)
+                });
+            } else {
+                dataByArea.dwellingType[areaName] = {
+                    [dataKey]: UTIL.convertToNumber(value)
+                };
+            }
+        }
+    }
+
+    let ageGroupByArea = rawData.ageGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
+    for (let row of ageGroupByArea) {
+        let areaName = UTIL.convertToTitleCase(row.rowText.toLowerCase().replace('- total', '').trim());
+
+        for (let totalAG of row.columns[0].columns) {
+            let dataKey = totalAG['key'];
+            let value = totalAG['value'];
+
+            if (dataByArea.ageGroup.hasOwnProperty(areaName)) {
+                Object.assign(dataByArea.ageGroup[areaName], {
+                    [dataKey]: UTIL.convertToNumber(value)
+                });
+            } else {
+                dataByArea.ageGroup[areaName] = {
+                    [dataKey]: UTIL.convertToNumber(value)
+                };
+            }
+        }
+    }
+
+    let ethnicGroupByArea = rawData.ethnicGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
+    for (let row of ethnicGroupByArea) {
+        let areaName = UTIL.convertToTitleCase(row.rowText.toLowerCase().replace('- total', '').trim());
+
+        for (let ethnicObj of row.columns) {
+            let dataKey = ethnicObj['key'];
+            let value = ethnicObj.columns[0].value;
+
+            if (dataByArea.ethnicGroup.hasOwnProperty(areaName)) {
+                Object.assign(dataByArea.ethnicGroup[areaName], {
+                    [dataKey]: UTIL.convertToNumber(value)
+                });
+            } else {
+                dataByArea.ethnicGroup[areaName] = {
+                    [dataKey]: UTIL.convertToNumber(value)
+                };
+            }
+        }
+    }
+
+    //console.log("Geographical Distribution:\n", dataByArea);
+    return dataByArea;
 }
 
 function transformAnnualPopulationData(rawData) {
@@ -126,11 +192,11 @@ function transformAnnualPopulationData(rawData) {
             let year = col['key'];
             if (dataByYear.hasOwnProperty(year)) {
                 dataByYear[year] = Object.assign(dataByYear[year], {
-                    [dataKey]: Number(col['value'])
+                    [dataKey]: UTIL.convertToNumber(col['value'])
                 });
             } else {
                 dataByYear[year] = {
-                    [dataKey]: Number(col['value'])
+                    [dataKey]: UTIL.convertToNumber(col['value'])
                 };
             }
         }
@@ -141,12 +207,11 @@ function transformAnnualPopulationData(rawData) {
         dataByYear: dataByYear
     }
 
-    console.log("Annual Population Indicators:\n", populationData);
+    //console.log("Annual Population Indicators:\n", populationData);
     return populationData;
 }
 
 function transformCensusData(rawData) {
-    console.log('rawData', rawData);
     let totalStructure = {};
     //let ageGroup = {};
     // let genderGroup = {};
@@ -161,34 +226,34 @@ function transformCensusData(rawData) {
             let group = ageData.rowText.toLowerCase();
 
             if (year >= 2020 && group.includes('89')) {
-                ageTotal['85 & over'] = Number(ageData.columns[0].columns[0].columns[0].value);
+                ageTotal['85 & over'] = UTIL.convertToNumber(ageData.columns[0].columns[0].columns[0].value);
             } else if (year >= 2020 && group.includes('90')) {
-                ageTotal['85 & over'] += Number(ageData.columns[0].columns[0].columns[0].value);
+                ageTotal['85 & over'] += UTIL.convertToNumber(ageData.columns[0].columns[0].columns[0].value);
             } else if (group !== 'total') {
-                ageTotal[ageData.rowText.toLowerCase()] = Number(ageData.columns[0].columns[0].columns[0].value);
+                ageTotal[ageData.rowText.toLowerCase()] = UTIL.convertToNumber(ageData.columns[0].columns[0].columns[0].value);
             }
         }
 
         totalStructure[key] = ({
-            total: Number(rawData[key][0].columns[0].columns[0].columns[0].value),
+            total: UTIL.convertToNumber(rawData[key][0].columns[0].columns[0].columns[0].value),
             gender: {
-                male: Number(rawData[key][0].columns[0].columns[0].columns[1].value),
-                female: Number(rawData[key][0].columns[0].columns[0].columns[2].value)
+                male: UTIL.convertToNumber(rawData[key][0].columns[0].columns[0].columns[1].value),
+                female: UTIL.convertToNumber(rawData[key][0].columns[0].columns[0].columns[2].value)
             },
             race: {
-                chinese: Number(rawData[key][0].columns[0].columns[1].columns[0].value),
-                malay: Number(rawData[key][0].columns[0].columns[2].columns[0].value),
-                indian: Number(rawData[key][0].columns[0].columns[3].columns[0].value),
-                others: Number(rawData[key][0].columns[0].columns[4].columns[0].value)
+                chinese: UTIL.convertToNumber(rawData[key][0].columns[0].columns[1].columns[0].value),
+                malay: UTIL.convertToNumber(rawData[key][0].columns[0].columns[2].columns[0].value),
+                indian: UTIL.convertToNumber(rawData[key][0].columns[0].columns[3].columns[0].value),
+                others: UTIL.convertToNumber(rawData[key][0].columns[0].columns[4].columns[0].value)
             },
             residency: {
-                citizen: Number(rawData[key][0].columns[1].columns[0].columns[0].value),
-                permanent: Number(rawData[key][0].columns[2].columns[0].columns[0].value)
+                citizen: UTIL.convertToNumber(rawData[key][0].columns[1].columns[0].columns[0].value),
+                permanent: UTIL.convertToNumber(rawData[key][0].columns[2].columns[0].columns[0].value)
             },
             age: ageTotal
         });
     }
 
-    console.log("Total Population Structure:\n", totalStructure);
+    //console.log("Total Population Structure:\n", totalStructure);
     return totalStructure;
 }
