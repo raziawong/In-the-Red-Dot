@@ -6,7 +6,7 @@
     color: #57423F;
 }
 
-header {
+.ct-body header.tree-nav {
     z-index: 400000;
 }
 
@@ -49,6 +49,10 @@ header .content {
 
 .chart {
     min-height: 70vh;
+}
+
+#ura-zones-map {
+    height: 80vh;
 }
 
 @media screen and (max-width:767px) {}

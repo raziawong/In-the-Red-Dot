@@ -1,12 +1,10 @@
 const UTIL = {
-    compareDesc: (a, b) => { return b - a; },
-    compareAsc: (a, b) => { return a - b },
-    getKeyByValue: (object, value) => {
-        return Object.keys(object).find(key => object[key] === value);
-    },
-    convertToNumber: (value) => {
-        return isNaN(value) || typeof value === 'undefined' ? 0 : value;
-    }
+    compareDesc: (a, b) => b - a,
+    compareAsc: (a, b) => a - b,
+    compareAlphabetically: (a, b) => a.localeCompare(b, undefined, { numeric: true }),
+    convertToTitleCase: str => str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
+    convertToNumber: (value) => isNaN(value) ? 0 : Number(value),
+    getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
 }
 const LABELS = {
     CITIZEN: 'Singapore Citizen',
