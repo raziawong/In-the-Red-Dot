@@ -55,4 +55,24 @@ header .content {
     height: 80vh;
 }
 
+#ura-zones-map .legend {
+    line-height: 1.4rem;
+    background-color: dimgray;
+    color: #FFF6F5;
+    display: inline-flex;
+    align-items: center;
+    float: none;
+    clear: none;
+    position: absolute;
+    bottom: 25px;
+}
+
+#ura-zones-map .legend i {
+    display: inline-flex;
+    width: 1.2rem;
+    height: 1rem;
+    margin-right: 0px;
+    opacity: 0.8;
+}
+
 @media screen and (max-width:767px) {}

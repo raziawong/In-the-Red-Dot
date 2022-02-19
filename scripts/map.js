@@ -1,14 +1,16 @@
+const MAP_COLOR_RANGE = ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506'];
+
 function getHeatMapColor(highestNum, num) {
     let percentage = (highestNum - num) / highestNum * 100;
-    return percentage > 90 ? '#ffffe5' :
-        percentage > 80 ? '#fff7bc' :
-        percentage > 70 ? '#fee391' :
-        percentage > 50 ? '#fec44f' :
-        percentage > 40 ? '#fe9929' :
-        percentage > 30 ? '#ec7014' :
-        percentage > 20 ? '#cc4c02' :
-        percentage > 10 ? '#993404' :
-        '#662506';
+    return percentage > 90 ? MAP_COLOR_RANGE[0] :
+        percentage > 80 ? MAP_COLOR_RANGE[1] :
+        percentage > 70 ? MAP_COLOR_RANGE[2] :
+        percentage > 50 ? MAP_COLOR_RANGE[3] :
+        percentage > 40 ? MAP_COLOR_RANGE[4] :
+        percentage > 30 ? MAP_COLOR_RANGE[5] :
+        percentage > 20 ? MAP_COLOR_RANGE[6] :
+        percentage > 10 ? MAP_COLOR_RANGE[7] :
+        MAP_COLOR_RANGE[8];
 }
 
 function toggleMapView(map, viewLayers, value) {
@@ -29,7 +31,7 @@ function toggleMapView(map, viewLayers, value) {
         map.addLayer(subzoneGroup);
     }
 }
-let populationNum = [];
+
 async function handleMapLayers(map, geoDistriSeries) {
     let viewSelectEle = document.getElementById('map-view-select');
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
@@ -49,15 +51,14 @@ async function handleMapLayers(map, geoDistriSeries) {
                 }
             }
             properties['population'] = properties['ageGroup']['Total'] || properties['ethnicGroup']['Total'];
-            populationNum.push(properties.population);
             properties['display_name'] = areaName;
 
             layer.setStyle({
                 fillColor: getHeatMapColor(geoDistriSeries.highestPopulationCount, properties['population']),
                 weight: 2,
                 opacity: 1,
-                color: 'white',
-                dashArray: '3',
+                color: 'grey',
+                dashArray: '4',
                 fillOpacity: 0.7
             });
 
@@ -66,6 +67,19 @@ async function handleMapLayers(map, geoDistriSeries) {
             // 2. Heat Map Color Region
         });
     });
+
+    let legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function(map) {
+        let divEle = L.DomUtil.create('div', 'info legend');
+
+        divEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
+        for (let color of MAP_COLOR_RANGE) {
+            divEle.innerHTML += '<i style="background:' + color + '"></i> ';
+        }
+        divEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
+        return divEle;
+    };
+    legend.addTo(map);
 
     let subzoneData = await getSubzoneLayerData();
     let subzoneGroup = L.layerGroup();
