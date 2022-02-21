@@ -158,7 +158,7 @@ function transformGeoDistributionData(rawData) {
 function transformAnnualPopulationData(rawData) {
     let dataByYear = {};
     for (let rowObj of rawData['indicators']) {
-        let dataKey = rowObj['rowText'];
+        let dataKey = UTIL.convertDOSKeys(rowObj['rowText']);
 
         for (let colObj of rowObj.columns) {
             let year = colObj['key'];
@@ -177,13 +177,15 @@ function transformAnnualPopulationData(rawData) {
     let prevSeriesNo = null;
     let prevDataKey = null;
     for (let rowObj of rawData['categories']) {
-        let dataKey = rowObj['rowText'];
+        let dataKey = UTIL.convertDOSKeys(rowObj['rowText']);
         let seriesNo = rowObj['SeriesNo'];
 
         for (let colObj of rowObj.columns) {
             let year = colObj['Key'];
+
             if (seriesNo.startsWith(prevSeriesNo + '.')) {
-                let breakDownKey = prevDataKey + ' Age Breakdown';
+                let breakDownKey = prevDataKey + '_age_breakdown';
+
                 if (dataByYear[year].hasOwnProperty(breakDownKey)) {
                     dataByYear[year][breakDownKey] = Object.assign(dataByYear[year][breakDownKey], {
                         [dataKey]: UTIL.convertToNumber(colObj['Value'])

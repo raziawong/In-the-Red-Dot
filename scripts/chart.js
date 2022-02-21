@@ -1,3 +1,10 @@
+function getYearSeriesChartData(years, data, key) {
+    let series = years.map(y => {
+        return data[y][key] ? data[y][key] : null;
+    });
+    return series;
+}
+
 function displaySingleChart(type, isStack, title, seriesArray, labelArray, elementId) {
     let options = {
         chart: {
@@ -48,44 +55,16 @@ function renderAnnualPopulationChart(populationData) {
     let yearData = populationData.dataByYear;
     let latestData = yearData[years[years.length - 1]];
 
-    displayResidencySparkLines(
-        'citizen-trend',
-        CHART_LABELS.CITIZEN,
-        years,
-        years.map(y => { return yearData[y][DOS_DATA_KEYS.CITIZEN_PPLT] }),
-        'Latest number: ' + latestData[DOS_DATA_KEYS.CITIZEN_PPLT]
-    );
-
-    displayResidencySparkLines(
-        'pr-trend',
-        CHART_LABELS.PR,
-        years,
-        years.map(y => { return yearData[y][DOS_DATA_KEYS.PR_PPLT] }),
-        'Latest number: ' + latestData[DOS_DATA_KEYS.PR_PPLT]
-    );
-
-    displayResidencySparkLines(
-        'nonres-trend',
-        CHART_LABELS.NON_RES,
-        years,
-        years.map(y => { return yearData[y][DOS_DATA_KEYS.NON_RES_PPLT] }),
-        'Latest number: ' + latestData[DOS_DATA_KEYS.NON_RES_PPLT]
-    );
-
     displaySingleChart(
         'bar',
         true,
         'Median Age Insights', [{
                 name: CHART_LABELS.CITIZEN,
-                data: years.map(y => {
-                    return yearData[y][DOS_DATA_KEYS.MED_AGE_CITIZEN] ? yearData[y][DOS_DATA_KEYS.MED_AGE_CITIZEN] : 0;
-                })
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.MED_AGE_CITIZEN)
             },
             {
                 name: CHART_LABELS.RESIDENT,
-                data: years.map(y => {
-                    return yearData[y][DOS_DATA_KEYS.MED_AGE_RESIDENT] ? yearData[y][DOS_DATA_KEYS.MED_AGE_RESIDENT] : 0;
-                })
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.MED_AGE_RESIDENT)
             }
         ],
         years,
@@ -93,24 +72,84 @@ function renderAnnualPopulationChart(populationData) {
     );
 
     displaySingleChart(
+        'line',
+        false,
+        'Age Dependency Ratio Insights', [{
+                name: CHART_LABELS.AGE_DEP_15_64,
+                type: 'column',
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_15_64)
+            },
+            {
+                name: CHART_LABELS.AGE_DEP_20_64,
+                type: 'column',
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_20_64)
+            },
+            {
+                name: CHART_LABELS.CHILD_DEP_15_64,
+                type: 'area',
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_15_64)
+            },
+            {
+                name: CHART_LABELS.CHILD_DEP_20_64,
+                type: 'area',
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_20_64)
+            },
+            {
+                name: CHART_LABELS.OLD_DEP_15_64,
+                type: 'line',
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_15_64)
+            },
+            {
+                name: CHART_LABELS.OLD_DEP_20_64,
+                type: 'line',
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64)
+            }
+        ],
+        years,
+        'dependency-trend'
+    );
+
+    displayResidencySparkLines(
+        'citizen-trend',
+        CHART_LABELS.CITIZEN,
+        years,
+        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT),
+        'Latest number: ' + latestData[DOS_DATA_KEYS.CITIZEN_PPLT]
+    );
+
+    displayResidencySparkLines(
+        'pr-trend',
+        CHART_LABELS.PR,
+        years,
+        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT),
+        'Latest number: ' + latestData[DOS_DATA_KEYS.PR_PPLT]
+    );
+
+    displayResidencySparkLines(
+        'nonres-trend',
+        CHART_LABELS.NON_RES,
+        years,
+        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT),
+        'Latest number: ' + latestData[DOS_DATA_KEYS.NON_RES_PPLT]
+    );
+
+    displaySingleChart(
         'area',
         true,
         'Population Growth Insights', [{
                 name: CHART_LABELS.RATE_NATURAL_INCR,
-                data: years.map(y => {
-                    return yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] ? yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] : 0;
-                })
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
             },
             {
                 name: CHART_LABELS.RATE_POPLT_INCR,
-                data: years.map(y => {
-                    return yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] ? yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] : 0;
-                })
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
             }
         ],
         years,
         'increase-trend'
     );
+
+
 
     // var options = {
     //     series: [{

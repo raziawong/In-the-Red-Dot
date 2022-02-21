@@ -3,7 +3,7 @@ const MAP_ZOOM_INITIAL = 12.4;
 function main() {
 
     function init() {
-        initApexChart();
+        initApexChartOptions();
         let map = initMap();
 
 
@@ -16,7 +16,7 @@ function main() {
         });
     }
 
-    function initApexChart() {
+    function initApexChartOptions() {
         window.Apex = {
             chart: {
                 height: '100%',
@@ -29,10 +29,10 @@ function main() {
                 type: 'gradient',
                 gradient: {
                     inverseColors: false,
-                    shade: 'light',
+                    shade: 'dark',
                     type: "vertical",
-                    opacityFrom: 0.9,
-                    opacityTo: 0.6
+                    opacityFrom: 1,
+                    opacityTo: 0.7
                 }
             },
             legend: {
@@ -134,12 +134,6 @@ function main() {
         let rawData = await getAnnualPopulationData();
         let populationSeries = transformAnnualPopulationData(rawData);
         return populationSeries;
-    }
-
-    async function initCensus() {
-        let rawData = await getAllCensusData();
-        let censusSeries = transformCensusData(rawData);
-        return censusSeries;
     }
 
     init();
