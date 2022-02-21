@@ -1,8 +1,7 @@
 function displayPieChart(type, elementId, seriesArray, labelArray) {
     const options = {
         chart: {
-            type: type,
-            height: "100%"
+            type: type
         },
         series: seriesArray,
         labels: labelArray
@@ -31,7 +30,6 @@ function displayResidencySparkLines(id, name, labels, seriesData, subtitle) {
             id: id,
             group: 'residency',
             type: 'area',
-            height: 160,
             sparkline: {
                 enabled: true
             },
@@ -39,32 +37,26 @@ function displayResidencySparkLines(id, name, labels, seriesData, subtitle) {
         stroke: {
             curve: 'smooth'
         },
-        fill: {
-            opacity: 1,
-        },
         series: [{
             name: name,
             data: seriesData
         }],
         labels: labels,
-        yaxis: {
-            min: 0
-        },
         title: {
             text: name,
-            offsetX: 30,
-            style: {
-                fontSize: '24px',
-                cssClass: 'apexcharts-yaxis-title'
-            }
+            // offsetX: 30,
+            // style: {
+            //     fontSize: '24px',
+            //     cssClass: 'apexcharts-yaxis-title'
+            // }
         },
         subtitle: {
             text: subtitle,
-            offsetX: 30,
-            style: {
-                fontSize: '14px',
-                cssClass: 'apexcharts-yaxis-title'
-            }
+            // offsetX: 30,
+            // style: {
+            //     fontSize: '14px',
+            //     cssClass: 'apexcharts-yaxis-title'
+            // }
         }
     };
 
@@ -79,11 +71,10 @@ function renderAnnualPopulationChart(populationData) {
 
     let optionsArea = {
         chart: {
-            height: 421,
             type: 'area',
             stacked: true,
             zoom: {
-                enabled: false
+                enabled: true
             }
         },
         plotOptions: {
@@ -96,7 +87,6 @@ function renderAnnualPopulationChart(populationData) {
         stroke: {
             curve: 'smooth'
         },
-        colors: ["#3F51B5", '#2196F3'],
         series: [{
                 name: CHART_LABELS.RATE_NATURAL_INCR,
                 data: years.map(y => {
@@ -110,19 +100,8 @@ function renderAnnualPopulationChart(populationData) {
                 })
             }
         ],
-        fill: {
-            type: 'gradient',
-            gradient: {
-                inverseColors: false,
-                shade: 'light',
-                type: "vertical",
-                opacityFrom: 0.9,
-                opacityTo: 0.6
-            }
-        },
         title: {
-            text: 'Population Growth Insights',
-            align: 'left'
+            text: 'Population Growth Insights'
         },
         markers: {
             size: 0,
@@ -132,11 +111,6 @@ function renderAnnualPopulationChart(populationData) {
             strokeOpacity: 0.25,
         },
         labels: years,
-        xaxis: {
-            tooltip: {
-                enabled: false
-            }
-        },
         legend: {
             position: 'top',
             horizontalAlign: 'right'

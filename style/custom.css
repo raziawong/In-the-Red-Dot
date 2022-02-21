@@ -47,8 +47,12 @@ header .content {
     width: 9vw;
 }
 
-.chart {
-    min-height: 70vh;
+.ct-body .chart {
+    height: 50vh;
+}
+
+.ct-body .chart.short {
+    height: 30vh;
 }
 
 #ura-zones-map {

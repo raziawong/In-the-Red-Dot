@@ -3,7 +3,9 @@ const MAP_ZOOM_INITIAL = 12.4;
 function main() {
 
     function init() {
+        initApexChart();
         let map = initMap();
+
 
         window.addEventListener('DOMContentLoaded', async function() {
             let populationSeries = await initPopulation();
@@ -12,6 +14,53 @@ function main() {
             let geoDistriSeries = await initGeoDistribution();
             renderZoneAndData(map, geoDistriSeries);
         });
+    }
+
+    function initApexChart() {
+        window.Apex = {
+            chart: {
+                height: '100%'
+            },
+            theme: {
+                palette: 'palette6'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    inverseColors: false,
+                    shade: 'light',
+                    type: "vertical",
+                    opacityFrom: 0.9,
+                    opacityTo: 0.6
+                }
+            },
+            xaxis: {
+                axisBorder: {
+                    show: false
+                },
+                labels: {
+                    show: false
+                }
+            },
+            yaxis: {
+                axisBorder: {
+                    show: false
+                },
+                labels: {
+                    show: false
+                }
+            },
+            title: {
+                style: {
+                    fontFamily: 'Montserrat,sans-serif'
+                }
+            },
+            subtitle: {
+                style: {
+                    fontFamily: 'Montserrat,sans-serif'
+                }
+            }
+        };
     }
 
     function initMap() {
