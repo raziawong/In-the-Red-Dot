@@ -17,15 +17,6 @@ const DOS_TABLE_API = {
 const DATA_GOV_API = {
     STORE_URL: 'assets/data/map'
 }
-async function getSubzoneLayerData() {
-    try {
-        let resp = await axios.get(DATA_GOV_API.STORE_URL + '/2019_subzone.geojson');
-        return resp.data;
-    } catch (e) {
-        console.error('Unable to get data of URA subzones');
-        return false;
-    }
-}
 
 async function getGeoDistributionData() {
     let promiseArr = [];
@@ -188,7 +179,7 @@ function transformGeoDistributionData(rawData) {
         }
     }
 
-    //console.log("Geographical Distribution:\n", dataByArea);
+    console.log("Geographical Distribution:\n", dataByArea);
     return dataByArea;
 }
 

@@ -32,10 +32,8 @@ function toggleMapView(map, viewLayers, value) {
     }
 }
 
-async function handleMapLayers(map, geoDistriSeries) {
-    let viewSelectEle = document.getElementById('map-view-select');
+function handleMapLayers(map, geoDistriSeries) {
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
-
     planAreaGroup.on('ready', function() {
         map.fitBounds(planAreaGroup.getBounds());
 
@@ -50,6 +48,7 @@ async function handleMapLayers(map, geoDistriSeries) {
                     }
                 }
             }
+            console.log(properties);
             properties['population'] = properties['ageGroup']['Total'] || properties['ethnicGroup']['Total'];
             properties['display_name'] = areaName;
 
@@ -63,10 +62,10 @@ async function handleMapLayers(map, geoDistriSeries) {
             });
 
             // TODO:
-            // 1. Hover effect to show area name and respective data
+            // 1. Click interaction to show area name and respective data
             // 2. Heat Map Color Region
         });
-    });
+    }).addTo(map);
 
     let legend = L.control({ position: 'bottomright' });
     legend.onAdd = function(map) {
@@ -81,28 +80,13 @@ async function handleMapLayers(map, geoDistriSeries) {
     };
     legend.addTo(map);
 
-    let subzoneData = await getSubzoneLayerData();
-    let subzoneGroup = L.layerGroup();
-    let subzoneName = [];
-    L.geoJson(subzoneData, {
-        onEachFeature: function(feature, layer) {
-            let dummyDiv = document.createElement('div');
-            dummyDiv.innerHTML = feature.properties.Description;
-            let name = dummyDiv.querySelectorAll('td')[1].innerHTML;
-            feature.properties.subzone_name = UTIL.convertToTitleCase(name);
-            subzoneName.push(feature.properties.subzone_name);
-        }
-    }).addTo(subzoneGroup);
+    // let viewLayers = {
+    //     'areas': planAreaGroup,
+    //     'subzones': subzoneGroup
+    // }
 
-    //console.log(subzoneName.sort(UTIL.compareAlphabetically));
-
-    let viewLayers = {
-        'areas': planAreaGroup,
-        'subzones': subzoneGroup
-    }
-
-    toggleMapView(map, viewLayers, viewSelectEle.selectedOptions[0].value)
-    viewSelectEle.addEventListener('change', function(event) {
-        toggleMapView(map, viewLayers, event.target.selectedOptions[0].value);
-    });
+    // toggleMapView(map, viewLayers, viewSelectEle.selectedOptions[0].value)
+    // viewSelectEle.addEventListener('change', function(event) {
+    //     toggleMapView(map, viewLayers, event.target.selectedOptions[0].value);
+    // });
 }
