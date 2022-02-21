@@ -51,15 +51,20 @@ The site should at least contain data visualization of the population structure 
 2. [Font Awesome](https://fontawesome.com/)
 3. [AXIOS](https://axios-http.com/docs/intro)
 4. [ApexCharts](https://apexcharts.com/)
-
+5. [Leaflet](https://leafletjs.com/)
+   
 ### Data Sources
 
 1. Department of Statistics Singapore's Table Builder API
    - https://www.singstat.gov.sg/
    - https://tablebuilder.singstat.gov.sg/
+2. Data.gov.sg
+   - https://data.gov.sg/dataset/master-plan-2019-planning-area-boundary-no-sea
 
 ### Media and Other External Sources
 1. [Singapore Map Vectors by seabranddesign, downloaded from Vecteezy](https://www.vecteezy.com/vector-art/145837-free-singapore-map-vectors)
+2. [Choropleth Map Tutorial](https://leafletjs.com/examples/choropleth/)
+3. [Color Brewer for Cartoggraphy](https://colorbrewer2.org/#type=sequential&scheme=YlOrRd&n=9)
 
 ---
 

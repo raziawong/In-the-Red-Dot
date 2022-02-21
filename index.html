@@ -7,6 +7,9 @@
     <title>In the Red Dot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/cirrus-ui" />
     <link rel="stylesheet" href="style/custom.css">
 </head>
@@ -34,9 +37,9 @@
             <div class="tree-nav-container">
                 <div class="tree">
                     <div class="tree-item">
-                        <input type="checkbox" id="census-item" class="u-none" name="censusItem">
-                        <label class="tree-item-header" for="census-item">
-                            <a href="#census">Census Population Data</a>
+                        <input type="checkbox" id="web" class="u-none" name="webTree">
+                        <label class="tree-item-header" for="web">
+                            <a href="#structure">Population Structure</a>
                         </label>
                         <!--<div class="tree-item-body">
                             <ul class="menu">
@@ -47,10 +50,10 @@
                         </div>-->
                     </div>
                     <div class="tree-item">
-                        <input type="checkbox" id="annual-item" class="u-none" name="annualItem">
-                        <label class="tree-item-header" for="annual-item">
-                            <a href="#annual">Annual Population Indicators</a>
+                        <label class="tree-item-header" for="web">
+                        <input type="checkbox" id="web" class="u-none" name="webTree">
                         </label>
+                            <a href="#geographical">Geographical Distribution</a>
                     </div>
                 </div>
             </div>
@@ -82,15 +85,23 @@
                     </div>
                 </div>
             </section>
-        </main>
+                <section id="geographical">
+                    <h2>Geographical Distribution</h2>
+                    <div id="ura-zones-map"></div>
+                </section>
+            </main>
     </div>
 
     <!-- external  -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- internal  -->
     <script src="scripts/util.js"></script>
     <script src="scripts/data.js"></script>
+    <script src="scripts/map.js"></script>
     <script src="scripts/chart.js"></script>
     <script src="scripts/main.js"></script>
 </body>

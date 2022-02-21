@@ -6,7 +6,7 @@
     color: #57423F;
 }
 
-header {
+.ct-body header.tree-nav {
     z-index: 400000;
 }
 
@@ -49,6 +49,40 @@ header .content {
 
 .chart {
     min-height: 70vh;
+}
+
+#ura-zones-map {
+    height: 80vh;
+}
+
+#ura-zones-map .info {
+    float: none;
+    clear: none;
+    position: absolute;
+    bottom: 20px;
+}
+
+#ura-zones-map .info h3 {
+    color: #57423F;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+#ura-zones-map .info .legend {
+    line-height: 1.4rem;
+    background-color: #57423F;
+    color: #FFF6F5;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+}
+
+#ura-zones-map .info .legend i {
+    display: inline-flex;
+    width: 1.2rem;
+    height: 1rem;
+    margin-right: 0px;
+    opacity: 0.8;
 }
 
 @media screen and (max-width:767px) {}
