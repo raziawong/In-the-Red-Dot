@@ -19,10 +19,11 @@ function main() {
     function initApexChart() {
         window.Apex = {
             chart: {
-                height: '100%'
-            },
-            theme: {
-                palette: 'palette6'
+                height: '100%',
+                width: '100%',
+                zoom: {
+                    enabled: true
+                }
             },
             fill: {
                 type: 'gradient',
@@ -32,6 +33,46 @@ function main() {
                     type: "vertical",
                     opacityFrom: 0.9,
                     opacityTo: 0.6
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right'
+            },
+            markers: {
+                size: 0,
+                style: 'hollow',
+                strokeWidth: 8,
+                strokeColor: "#fff",
+                strokeOpacity: 0.25,
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    columnWidth: '75%'
+                },
+                line: {
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            subtitle: {
+                style: {
+                    fontFamily: 'Montserrat,sans-serif'
+                }
+            },
+            theme: {
+                palette: 'palette7'
+            },
+            title: {
+                style: {
+                    fontFamily: 'Montserrat,sans-serif'
                 }
             },
             xaxis: {
@@ -48,16 +89,6 @@ function main() {
                 },
                 labels: {
                     show: false
-                }
-            },
-            title: {
-                style: {
-                    fontFamily: 'Montserrat,sans-serif'
-                }
-            },
-            subtitle: {
-                style: {
-                    fontFamily: 'Montserrat,sans-serif'
                 }
             }
         };

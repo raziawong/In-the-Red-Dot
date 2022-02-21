@@ -1,27 +1,17 @@
-function displayPieChart(type, elementId, seriesArray, labelArray) {
-    const options = {
+function displaySingleChart(type, isStack, title, seriesArray, labelArray, elementId) {
+    let options = {
         chart: {
-            type: type
+            type: type,
+            stacked: isStack
+        },
+        title: {
+            text: title
         },
         series: seriesArray,
         labels: labelArray
     }
 
-    if (type == 'donut') {
-        options.plotOptions = {
-            pie: {
-                donut: {
-                    labels: {
-                        total: {
-                            show: true
-                        }
-                    }
-                }
-            }
-        }
-    }
-    const pie = new ApexCharts(document.getElementById(elementId), options);
-    pie.render();
+    new ApexCharts(document.getElementById(elementId), options).render();
 }
 
 function displayResidencySparkLines(id, name, labels, seriesData, subtitle) {
@@ -43,82 +33,20 @@ function displayResidencySparkLines(id, name, labels, seriesData, subtitle) {
         }],
         labels: labels,
         title: {
-            text: name,
-            // offsetX: 30,
-            // style: {
-            //     fontSize: '24px',
-            //     cssClass: 'apexcharts-yaxis-title'
-            // }
+            text: name
         },
         subtitle: {
-            text: subtitle,
-            // offsetX: 30,
-            // style: {
-            //     fontSize: '14px',
-            //     cssClass: 'apexcharts-yaxis-title'
-            // }
+            text: subtitle
         }
     };
 
-    let chart = new ApexCharts(document.getElementById(id), options);
-    chart.render();
+    new ApexCharts(document.getElementById(id), options).render();
 }
 
 function renderAnnualPopulationChart(populationData) {
-    let years = populationData.ascYear.slice(-30);
+    let years = populationData.ascYear.slice(-10);
     let yearData = populationData.dataByYear;
     let latestData = yearData[years[years.length - 1]];
-
-    let optionsArea = {
-        chart: {
-            type: 'area',
-            stacked: true,
-            zoom: {
-                enabled: true
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: false
-                }
-            }
-        },
-        stroke: {
-            curve: 'smooth'
-        },
-        series: [{
-                name: CHART_LABELS.RATE_NATURAL_INCR,
-                data: years.map(y => {
-                    return yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] ? yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] : 0;
-                })
-            },
-            {
-                name: CHART_LABELS.RATE_POPLT_INCR,
-                data: years.map(y => {
-                    return yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] ? yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] : 0;
-                })
-            }
-        ],
-        title: {
-            text: 'Population Growth Insights'
-        },
-        markers: {
-            size: 0,
-            style: 'hollow',
-            strokeWidth: 8,
-            strokeColor: "#fff",
-            strokeOpacity: 0.25,
-        },
-        labels: years,
-        legend: {
-            position: 'top',
-            horizontalAlign: 'right'
-        }
-    }
-
-    let chart = new ApexCharts(document.getElementById("increase-trend"), optionsArea);
-    chart.render();
 
     displayResidencySparkLines(
         'citizen-trend',
@@ -142,6 +70,46 @@ function renderAnnualPopulationChart(populationData) {
         years,
         years.map(y => { return yearData[y][DOS_DATA_KEYS.NON_RES_PPLT] }),
         'Latest number: ' + latestData[DOS_DATA_KEYS.NON_RES_PPLT]
+    );
+
+    displaySingleChart(
+        'bar',
+        true,
+        'Median Age Insights', [{
+                name: CHART_LABELS.CITIZEN,
+                data: years.map(y => {
+                    return yearData[y][DOS_DATA_KEYS.MED_AGE_CITIZEN] ? yearData[y][DOS_DATA_KEYS.MED_AGE_CITIZEN] : 0;
+                })
+            },
+            {
+                name: CHART_LABELS.RESIDENT,
+                data: years.map(y => {
+                    return yearData[y][DOS_DATA_KEYS.MED_AGE_RESIDENT] ? yearData[y][DOS_DATA_KEYS.MED_AGE_RESIDENT] : 0;
+                })
+            }
+        ],
+        years,
+        'age-trend'
+    );
+
+    displaySingleChart(
+        'area',
+        true,
+        'Population Growth Insights', [{
+                name: CHART_LABELS.RATE_NATURAL_INCR,
+                data: years.map(y => {
+                    return yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] ? yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] : 0;
+                })
+            },
+            {
+                name: CHART_LABELS.RATE_POPLT_INCR,
+                data: years.map(y => {
+                    return yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] ? yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] : 0;
+                })
+            }
+        ],
+        years,
+        'increase-trend'
     );
 
     // var options = {
