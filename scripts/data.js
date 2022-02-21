@@ -179,7 +179,7 @@ function transformGeoDistributionData(rawData) {
         }
     }
 
-    console.log("Geographical Distribution:\n", dataByArea);
+    //console.log("Geographical Distribution:\n", dataByArea);
     return dataByArea;
 }
 

@@ -10,7 +10,7 @@ function main() {
             displayCensusCharts(censusSeries);
 
             let geoDistriSeries = await initGeoDistribution();
-            await handleMapLayers(map, geoDistriSeries);
+            renderZoneAndData(map, geoDistriSeries);
         });
     }
 

@@ -55,19 +55,29 @@ header .content {
     height: 80vh;
 }
 
-#ura-zones-map .legend {
-    line-height: 1.4rem;
-    background-color: dimgray;
-    color: #FFF6F5;
-    display: inline-flex;
-    align-items: center;
+#ura-zones-map .info {
     float: none;
     clear: none;
     position: absolute;
-    bottom: 25px;
+    bottom: 20px;
 }
 
-#ura-zones-map .legend i {
+#ura-zones-map .info h3 {
+    color: #57423F;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+#ura-zones-map .info .legend {
+    line-height: 1.4rem;
+    background-color: #57423F;
+    color: #FFF6F5;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+}
+
+#ura-zones-map .info .legend i {
     display: inline-flex;
     width: 1.2rem;
     height: 1rem;

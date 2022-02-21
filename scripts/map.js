@@ -32,7 +32,7 @@ function toggleMapView(map, viewLayers, value) {
     }
 }
 
-function handleMapLayers(map, geoDistriSeries) {
+function renderZoneAndData(map, geoDistriSeries) {
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
     planAreaGroup.on('ready', function() {
         map.fitBounds(planAreaGroup.getBounds());
@@ -48,7 +48,7 @@ function handleMapLayers(map, geoDistriSeries) {
                     }
                 }
             }
-            console.log(properties);
+
             properties['population'] = properties['ageGroup']['Total'] || properties['ethnicGroup']['Total'];
             properties['display_name'] = areaName;
 
@@ -67,18 +67,35 @@ function handleMapLayers(map, geoDistriSeries) {
         });
     }).addTo(map);
 
-    let legend = L.control({ position: 'bottomright' });
-    legend.onAdd = function(map) {
-        let divEle = L.DomUtil.create('div', 'info legend');
+    let info = L.control({ position: 'bottomright' });
+    info.onAdd = function(map) {
+        let containerEle = L.DomUtil.create('div', 'info');
+        let headerEle = L.DomUtil.create('h3', '', containerEle);
+        let legendEle = L.DomUtil.create('div', 'legend', containerEle);
 
-        divEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
+        containerEle.setAttribute('id', 'map-info');
+        headerEle.innerHTML = '<h3>Population Density</h3>';
+
+        legendEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
         for (let color of MAP_COLOR_RANGE) {
-            divEle.innerHTML += '<i style="background:' + color + '"></i> ';
+            legendEle.innerHTML += '<i style="background:' + color + '"></i> ';
         }
-        divEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
-        return divEle;
+        legendEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
+
+        // let divEle = L.DomUtil.create('div', 'info legend');
+        // let titleEle = L.DomUtil.create('div', 'title', divEle);
+        // titleEle.innerHTML = '<div><h3>Population Density</h3>';
+
+        // console.log(divEle);
+
+        // divEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
+        // for (let color of MAP_COLOR_RANGE) {
+        //     divEle.innerHTML += '<i style="background:' + color + '"></i> ';
+        // }
+        // divEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
+        return containerEle;
     };
-    legend.addTo(map);
+    info.addTo(map);
 
     // let viewLayers = {
     //     'areas': planAreaGroup,
