@@ -57,6 +57,42 @@ function renderAnnualPopulationChart(populationData) {
 
     displaySingleChart(
         'bar',
+        false,
+        'Gender', [{
+            name: CHART_LABELS.MALE,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_MALE)
+        }, {
+            name: CHART_LABELS.FEMALE,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_FEMALE)
+        }],
+        years,
+        'gender-trend'
+    );
+
+    displaySingleChart(
+        'bar',
+        true,
+        'Ethnicity', [{
+                name: CHART_LABELS.CHINESE,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_CHINESE)
+            }, {
+                name: CHART_LABELS.MALAYS,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_MALAYS)
+            }, {
+                name: CHART_LABELS.INDIANS,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_INDIANS)
+            },
+            {
+                name: CHART_LABELS.OTHERS,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_OTHER_ETHN)
+            }
+        ],
+        years,
+        'race-trend'
+    );
+
+    displaySingleChart(
+        'bar',
         true,
         'Median Age Insights', [{
                 name: CHART_LABELS.CITIZEN,

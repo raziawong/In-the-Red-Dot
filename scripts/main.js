@@ -68,7 +68,7 @@ function main() {
                 }
             },
             theme: {
-                palette: 'palette7'
+                palette: 'palette8'
             },
             title: {
                 style: {
