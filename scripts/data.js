@@ -9,11 +9,6 @@ const DOS_TABLE_API = {
         dwellingType: '17574',
         ageGroup: '17560',
         ethnicGroup: '17561'
-    },
-    CENSUS_IDS: {
-        2020: '17394',
-        2010: '8537',
-        2000: '8850'
     }
 };
 
@@ -138,7 +133,7 @@ function transformGeoDistributionData(rawData) {
 
         for (let ethnicObj of rowObj.columns) {
             let dataKey = ethnicObj['key'];
-            let value = UTIL.convertToNumber(ethnicObj.columns[0].value);
+            let value = UTIL.convertToNumber(ethnicObj.columns[0]['value']);
 
             if (areaName.toLowerCase() !== 'total' && dataKey.toLowerCase() == 'total' && value > dataByArea.highestPopulationCount) {
                 dataByArea.highestPopulationCount = value;
