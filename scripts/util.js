@@ -9,10 +9,14 @@ const UTIL = {
 const CHART_LABELS = {
     CITIZEN: 'Singapore Citizen',
     PR: 'Permanent Resident',
-    NON_RES: 'Non-Resident'
+    NON_RES: 'Non-Resident',
+    RATE_NATURAL_INCR: 'Rate of Natural Increase',
+    RATE_POPLT_INCR: 'Rate of Population Growth'
 }
 const DOS_DATA_KEYS = {
     CITIZEN_PPLT: 'Singapore Citizen Population',
     PR_PPLT: 'Permanent Resident Population',
-    NON_RES_PPLT: 'Non-Resident Population'
+    NON_RES_PPLT: 'Non-Resident Population',
+    RATE_NATURAL_INCR: 'Rate Of Natural Increase',
+    TOTAL_PPLT_GROWTH: 'Total Population Growth'
 }

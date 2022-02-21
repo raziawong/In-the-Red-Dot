@@ -77,6 +77,75 @@ function renderAnnualPopulationChart(populationData) {
     let yearData = populationData.dataByYear;
     let latestData = yearData[years[years.length - 1]];
 
+    let optionsArea = {
+        chart: {
+            height: 421,
+            type: 'area',
+            stacked: true,
+            zoom: {
+                enabled: false
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        colors: ["#3F51B5", '#2196F3'],
+        series: [{
+                name: CHART_LABELS.RATE_NATURAL_INCR,
+                data: years.map(y => {
+                    return yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] ? yearData[y][DOS_DATA_KEYS.RATE_NATURAL_INCR] : 0;
+                })
+            },
+            {
+                name: CHART_LABELS.RATE_POPLT_INCR,
+                data: years.map(y => {
+                    return yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] ? yearData[y][DOS_DATA_KEYS.TOTAL_PPLT_GROWTH] : 0;
+                })
+            }
+        ],
+        fill: {
+            type: 'gradient',
+            gradient: {
+                inverseColors: false,
+                shade: 'light',
+                type: "vertical",
+                opacityFrom: 0.9,
+                opacityTo: 0.6
+            }
+        },
+        title: {
+            text: 'Population Growth Insights',
+            align: 'left'
+        },
+        markers: {
+            size: 0,
+            style: 'hollow',
+            strokeWidth: 8,
+            strokeColor: "#fff",
+            strokeOpacity: 0.25,
+        },
+        labels: years,
+        xaxis: {
+            tooltip: {
+                enabled: false
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'right'
+        }
+    }
+
+    let chart = new ApexCharts(document.getElementById("increase-trend"), optionsArea);
+    chart.render();
+
     displayResidencySparkLines(
         'citizen-trend',
         CHART_LABELS.CITIZEN,
