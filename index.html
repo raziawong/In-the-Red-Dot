@@ -37,8 +37,8 @@
             <div class="tree-nav-container">
                 <div class="tree">
                     <div class="tree-item">
-                        <input type="checkbox" id="web" class="u-none" name="webTree">
-                        <label class="tree-item-header" for="web">
+                        <input type="checkbox" id="structureItem" class="u-none" name="structureItem">
+                        <label class="tree-item-header" for="structureItem">
                             <a href="#structure">Population Structure</a>
                         </label>
                         <!--<div class="tree-item-body">
@@ -50,46 +50,51 @@
                         </div>-->
                     </div>
                     <div class="tree-item">
-                        <label class="tree-item-header" for="web">
-                        <input type="checkbox" id="web" class="u-none" name="webTree">
-                        </label>
+                        <input type="checkbox" id="geographicalItem" class="u-none" name="geographicalItem">
+                        <label class="tree-item-header" for="geographicalItem">
                             <a href="#geographical">Geographical Distribution</a>
+                        </label>
                     </div>
                 </div>
             </div>
         </header>
 
         <main class="ct-content tree-nav-content">
-            <section id="census">
-                <h2>Census Population Structure</h2>
-                <div class="row">
-                    <div class="col-4 chart">
-                        <div id="pie-race"></div>
-                    </div>
-                    <div class="col-4 chart">
-                        <div id="pie-gender"></div>
-                    </div>
-                    <div class="col-4 chart">
-                        <div id="pie-residency"></div>
-                    </div>
-                    <div class="col-12 chart">
-                        <div id="total"></div>
-                    </div>
+            <section id="structure">
+                <h2>Population Structure</h2>
+                <div class="form-group">
+                    <label class="form-group-label">Year</label>
+                    <select class="select" placeholder="From">
+                        <option value="1">Dropdown normal</option>
+                        <option value="2">2</option>
+                    </select>
+                    <select class="select" placeholder="To">
+                        <option value="1">Dropdown normal</option>
+                        <option value="2">2</option>
+                    </select>
                 </div>
-            </section>
-            <section id="annual">
-                <h2>Annual Population Indicators</h2>
                 <div class="row">
                     <div class="col-12 chart">
                         <div id="population-stack"></div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-4 chart">
+                        <div id="citizen-trend"></div>
+                    </div>
+                    <div class="col-4 chart">
+                        <div id="pr-trend"></div>
+                    </div>
+                    <div class="col-4 chart">
+                        <div id="nonres-trend"></div>
+                    </div>
+                </div>
             </section>
-                <section id="geographical">
-                    <h2>Geographical Distribution</h2>
-                    <div id="ura-zones-map"></div>
-                </section>
-            </main>
+            <section id="geographical">
+                <h2>Geographical Distribution</h2>
+                <div id="ura-zones-map"></div>
+            </section>
+        </main>
     </div>
 
     <!-- external  -->

@@ -1,7 +1,10 @@
 const DOS_TABLE_API = {
     BASE_URL: 'https://tablebuilder.singstat.gov.sg/api/table/tabledata/',
     STORE_URL: 'assets/data/temp/',
-    ANNUAL_POP_ID: 'M810001',
+    ANNUAL_POP_IDS: {
+        indicators: 'M810001',
+        categories: 'M810011'
+    },
     GEO_DISTRI_IDS: {
         dwellingType: '17574',
         ageGroup: '17560',
@@ -52,53 +55,27 @@ async function getGeoDistributionData() {
 }
 
 async function getAnnualPopulationData() {
-    let data = [];
-
-    await axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.ANNUAL_POP_ID).then(resp => {
-        data = resp.data.Data.row;
-    }).catch(async error => {
-        console.log('Unable to get data of DOS annual population data via singstag.gov.sg, attempting to use stored copy');
-        await axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.ANNUAL_POP_ID + '.json').then(resp => {
-            data = resp.data.Data.row;
-        }).catch(error => {
-            console.log('Unable to get data of DOS annual population data stored copy');
-        });
-    });
-
-    //console.log("Annual Population Data Response:\n", data);
-    return data;
-}
-
-async function getAllCensusData() {
-    let promiseArr = [];
+    //let promiseArr = [];
     let storedPromiseArr = [];
     let data = {};
 
-    for (let prop in DOS_TABLE_API.CENSUS_IDS) {
-        promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.CENSUS_IDS[prop]));
-        storedPromiseArr.push(axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.CENSUS_IDS[prop] + '.json'))
+    // use stored copies instead due to limitation of returned results in API
+    for (let prop in DOS_TABLE_API.ANNUAL_POP_IDS) {
+        //promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop]));
+        storedPromiseArr.push(axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop] + '.json'))
     }
 
-    await Promise.all(promiseArr).then(resp => {
+    await Promise.all(storedPromiseArr).then(resp => {
         for (let r of resp) {
-            if (Object.values(DOS_TABLE_API.CENSUS_IDS).includes(r.data.Data.id)) {
-                data[UTIL.getKeyByValue(DOS_TABLE_API.CENSUS_IDS, r.data.Data.id)] = r.data.Data.row;
+            if (Object.values(DOS_TABLE_API.ANNUAL_POP_IDS).includes(r.data.Data.id)) {
+                data[UTIL.getKeyByValue(DOS_TABLE_API.ANNUAL_POP_IDS, r.data.Data.id)] = r.data.Data.row;
             }
         }
-    }).catch(async error => {
-        console.log('Unable to get data of DOS census via singstag.gov.sg, attempting to use stored copies');
-        await Promise.all(storedPromiseArr).then(resp => {
-            for (let r of resp) {
-                if (Object.values(DOS_TABLE_API.CENSUS_IDS).includes(r.data.Data.id)) {
-                    data[UTIL.getKeyByValue(DOS_TABLE_API.CENSUS_IDS, r.data.Data.id)] = r.data.Data.row;
-                }
-            }
-        }).catch(error => {
-            console.log('Unable to get data of DOS census stored copies');
-        });
+    }).catch(error => {
+        console.log('Unable to get data of DOS annual population data stored copies');
     });
 
-    //console.log("Census Data Response:\n", data);
+    console.log("Annual Population Data Response:\n", data);
     return data;
 }
 
@@ -110,10 +87,10 @@ function transformGeoDistributionData(rawData) {
         highestPopulationCount: 0
     };
 
-    for (let row of rawData.dwellingType) {
-        let areaName = row.rowText;
+    for (let rowObj of rawData.dwellingType) {
+        let areaName = rowObj['rowText'];
 
-        for (let dwellingObj of row.columns) {
+        for (let dwellingObj of rowObj.columns) {
             let dataKey = dwellingObj['key'];
             let value = dwellingObj.hasOwnProperty('value') ? dwellingObj['value'] : (dwellingObj['columns'].find(hdb => hdb['key'].toLowerCase() === 'total'))['value'];
             value = UTIL.convertToNumber(value);
@@ -132,10 +109,10 @@ function transformGeoDistributionData(rawData) {
     }
 
     let ageGroupByArea = rawData.ageGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
-    for (let row of ageGroupByArea) {
-        let areaName = UTIL.convertToTitleCase(row.rowText.toLowerCase().replace('- total', '').trim());
+    for (let rowObj of ageGroupByArea) {
+        let areaName = UTIL.convertToTitleCase(rowObj['rowText'].toLowerCase().replace('- total', '').trim());
 
-        for (let ageGroupObj of row.columns[0].columns) {
+        for (let ageGroupObj of rowObj.columns[0].columns) {
             let dataKey = ageGroupObj['key'];
             let value = UTIL.convertToNumber(ageGroupObj['value']);
 
@@ -156,10 +133,10 @@ function transformGeoDistributionData(rawData) {
     }
 
     let ethnicGroupByArea = rawData.ethnicGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
-    for (let row of ethnicGroupByArea) {
-        let areaName = UTIL.convertToTitleCase(row.rowText.toLowerCase().replace('- total', '').trim());
+    for (let rowObj of ethnicGroupByArea) {
+        let areaName = UTIL.convertToTitleCase(rowObj['rowText'].toLowerCase().replace('- total', '').trim());
 
-        for (let ethnicObj of row.columns) {
+        for (let ethnicObj of rowObj.columns) {
             let dataKey = ethnicObj['key'];
             let value = UTIL.convertToNumber(ethnicObj.columns[0].value);
 
@@ -185,23 +162,57 @@ function transformGeoDistributionData(rawData) {
 
 function transformAnnualPopulationData(rawData) {
     let dataByYear = {};
-    for (let rowKey in rawData) {
-        let row = rawData[rowKey];
-        let dataKey = row['rowText'];
+    for (let rowObj of rawData['indicators']) {
+        let dataKey = rowObj['rowText'];
 
-        for (let colKey in row.columns) {
-            let col = row.columns[colKey];
-            let year = col['key'];
+        for (let colObj of rowObj.columns) {
+            let year = colObj['key'];
             if (dataByYear.hasOwnProperty(year)) {
                 dataByYear[year] = Object.assign(dataByYear[year], {
-                    [dataKey]: UTIL.convertToNumber(col['value'])
+                    [dataKey]: UTIL.convertToNumber(colObj['value'])
                 });
             } else {
                 dataByYear[year] = {
-                    [dataKey]: UTIL.convertToNumber(col['value'])
+                    [dataKey]: UTIL.convertToNumber(colObj['value'])
                 };
             }
         }
+    }
+
+    let prevSeriesNo = null;
+    let prevDataKey = null;
+    for (let rowObj of rawData['categories']) {
+        let dataKey = rowObj['rowText'];
+        let seriesNo = rowObj['SeriesNo'];
+
+        for (let colObj of rowObj.columns) {
+            let year = colObj['Key'];
+            if (seriesNo.startsWith(prevSeriesNo + '.')) {
+                let breakDownKey = prevDataKey + ' Age Breakdown';
+                if (dataByYear[year].hasOwnProperty(breakDownKey)) {
+                    dataByYear[year][breakDownKey] = Object.assign(dataByYear[year][breakDownKey], {
+                        [dataKey]: UTIL.convertToNumber(colObj['Value'])
+                    });
+                } else {
+                    dataByYear[year][breakDownKey] = {
+                        [dataKey]: UTIL.convertToNumber(colObj['Value'])
+                    };
+                }
+            } else {
+                if (dataByYear.hasOwnProperty(year)) {
+                    dataByYear[year] = Object.assign(dataByYear[year], {
+                        [dataKey]: UTIL.convertToNumber(colObj['Value'])
+                    });
+                } else {
+                    dataByYear[year] = {
+                        [dataKey]: UTIL.convertToNumber(colObj['Value'])
+                    };
+                }
+            }
+        }
+
+        prevDataKey = seriesNo.includes('.') ? prevDataKey : dataKey;
+        prevSeriesNo = seriesNo.includes('.') ? prevSeriesNo : seriesNo;
     }
 
     let populationData = {
@@ -209,53 +220,6 @@ function transformAnnualPopulationData(rawData) {
         dataByYear: dataByYear
     }
 
-    //console.log("Annual Population Indicators:\n", populationData);
+    console.log("Annual Population Indicators:\n", populationData);
     return populationData;
-}
-
-function transformCensusData(rawData) {
-    let totalStructure = {};
-    //let ageGroup = {};
-    // let genderGroup = {};
-    // let raceGroup = {};
-    // let residency = {};
-
-    for (let key in rawData) {
-        let ageTotal = {};
-        let year = Number(key);
-
-        for (let ageData of rawData[key]) {
-            let group = ageData.rowText.toLowerCase();
-
-            if (year >= 2020 && group.includes('89')) {
-                ageTotal['85 & over'] = UTIL.convertToNumber(ageData.columns[0].columns[0].columns[0].value);
-            } else if (year >= 2020 && group.includes('90')) {
-                ageTotal['85 & over'] += UTIL.convertToNumber(ageData.columns[0].columns[0].columns[0].value);
-            } else if (group !== 'total') {
-                ageTotal[ageData.rowText.toLowerCase()] = UTIL.convertToNumber(ageData.columns[0].columns[0].columns[0].value);
-            }
-        }
-
-        totalStructure[key] = ({
-            total: UTIL.convertToNumber(rawData[key][0].columns[0].columns[0].columns[0].value),
-            gender: {
-                male: UTIL.convertToNumber(rawData[key][0].columns[0].columns[0].columns[1].value),
-                female: UTIL.convertToNumber(rawData[key][0].columns[0].columns[0].columns[2].value)
-            },
-            race: {
-                chinese: UTIL.convertToNumber(rawData[key][0].columns[0].columns[1].columns[0].value),
-                malay: UTIL.convertToNumber(rawData[key][0].columns[0].columns[2].columns[0].value),
-                indian: UTIL.convertToNumber(rawData[key][0].columns[0].columns[3].columns[0].value),
-                others: UTIL.convertToNumber(rawData[key][0].columns[0].columns[4].columns[0].value)
-            },
-            residency: {
-                citizen: UTIL.convertToNumber(rawData[key][0].columns[1].columns[0].columns[0].value),
-                permanent: UTIL.convertToNumber(rawData[key][0].columns[2].columns[0].columns[0].value)
-            },
-            age: ageTotal
-        });
-    }
-
-    //console.log("Total Population Structure:\n", totalStructure);
-    return totalStructure;
 }

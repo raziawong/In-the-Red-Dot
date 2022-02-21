@@ -6,8 +6,8 @@ function main() {
         let map = initMap();
 
         window.addEventListener('DOMContentLoaded', async function() {
-            let censusSeries = await initCensus();
-            displayCensusCharts(censusSeries);
+            let populationSeries = await initPopulation();
+            renderAnnualPopulationChart(populationSeries);
 
             let geoDistriSeries = await initGeoDistribution();
             renderZoneAndData(map, geoDistriSeries);
