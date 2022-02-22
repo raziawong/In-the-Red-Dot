@@ -5,7 +5,27 @@ function getYearSeriesChartData(years, data, key) {
     return series;
 }
 
-function displaySingleChart(type, isStack, title, seriesArray, labelArray, elementId) {
+function renderOverviewChart(type, title, seriesArray, otherOptObj, elementId) {
+    let options = {
+        chart: {
+            type: type
+        },
+        title: {
+            text: title
+        },
+        series: seriesArray
+    }
+
+    if (otherOptObj) {
+        for (let opt in otherOptObj) {
+            options[opt] = otherOptObj[opt];
+        }
+    }
+
+    new ApexCharts(document.getElementById(elementId), options).render();
+}
+
+function renderComparisonChart(type, isStack, title, seriesArray, labelArray, elementId) {
     let options = {
         chart: {
             type: type,
@@ -21,12 +41,12 @@ function displaySingleChart(type, isStack, title, seriesArray, labelArray, eleme
     new ApexCharts(document.getElementById(elementId), options).render();
 }
 
-function displayResidencySparkLines(id, name, labels, seriesData, subtitle) {
+function renderGroupedSparkLines(id, name, labels, seriesData) {
     let options = {
         chart: {
             id: id,
             group: 'residency',
-            type: 'area',
+            type: CHART_TYPES.AREA,
             sparkline: {
                 enabled: true
             },
@@ -41,22 +61,15 @@ function displayResidencySparkLines(id, name, labels, seriesData, subtitle) {
         labels: labels,
         title: {
             text: name
-        },
-        subtitle: {
-            text: subtitle
         }
     };
 
     new ApexCharts(document.getElementById(id), options).render();
 }
 
-function renderAnnualPopulationChart(populationData) {
-    let years = populationData.ascYear.slice(-10);
-    let yearData = populationData.dataByYear;
-    let latestData = yearData[years[years.length - 1]];
-
-    displaySingleChart(
-        'bar',
+function doPopulationTrendData(years, yearData) {
+    renderComparisonChart(
+        CHART_TYPES.BAR,
         false,
         'Gender', [{
             name: CHART_LABELS.MALE,
@@ -69,8 +82,8 @@ function renderAnnualPopulationChart(populationData) {
         'gender-trend'
     );
 
-    displaySingleChart(
-        'bar',
+    renderComparisonChart(
+        CHART_TYPES.BAR,
         true,
         'Ethnicity', [{
                 name: CHART_LABELS.CHINESE,
@@ -91,8 +104,8 @@ function renderAnnualPopulationChart(populationData) {
         'race-trend'
     );
 
-    displaySingleChart(
-        'bar',
+    renderComparisonChart(
+        CHART_TYPES.BAR,
         true,
         'Median Age Insights', [{
                 name: CHART_LABELS.CITIZEN,
@@ -107,37 +120,37 @@ function renderAnnualPopulationChart(populationData) {
         'age-trend'
     );
 
-    displaySingleChart(
-        'line',
+    renderComparisonChart(
+        CHART_TYPES.LINE,
         false,
         'Age Dependency Ratio Insights', [{
                 name: CHART_LABELS.AGE_DEP_15_64,
-                type: 'column',
+                type: CHART_TYPES.COLUMN,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_15_64)
             },
             {
                 name: CHART_LABELS.AGE_DEP_20_64,
-                type: 'column',
+                type: CHART_TYPES.COLUMN,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_20_64)
             },
             {
                 name: CHART_LABELS.CHILD_DEP_15_64,
-                type: 'area',
+                type: CHART_TYPES.AREA,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_15_64)
             },
             {
                 name: CHART_LABELS.CHILD_DEP_20_64,
-                type: 'area',
+                type: CHART_TYPES.AREA,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_20_64)
             },
             {
                 name: CHART_LABELS.OLD_DEP_15_64,
-                type: 'line',
+                type: CHART_TYPES.LINE,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_15_64)
             },
             {
                 name: CHART_LABELS.OLD_DEP_20_64,
-                type: 'line',
+                type: CHART_TYPES.LINE,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64)
             }
         ],
@@ -145,32 +158,29 @@ function renderAnnualPopulationChart(populationData) {
         'dependency-trend'
     );
 
-    displayResidencySparkLines(
+    renderGroupedSparkLines(
         'citizen-trend',
         CHART_LABELS.CITIZEN,
         years,
-        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT),
-        'Latest number: ' + latestData[DOS_DATA_KEYS.CITIZEN_PPLT]
+        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT)
     );
 
-    displayResidencySparkLines(
+    renderGroupedSparkLines(
         'pr-trend',
         CHART_LABELS.PR,
         years,
-        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT),
-        'Latest number: ' + latestData[DOS_DATA_KEYS.PR_PPLT]
+        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT)
     );
 
-    displayResidencySparkLines(
+    renderGroupedSparkLines(
         'nonres-trend',
         CHART_LABELS.NON_RES,
         years,
-        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT),
-        'Latest number: ' + latestData[DOS_DATA_KEYS.NON_RES_PPLT]
+        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT)
     );
 
-    displaySingleChart(
-        'area',
+    renderComparisonChart(
+        CHART_TYPES.AREA,
         true,
         'Population Growth Insights', [{
                 name: CHART_LABELS.RATE_NATURAL_INCR,
@@ -184,7 +194,57 @@ function renderAnnualPopulationChart(populationData) {
         years,
         'increase-trend'
     );
+}
 
+function doAllAnnualPopulationCharts(populationData) {
+    let years = populationData.ascYear.slice(-10);
+    let yearData = populationData.dataByYear;
+    let latestData = yearData[years[years.length - 1]];
+
+    // let options = {
+    //     chart: {
+    //         type: type
+    //     },
+    //     title: {
+    //         text: title
+    //     },
+    //     series: [latestData[DOS_DATA_KEYS.CITIZEN_PPLT], latestData[DOS_DATA_KEYS.PR_PPLT], latestData[DOS_DATA_KEYS.NON_RES_PPLT]]
+    // }
+
+    let resPercentageArr = [latestData[DOS_DATA_KEYS.CITIZEN_PPLT], latestData[DOS_DATA_KEYS.PR_PPLT], latestData[DOS_DATA_KEYS.NON_RES_PPLT]].map(e => Math.ceil((e / latestData[DOS_DATA_KEYS.TOTAL_PPLT]) * 100));
+    renderOverviewChart(
+        CHART_TYPES.RADIAL_BAR,
+        'Residency',
+        resPercentageArr, {
+            labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES]
+        },
+        'residency-single'
+    );
+
+    renderOverviewChart(
+        CHART_TYPES.PIE,
+        'Gender', [
+            latestData[DOS_DATA_KEYS.TOTAL_MALE], latestData[DOS_DATA_KEYS.TOTAL_FEMALE]
+        ], {
+            labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
+        },
+        'gender-single'
+    );
+
+    let ethPercentageArr = [
+        latestData[DOS_DATA_KEYS.TOTAL_CHINESE], latestData[DOS_DATA_KEYS.TOTAL_MALAYS], latestData[DOS_DATA_KEYS.TOTAL_INDIANS], latestData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
+    ].map(e => (e / latestData[DOS_DATA_KEYS.TOTAL_PPLT]) * 100);
+    renderOverviewChart(
+        CHART_TYPES.PIE,
+        'Ethnicity', [
+            latestData[DOS_DATA_KEYS.TOTAL_CHINESE], latestData[DOS_DATA_KEYS.TOTAL_MALAYS], latestData[DOS_DATA_KEYS.TOTAL_INDIANS], latestData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
+        ], {
+            labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS],
+        },
+        'race-single'
+    );
+
+    doPopulationTrendData(years, yearData, latestData);
 
 
     // var options = {

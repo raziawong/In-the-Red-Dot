@@ -7,6 +7,15 @@ const UTIL = {
     convertToNumber: (value) => isNaN(value) ? 0 : Number(value),
     getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
 }
+const CHART_TYPES = {
+    AREA: 'area',
+    BAR: 'bar',
+    COLUMN: 'column',
+    DONUT: 'donut',
+    LINE: 'line',
+    PIE: 'pie',
+    RADIAL_BAR: 'radialBar'
+}
 const CHART_LABELS = {
     CITIZEN: 'Singapore Citizen',
     RESIDENT: 'Resident',
@@ -32,6 +41,7 @@ const DOS_DATA_KEYS = {
     CITIZEN_PPLT: 'singapore_citizen_population',
     PR_PPLT: 'permanent_resident_population',
     NON_RES_PPLT: 'non-resident_population',
+    TOTAL_PPLT: 'total_population',
     RATE_NATURAL_INCR: 'rate_of_natural_increase',
     TOTAL_PPLT_GROWTH: 'total_population_growth',
     MED_AGE_CITIZEN: 'median_age_of_citizen_population',

@@ -9,7 +9,7 @@ function main() {
 
         window.addEventListener('DOMContentLoaded', async function() {
             let populationSeries = await initPopulation();
-            renderAnnualPopulationChart(populationSeries);
+            doAllAnnualPopulationCharts(populationSeries);
 
             let geoDistriSeries = await initGeoDistribution();
             renderZoneAndData(map, geoDistriSeries);
@@ -36,6 +36,7 @@ function main() {
                 }
             },
             legend: {
+                show: true,
                 position: 'top',
                 horizontalAlign: 'right'
             },
