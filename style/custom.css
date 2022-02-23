@@ -55,6 +55,10 @@ header .content {
     height: 30vh;
 }
 
+#total-population select {
+    width: 10rem;
+}
+
 #ura-zones-map {
     height: 80vh;
 }

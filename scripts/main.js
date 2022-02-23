@@ -6,10 +6,12 @@ function main() {
         initApexChartOptions();
         let map = initMap();
 
-
         window.addEventListener('DOMContentLoaded', async function() {
             let populationSeries = await initPopulation();
-            doAllAnnualPopulationCharts(populationSeries);
+            let years = populationSeries.ascYear.slice(-10);
+            let yearData = populationSeries.dataByYear;
+            doPopulationOverview(years, yearData);
+            doPopulationTrendData(years, yearData);
 
             let geoDistriSeries = await initGeoDistribution();
             renderZoneAndData(map, geoDistriSeries);
@@ -18,6 +20,19 @@ function main() {
 
     function initApexChartOptions() {
         window.Apex = {
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            },
             chart: {
                 height: '100%',
                 width: '100%',

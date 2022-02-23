@@ -5,15 +5,16 @@ function getYearSeriesChartData(years, data, key) {
     return series;
 }
 
-function renderOverviewChart(type, title, seriesArray, otherOptObj, elementId) {
+function createApexChart(id, type, title, otherOptObj) {
     let options = {
         chart: {
+            id: id,
             type: type
         },
         title: {
             text: title
         },
-        series: seriesArray
+        series: []
     }
 
     if (otherOptObj) {
@@ -22,7 +23,10 @@ function renderOverviewChart(type, title, seriesArray, otherOptObj, elementId) {
         }
     }
 
-    new ApexCharts(document.getElementById(elementId), options).render();
+    let chart = new ApexCharts(document.getElementById(id), options);
+    chart.render();
+
+    return chart;
 }
 
 function renderComparisonChart(type, isStack, title, seriesArray, labelArray, elementId) {
@@ -194,58 +198,6 @@ function doPopulationTrendData(years, yearData) {
         years,
         'increase-trend'
     );
-}
-
-function doAllAnnualPopulationCharts(populationData) {
-    let years = populationData.ascYear.slice(-10);
-    let yearData = populationData.dataByYear;
-    let latestData = yearData[years[years.length - 1]];
-
-    // let options = {
-    //     chart: {
-    //         type: type
-    //     },
-    //     title: {
-    //         text: title
-    //     },
-    //     series: [latestData[DOS_DATA_KEYS.CITIZEN_PPLT], latestData[DOS_DATA_KEYS.PR_PPLT], latestData[DOS_DATA_KEYS.NON_RES_PPLT]]
-    // }
-
-    let resPercentageArr = [latestData[DOS_DATA_KEYS.CITIZEN_PPLT], latestData[DOS_DATA_KEYS.PR_PPLT], latestData[DOS_DATA_KEYS.NON_RES_PPLT]].map(e => Math.ceil((e / latestData[DOS_DATA_KEYS.TOTAL_PPLT]) * 100));
-    renderOverviewChart(
-        CHART_TYPES.RADIAL_BAR,
-        'Residency',
-        resPercentageArr, {
-            labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES]
-        },
-        'residency-single'
-    );
-
-    renderOverviewChart(
-        CHART_TYPES.PIE,
-        'Gender', [
-            latestData[DOS_DATA_KEYS.TOTAL_MALE], latestData[DOS_DATA_KEYS.TOTAL_FEMALE]
-        ], {
-            labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
-        },
-        'gender-single'
-    );
-
-    let ethPercentageArr = [
-        latestData[DOS_DATA_KEYS.TOTAL_CHINESE], latestData[DOS_DATA_KEYS.TOTAL_MALAYS], latestData[DOS_DATA_KEYS.TOTAL_INDIANS], latestData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
-    ].map(e => (e / latestData[DOS_DATA_KEYS.TOTAL_PPLT]) * 100);
-    renderOverviewChart(
-        CHART_TYPES.PIE,
-        'Ethnicity', [
-            latestData[DOS_DATA_KEYS.TOTAL_CHINESE], latestData[DOS_DATA_KEYS.TOTAL_MALAYS], latestData[DOS_DATA_KEYS.TOTAL_INDIANS], latestData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
-        ], {
-            labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS],
-        },
-        'race-single'
-    );
-
-    doPopulationTrendData(years, yearData, latestData);
-
 
     // var options = {
     //     series: [{
@@ -294,4 +246,62 @@ function doAllAnnualPopulationCharts(populationData) {
 
     // var chart = new ApexCharts(document.getElementById("population-stack"), options);
     // chart.render();
+}
+
+function getOverviewCharts() {
+    let overviewCharts = {};
+
+    overviewCharts[CHART_IDS.RESIDENCY_SINGLE] = createApexChart(
+        CHART_IDS.RESIDENCY_SINGLE, CHART_TYPES.RADIAL_BAR,
+        'Residency', { labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES] }
+    );
+
+    overviewCharts[CHART_IDS.GENDER_SINGLE] = createApexChart(
+        CHART_IDS.GENDER_SINGLE, CHART_TYPES.PIE,
+        'Gender', { labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE] }
+    );
+
+    overviewCharts[CHART_IDS.RACE_SINGLE] = createApexChart(
+        CHART_IDS.RACE_SINGLE, CHART_TYPES.PIE,
+        'Ethnicity', { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
+    );
+
+    return overviewCharts;
+}
+
+function updateOverviewCharts(charts, latestData) {
+    let resPercentageArr = [latestData[DOS_DATA_KEYS.CITIZEN_PPLT], latestData[DOS_DATA_KEYS.PR_PPLT], latestData[DOS_DATA_KEYS.NON_RES_PPLT]].map(e => Math.ceil((e / latestData[DOS_DATA_KEYS.TOTAL_PPLT]) * 100));
+
+    console.log(charts);
+
+    charts[CHART_IDS.RESIDENCY_SINGLE].updateSeries(resPercentageArr, true);
+    charts[CHART_IDS.GENDER_SINGLE].updateSeries([latestData[DOS_DATA_KEYS.TOTAL_MALE], latestData[DOS_DATA_KEYS.TOTAL_FEMALE]], true);
+    charts[CHART_IDS.RACE_SINGLE].updateSeries([latestData[DOS_DATA_KEYS.TOTAL_CHINESE], latestData[DOS_DATA_KEYS.TOTAL_MALAYS], latestData[DOS_DATA_KEYS.TOTAL_INDIANS], latestData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]], true);
+}
+
+function doPopulationOverview(years, yearData) {
+    let totalPopulationEle = document.getElementById('total-population');
+    let yearSelectEle = document.getElementById('total-population').getElementsByTagName('select')[0];
+    for (let y of years.sort(UTIL.compareDesc)) {
+        let optEle = document.createElement('option');
+        optEle.value = y;
+        optEle.innerText = y;
+        yearSelectEle.appendChild(optEle);
+    }
+
+    let populationPlaceholder = totalPopulationEle.getElementsByTagName('span')[0];
+    let latestYearOptEle = yearSelectEle.getElementsByTagName('option')[0];
+    let chartObj = getOverviewCharts();
+
+    latestYearOptEle.selected = true;
+    updateOverviewCharts(chartObj, yearData[latestYearOptEle.value]);
+    populationPlaceholder.innerText = yearData[latestYearOptEle.value][DOS_DATA_KEYS.TOTAL_PPLT];
+
+    yearSelectEle.addEventListener('change', event => {
+        let selectedYear = event.target.value || 0;
+        if (selectedYear) {
+            updateOverviewCharts(chartObj, yearData[selectedYear]);
+            populationPlaceholder.innerText = yearData[selectedYear][DOS_DATA_KEYS.TOTAL_PPLT];
+        }
+    });
 }

@@ -37,6 +37,11 @@ const CHART_LABELS = {
     INDIANS: 'Indian',
     OTHERS: 'Other'
 }
+const CHART_IDS = {
+    RESIDENCY_SINGLE: 'residency-single',
+    GENDER_SINGLE: 'gender-single',
+    RACE_SINGLE: 'race-single'
+}
 const DOS_DATA_KEYS = {
     CITIZEN_PPLT: 'singapore_citizen_population',
     PR_PPLT: 'permanent_resident_population',
