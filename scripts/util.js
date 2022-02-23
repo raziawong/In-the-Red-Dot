@@ -1,12 +1,14 @@
 const UTIL = {
     compareDesc: (a, b) => b - a,
     compareAsc: (a, b) => a - b,
-    compareAlphabetically: (a, b) => a.localeCompare(b, undefined, { numeric: true }),
-    convertDOSKeys: str => str.trim().toLowerCase().replaceAll(' ', '_'),
+    compareAlphaNumDesc: (a, b) => b.localeCompare(a, undefined, { numeric: true }),
+    compareAlphaNumAsc: (a, b) => a.localeCompare(b, undefined, { numeric: true }),
+    convertDOSKeys: str => str.trim().toLowerCase().replaceAll(/\s+/g, ' ').replaceAll(' ', '_'),
     convertToTitleCase: str => str.trim().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
     convertToNumber: (value) => isNaN(value) ? 0 : Number(value),
     getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
 }
+const MAP_ZOOM_INITIAL = 12.4;
 const CHART_TYPES = {
     AREA: 'area',
     BAR: 'bar',
@@ -37,10 +39,14 @@ const CHART_LABELS = {
     INDIANS: 'Indian',
     OTHERS: 'Other'
 }
-const CHART_IDS = {
-    RESIDENCY_SINGLE: 'residency-single',
-    GENDER_SINGLE: 'gender-single',
-    RACE_SINGLE: 'race-single'
+const ELEMENT_IDS = {
+    POPULATION: 'population',
+    RESIDENCY: 'residency',
+    GENDER: 'gender',
+    RACE: 'race',
+    AGE_GROUP: 'age-group',
+    MED_AGE_CITIZEN: 'mage-citizen',
+    MED_AGE_RESIDENT: 'mage-resident'
 }
 const DOS_DATA_KEYS = {
     CITIZEN_PPLT: 'singapore_citizen_population',
@@ -58,7 +64,9 @@ const DOS_DATA_KEYS = {
     OLD_DEP_15_64: 'old-age_dependency_ratio:_residents_aged_65_years_&_over_per_hundred_residents_aged_15-64_years',
     OLD_DEP_20_64: 'old-age_dependency_ratio:_residents_aged_65_years_&_over_per_hundred_residents_aged_20-64_years',
     TOTAL_MALE: 'total_male_residents',
+    TOTAL_MALE_AGE: 'total_male_residents_age_breakdown',
     TOTAL_FEMALE: 'total_female_residents',
+    TOTAL_FEMALE_AGE: 'total_female_residents_age_breakdown',
     SEX_RATIO: 'sex_ratio',
     TOTAL_CHINESE: 'total_chinese',
     TOTAL_MALAYS: 'total_malays',

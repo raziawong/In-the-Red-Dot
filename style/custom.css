@@ -48,14 +48,14 @@ header .content {
 }
 
 .ct-body .chart {
-    height: 50vh;
+    height: 400px;
 }
 
 .ct-body .chart.short {
-    height: 30vh;
+    height: 280px;
 }
 
-#total-population select {
+#population select {
     width: 10rem;
 }
 

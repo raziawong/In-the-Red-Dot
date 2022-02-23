@@ -1,5 +1,3 @@
-const MAP_ZOOM_INITIAL = 12.4;
-
 function main() {
 
     function init() {
@@ -40,20 +38,10 @@ function main() {
                     enabled: true
                 }
             },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    inverseColors: false,
-                    shade: 'dark',
-                    type: "vertical",
-                    opacityFrom: 1,
-                    opacityTo: 0.7
-                }
-            },
             legend: {
                 show: true,
-                position: 'top',
-                horizontalAlign: 'right'
+                position: 'bottom',
+                horizontalAlign: 'center'
             },
             markers: {
                 size: 0,
@@ -61,19 +49,6 @@ function main() {
                 strokeWidth: 8,
                 strokeColor: "#fff",
                 strokeOpacity: 0.25,
-            },
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    columnWidth: '75%'
-                },
-                line: {
-                    dataLabels: {
-                        enabled: false
-                    }
-                }
             },
             stroke: {
                 curve: 'smooth'
@@ -87,19 +62,13 @@ function main() {
                 palette: 'palette8'
             },
             title: {
+                offsetY: 12,
                 style: {
-                    fontFamily: 'Montserrat,sans-serif'
+                    fontFamily: 'Montserrat,sans-serif',
+                    fontSize: '1.3rem'
                 }
             },
             xaxis: {
-                axisBorder: {
-                    show: false
-                },
-                labels: {
-                    show: false
-                }
-            },
-            yaxis: {
                 axisBorder: {
                     show: false
                 },
