@@ -63,6 +63,15 @@ header .content {
     height: 80vh;
 }
 
+#ura-zones-map .map-country-tooltip {
+    background-color: transparent;
+    border: 0px;
+    color: #57423F;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: none;
+}
+
 #ura-zones-map .info {
     float: none;
     clear: none;

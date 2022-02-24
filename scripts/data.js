@@ -1,21 +1,3 @@
-const DOS_TABLE_API = {
-    BASE_URL: 'https://tablebuilder.singstat.gov.sg/api/table/tabledata/',
-    STORE_URL: 'assets/data/temp/',
-    ANNUAL_POP_IDS: {
-        indicators: 'M810001',
-        categories: 'M810011'
-    },
-    GEO_DISTRI_IDS: {
-        dwellingType: '17574',
-        ageGroup: '17560',
-        ethnicGroup: '17561'
-    }
-};
-
-const DATA_GOV_API = {
-    STORE_URL: 'assets/data/map'
-}
-
 async function getGeoDistributionData() {
     let promiseArr = [];
     let storedPromiseArr = [];
@@ -45,32 +27,7 @@ async function getGeoDistributionData() {
         });
     });
 
-    //console.log("Geographical Distribution Response:\n", data);
-    return data;
-}
-
-async function getAnnualPopulationData() {
-    //let promiseArr = [];
-    let storedPromiseArr = [];
-    let data = {};
-
-    // use stored copies instead due to limitation of returned results in API
-    for (let prop in DOS_TABLE_API.ANNUAL_POP_IDS) {
-        //promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop]));
-        storedPromiseArr.push(axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop] + '.json'))
-    }
-
-    await Promise.all(storedPromiseArr).then(resp => {
-        for (let r of resp) {
-            if (Object.values(DOS_TABLE_API.ANNUAL_POP_IDS).includes(r.data.Data.id)) {
-                data[UTIL.getKeyByValue(DOS_TABLE_API.ANNUAL_POP_IDS, r.data.Data.id)] = r.data.Data.row;
-            }
-        }
-    }).catch(error => {
-        console.log('Unable to get data of DOS annual population data stored copies');
-    });
-
-    console.log("Annual Population Data Response:\n", data);
+    console.log("Geographical Distribution Response:\n", data);
     return data;
 }
 
@@ -151,8 +108,33 @@ function transformGeoDistributionData(rawData) {
         }
     }
 
-    //console.log("Geographical Distribution:\n", dataByArea);
+    console.log("Geographical Distribution:\n", dataByArea);
     return dataByArea;
+}
+
+async function getAnnualPopulationData() {
+    //let promiseArr = [];
+    let storedPromiseArr = [];
+    let data = {};
+
+    // use stored copies instead due to limitation of returned results in API
+    for (let prop in DOS_TABLE_API.ANNUAL_POP_IDS) {
+        //promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop]));
+        storedPromiseArr.push(axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop] + '.json'))
+    }
+
+    await Promise.all(storedPromiseArr).then(resp => {
+        for (let r of resp) {
+            if (Object.values(DOS_TABLE_API.ANNUAL_POP_IDS).includes(r.data.Data.id)) {
+                data[UTIL.getKeyByValue(DOS_TABLE_API.ANNUAL_POP_IDS, r.data.Data.id)] = r.data.Data.row;
+            }
+        }
+    }).catch(error => {
+        console.log('Unable to get data of DOS annual population data stored copies');
+    });
+
+    // console.log("Annual Population Data Response:\n", data);
+    return data;
 }
 
 function transformAnnualPopulationData(rawData) {
@@ -217,6 +199,6 @@ function transformAnnualPopulationData(rawData) {
         dataByYear: dataByYear
     }
 
-    console.log("Annual Population Indicators:\n", populationData);
+    // console.log("Annual Population Indicators:\n", populationData);
     return populationData;
 }

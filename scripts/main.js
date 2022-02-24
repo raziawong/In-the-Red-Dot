@@ -85,9 +85,9 @@ function main() {
         let map = L.map('ura-zones-map', {
             dragging: false,
             zoomControl: false,
-            maxZoom: MAP_ZOOM_INITIAL + 4,
-            minZoom: MAP_ZOOM_INITIAL - 1
-        }).setView(singapore, MAP_ZOOM_INITIAL);
+            maxZoom: MAP.ZOOM_INITIAL + 4,
+            minZoom: MAP.ZOOM_INITIAL - 1
+        }).setView(singapore, MAP.ZOOM_INITIAL);
 
         //map.fitBounds(bounds);
 

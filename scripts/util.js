@@ -7,47 +7,40 @@ const UTIL = {
     convertToTitleCase: str => str.trim().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
     convertToNumber: (value) => isNaN(value) ? 0 : Number(value),
     getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
-}
-const MAP_ZOOM_INITIAL = 12.4;
-const CHART_TYPES = {
-    AREA: 'area',
-    BAR: 'bar',
-    COLUMN: 'column',
-    DONUT: 'donut',
-    LINE: 'line',
-    PIE: 'pie',
-    RADIAL_BAR: 'radialBar'
-}
-const CHART_LABELS = {
-    CITIZEN: 'Singapore Citizen',
-    RESIDENT: 'Resident',
-    PR: 'Permanent Resident',
-    NON_RES: 'Non-Resident',
-    RATE_NATURAL_INCR: 'Rate of Natural Increase',
-    RATE_POPLT_INCR: 'Rate of Population Growth',
-    AGE_DEP_15_64: 'Age Dependency: < 15 and 60 years old per 100 aged 15-64 years',
-    AGE_DEP_20_64: 'Age Dependency: < 15 and 60 years old per 100 aged 20-64 years',
-    CHILD_DEP_15_64: 'Child Dependency: < 15 years old per 100 aged 15-64 years',
-    CHILD_DEP_20_64: 'Child Dependency: < 20 years old per 100 aged 20-64 years',
-    OLD_DEP_15_64: 'Old Age Dependency: > 65 years old per 100 aged 15-64 years',
-    OLD_DEP_20_64: 'Old Age Dependency: > 65 years old per 100 aged 20-64 years',
-    MALE: 'Male',
-    FEMALE: 'Female',
-    GENDER_RATIO: 'Gender Ratio',
-    CHINESE: 'Chinese',
-    MALAYS: 'Malay',
-    INDIANS: 'Indian',
-    OTHERS: 'Other'
-}
-const ELEMENT_IDS = {
+};
+const MAP = {
+    ZOOM_INITIAL: 12.4,
+    COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
+};
+const MAP_PROP = {
     POPULATION: 'population',
-    RESIDENCY: 'residency',
-    GENDER: 'gender',
-    RACE: 'race',
-    AGE_GROUP: 'age-group',
-    MED_AGE_CITIZEN: 'mage-citizen',
-    MED_AGE_RESIDENT: 'mage-resident'
-}
+    AGE_GROUP: 'ageGroup',
+    ETHNIC_GROUP: 'ethnicGroup',
+    DISPLAY_NAME: 'display_name',
+    TOTAL: 'Total'
+};
+const DATA_GOV_API = {
+    STORE_URL: 'assets/data/map'
+};
+const DOS_TABLE_API = {
+    BASE_URL: 'https://tablebuilder.singstat.gov.sg/api/table/tabledata/',
+    STORE_URL: 'assets/data/temp/',
+    ANNUAL_POP_IDS: {
+        indicators: 'M810001',
+        categories: 'M810011'
+    },
+    GEO_DISTRI_IDS: {
+        ageGroup: '17560',
+        ethnicGroup: '17561',
+        qualitfication: '17568',
+        grossIncome: '17571',
+        travelTime: '17572',
+        dwellingType: '17574',
+        literacy: '17591',
+        occupation: '17593',
+        transportMode: '17594'
+    }
+};
 const DOS_DATA_KEYS = {
     CITIZEN_PPLT: 'singapore_citizen_population',
     PR_PPLT: 'permanent_resident_population',
@@ -72,4 +65,43 @@ const DOS_DATA_KEYS = {
     TOTAL_MALAYS: 'total_malays',
     TOTAL_INDIANS: 'total_indians',
     TOTAL_OTHER_ETHN: 'other_ethnic_groups_(total)'
-}
+};
+const CHART_TYPES = {
+    AREA: 'area',
+    BAR: 'bar',
+    COLUMN: 'column',
+    DONUT: 'donut',
+    LINE: 'line',
+    PIE: 'pie',
+    RADIAL_BAR: 'radialBar'
+};
+const CHART_LABELS = {
+    CITIZEN: 'Singapore Citizen',
+    RESIDENT: 'Resident',
+    PR: 'Permanent Resident',
+    NON_RES: 'Non-Resident',
+    RATE_NATURAL_INCR: 'Rate of Natural Increase',
+    RATE_POPLT_INCR: 'Rate of Population Growth',
+    AGE_DEP_15_64: 'Age Dependency: < 15 and 60 years old per 100 aged 15-64 years',
+    AGE_DEP_20_64: 'Age Dependency: < 15 and 60 years old per 100 aged 20-64 years',
+    CHILD_DEP_15_64: 'Child Dependency: < 15 years old per 100 aged 15-64 years',
+    CHILD_DEP_20_64: 'Child Dependency: < 20 years old per 100 aged 20-64 years',
+    OLD_DEP_15_64: 'Old Age Dependency: > 65 years old per 100 aged 15-64 years',
+    OLD_DEP_20_64: 'Old Age Dependency: > 65 years old per 100 aged 20-64 years',
+    MALE: 'Male',
+    FEMALE: 'Female',
+    GENDER_RATIO: 'Gender Ratio',
+    CHINESE: 'Chinese',
+    MALAYS: 'Malay',
+    INDIANS: 'Indian',
+    OTHERS: 'Other'
+};
+const ELEMENT_IDS = {
+    POPULATION: 'population',
+    RESIDENCY: 'residency',
+    GENDER: 'gender',
+    RACE: 'race',
+    AGE_GROUP: 'age-group',
+    MED_AGE_CITIZEN: 'mage-citizen',
+    MED_AGE_RESIDENT: 'mage-resident'
+};
