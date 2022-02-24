@@ -11,8 +11,7 @@ function main() {
             doPopulationOverview(years, yearData);
             doPopulationTrendData(years, yearData);
 
-            let geoDistriSeries = await initGeoDistribution();
-            renderZoneAndData(map, geoDistriSeries);
+            renderZoneAndData(map, await initGeoDistribution());
         });
     }
 

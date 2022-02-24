@@ -11,24 +11,24 @@ function getHeatMapColor(highestNum, num) {
         MAP.COLOR_RANGE[8];
 }
 
-function toggleMapView(map, viewLayers, value) {
-    let planAreaGroup = viewLayers.areas;
-    let subzoneGroup = viewLayers.subzones;
+// function toggleMapView(map, viewLayers, value) {
+//     let planAreaGroup = viewLayers.areas;
+//     let subzoneGroup = viewLayers.subzones;
 
-    if (map.hasLayer(planAreaGroup)) {
-        map.removeLayer(planAreaGroup);
-    }
+//     if (map.hasLayer(planAreaGroup)) {
+//         map.removeLayer(planAreaGroup);
+//     }
 
-    if (map.hasLayer(subzoneGroup)) {
-        map.removeLayer(planAreaGroup);
-    }
+//     if (map.hasLayer(subzoneGroup)) {
+//         map.removeLayer(planAreaGroup);
+//     }
 
-    if (value === 'area') {
-        map.addLayer(planAreaGroup);
-    } else if (value === 'subzone') {
-        map.addLayer(subzoneGroup);
-    }
-}
+//     if (value === 'area') {
+//         map.addLayer(planAreaGroup);
+//     } else if (value === 'subzone') {
+//         map.addLayer(subzoneGroup);
+//     }
+// }
 
 function hoverLayer(event) {
     let layer = event.target;
@@ -67,9 +67,9 @@ function renderZoneAndData(map, geoDistriSeries) {
     planAreaGroup.on('ready', function() {
         map.fitBounds(planAreaGroup.getBounds());
 
-        planAreaGroup.eachLayer(function(layer) {
+        this.eachLayer(function(layer) {
             let properties = layer.feature.properties;
-            let areaName = UTIL.convertToTitleCase(layer.feature.properties.PLN_AREA_N);
+            let areaName = layer.feature.properties.PLN_AREA_N;
 
             for (let [type, data] of Object.entries(geoDistriSeries)) {
                 for (let area in data) {
@@ -102,10 +102,6 @@ function renderZoneAndData(map, geoDistriSeries) {
                 mouseout: resetLayer,
                 click: (e => clickLayer(e, map))
             });
-
-            // TODO:
-            // 1. Click interaction to show area name and respective data
-            // 2. Heat Map Color Region
         });
     }).addTo(map);
 
@@ -123,18 +119,6 @@ function renderZoneAndData(map, geoDistriSeries) {
             legendEle.innerHTML += '<i style="background:' + color + '"></i> ';
         }
         legendEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
-
-        // let divEle = L.DomUtil.create('div', 'info legend');
-        // let titleEle = L.DomUtil.create('div', 'title', divEle);
-        // titleEle.innerHTML = '<div><h3>Population Density</h3>';
-
-        // console.log(divEle);
-
-        // divEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
-        // for (let color of MAP.COLOR_RANGE) {
-        //     divEle.innerHTML += '<i style="background:' + color + '"></i> ';
-        // }
-        // divEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
         return containerEle;
     };
     info.addTo(map);
