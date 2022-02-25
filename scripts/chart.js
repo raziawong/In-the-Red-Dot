@@ -403,7 +403,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
 
     let dwellOpt = {
         series: [{
-            data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => !d.x.includes('Total'))
+            data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes('Total') && d.y))
         }],
         dataLabels: {
             formatter: function(text, op) {

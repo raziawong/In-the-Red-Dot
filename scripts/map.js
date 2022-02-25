@@ -52,6 +52,7 @@ function resetLayer(event) {
 
 function clickLayer(event, map, geoCharts) {
     let layer = event.target;
+    let properties = layer.feature.properties;
     layer.setStyle({
         weight: 5,
         color: '#E73340',
@@ -61,9 +62,10 @@ function clickLayer(event, map, geoCharts) {
     layer.bringToFront();
     map.fitBounds(layer.getBounds());
 
-    updateGeoDistrCharts(geoCharts, layer.feature.properties);
+    let container = document.getElementById('gd-content');
+    container.querySelector('h4 span').innerText = properties[MAP_LAYER_PROPS.POPULATION];
 
-    document.getElementById('gd-content').style.display = 'inherit';
+    updateGeoDistrCharts(geoCharts, properties);
 }
 
 function renderZoneAndData(map, geoDistrData) {
