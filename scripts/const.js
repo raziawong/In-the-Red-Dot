@@ -21,7 +21,7 @@ const DOS_TABLE_API = {
     GEO_DISTRI_IDS: {
         ageGroup: '17560',
         ethnicGroup: '17561',
-        qualitfication: '17568',
+        qualification: '17568',
         grossIncome: '17571',
         travelTime: '17572',
         dwellingType: '17574',
@@ -67,6 +67,7 @@ const CHART_TYPES = {
     TREE_MAP: 'treemap'
 };
 const CHART_LABELS = {
+    POPULATION: 'Population',
     CITIZEN: 'Singapore Citizen',
     RESIDENT: 'Resident',
     PR: 'Permanent Resident',
