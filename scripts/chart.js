@@ -267,14 +267,12 @@ function getOverviewCharts() {
         'Ethnicity', false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
     );
 
-
     overviewCharts[ELEMENT_IDS.AGE_GROUP] = createApexChart(
         ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
         'Age Group', true, {
             plotOptions: {
                 bar: {
-                    horizontal: true,
-                    barHeight: '80%',
+                    horizontal: true
                 },
             }
         }
@@ -290,9 +288,9 @@ function updateOverviewCharts(charts, populationData) {
     let ageGroup = Object.keys(populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
     let ageGroupOpt = {
         dataLabels: {
-            formatter: function(val, opts) {
-                return (Math.round((Math.abs(val) / totalCount) * 100)) + '%';
-            },
+            formatter: (val, opts) => {
+                return Math.round((Math.abs(val) / totalCount) * 100) + '%';
+            }
         },
         series: [{
                 name: CHART_LABELS.MALE,
@@ -305,29 +303,17 @@ function updateOverviewCharts(charts, populationData) {
         ],
         tooltip: {
             shared: false,
-            x: {
-                formatter: function(val) {
-                    return val
-                }
-            },
-            y: {
-                formatter: function(val) {
-                    return Math.abs(val)
-                }
-            }
+            x: { formatter: v => v },
+            y: { formatter: v => Math.abs(v) }
         },
         xaxis: {
             categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
         },
         yaxis: {
-            axisBorder: {
-                show: true
-            },
-            labels: {
-                show: true
-            }
+            axisBorder: { show: true },
+            labels: { show: true }
         }
-    }
+    };
 
     charts[ELEMENT_IDS.RESIDENCY].updateSeries([populationData[DOS_DATA_KEYS.CITIZEN_PPLT], populationData[DOS_DATA_KEYS.PR_PPLT], populationData[DOS_DATA_KEYS.NON_RES_PPLT]]);
     charts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
@@ -361,4 +347,39 @@ function doPopulationOverview(years, dataByYear) {
             updateOverviewElements(dataByYear[selectedYear]);
         }
     });
+}
+
+function getGeoDistrCharts() {
+    let geoCharts = {};
+
+    geoCharts[ELEMENT_IDS.GEO_AGE_GROUP] = createApexChart(
+        ELEMENT_IDS.GEO_AGE_GROUP, CHART_TYPES.BAR,
+        'Age Group', false, {
+            plotOptions: {
+                bar: {
+                    horizontal: true
+                },
+            }
+        }
+    );
+
+    return geoCharts;
+}
+
+function updateGeoDistrCharts(charts, mLayerProp) {
+    let ageGroupData = mLayerProp.ageGroup;
+    let ageGroupLabels = Object.keys(ageGroupData).filter(k => !k.includes(MAP_PROP.TOTAL));
+    console.log(ageGroupData);
+    console.log(ageGroupLabels.map(k => ageGroupData.hasOwnProperty(k) ? ageGroupData[k] : 0));
+
+    let ageGroupOpt = {
+        series: [{
+            data: ageGroupLabels.map(k => ageGroupData.hasOwnProperty(k) ? ageGroupData[k] : 0)
+        }],
+        xaxis: {
+            categories: ageGroupLabels
+        }
+    };
+
+    charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
 }

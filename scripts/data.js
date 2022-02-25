@@ -35,6 +35,7 @@ function transformGeoDistributionData(rawData) {
     let dataByArea = {
         dwellingType: {},
         ageGroup: {},
+        ageGroupGender: {},
         ethnicGroup: {},
         highestPopulationCount: 0
     };
@@ -64,24 +65,56 @@ function transformGeoDistributionData(rawData) {
     for (let rowObj of ageGroupByArea) {
         let areaName = UTIL.convertToTitleCase(rowObj['rowText'].toLowerCase().replace('- total', '').trim());
 
-        for (let ageGroupObj of rowObj.columns[0].columns) {
-            let dataKey = ageGroupObj['key'];
-            let value = UTIL.convertToNumber(ageGroupObj['value']);
+        for (let ageCol of rowObj.columns) {
+            let genderKey = ageCol['key'];
 
-            if (areaName.toLowerCase() !== 'total' && dataKey.toLowerCase() == 'total' && value > dataByArea.highestPopulationCount) {
-                dataByArea.highestPopulationCount = value;
-            }
+            for (let ageGroupObj of ageCol.columns) {
+                let dataKey = ageGroupObj['key'];
+                let value = UTIL.convertToNumber(ageGroupObj['value']);
 
-            if (dataByArea.ageGroup.hasOwnProperty(areaName)) {
-                Object.assign(dataByArea.ageGroup[areaName], {
-                    [dataKey]: value
-                });
-            } else {
-                dataByArea.ageGroup[areaName] = {
-                    [dataKey]: value
-                };
+                if (areaName.toLowerCase() !== 'total' && dataKey.toLowerCase() == 'total' && value > dataByArea.highestPopulationCount) {
+                    dataByArea.highestPopulationCount = value;
+                }
+
+                if (genderKey.toLowerCase() == 'total') {
+                    if (dataByArea.ageGroup.hasOwnProperty(areaName)) {
+                        Object.assign(dataByArea.ageGroup[areaName], {
+                            [dataKey]: value
+                        });
+                    } else {
+                        dataByArea.ageGroup[areaName] = {
+                            [dataKey]: value
+                        };
+                    }
+                } else {
+                    // if (dataByArea.ageGroupGender.hasOwnProperty(areaName)) {
+                    //     Object.assign(dataByArea.ageGroupGender[areaName][genderKey], {
+                    //         [dataKey]: value
+                    //     });
+                    // } else {
+                    //     dataByArea.ageGroupGender[areaName][genderKey] = {
+                    //         [dataKey]: value
+                    //     };
+                    // }
+                }
             }
         }
+
+        // let genderKey = rowObj.columns[1]['key'];
+        // for (let ageGroupObj of rowObj.columns[1].columns) {
+        //     let dataKey = ageGroupObj['key'];
+        //     let value = UTIL.convertToNumber(ageGroupObj['value']);
+
+        //     if (dataByArea.ageGroup.hasOwnProperty(areaName)) {
+        //         Object.assign(dataByArea.ageGroup[genderKey][areaName], {
+        //             [dataKey]: value
+        //         });
+        //     } else {
+        //         dataByArea.ageGroupp[genderKey][areaName] = {
+        //             [dataKey]: value
+        //         };
+        //     }
+        // }
     }
 
     let ethnicGroupByArea = rawData.ethnicGroup.filter(d => d['rowText'].toLowerCase().includes('total'));

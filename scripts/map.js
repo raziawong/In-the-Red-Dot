@@ -50,7 +50,7 @@ function resetLayer(event) {
     });
 }
 
-function clickLayer(event, map) {
+function clickLayer(event, map, geoCharts) {
     let layer = event.target;
     layer.setStyle({
         weight: 5,
@@ -60,10 +60,16 @@ function clickLayer(event, map) {
     layer.openTooltip();
     layer.bringToFront();
     map.fitBounds(layer.getBounds());
+
+    updateGeoDistrCharts(geoCharts, layer.feature.properties);
+
+    document.getElementById('gd-content').style.display = 'inherit';
 }
 
-function renderZoneAndData(map, geoDistriSeries) {
+function renderZoneAndData(map, geoDistrData) {
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
+    let geoCharts = getGeoDistrCharts();
+
     planAreaGroup.on('ready', function() {
         map.fitBounds(planAreaGroup.getBounds());
 
@@ -71,7 +77,7 @@ function renderZoneAndData(map, geoDistriSeries) {
             let properties = layer.feature.properties;
             let areaName = layer.feature.properties.PLN_AREA_N;
 
-            for (let [type, data] of Object.entries(geoDistriSeries)) {
+            for (let [type, data] of Object.entries(geoDistrData)) {
                 for (let area in data) {
                     if (area.toLowerCase() == areaName.toLowerCase()) {
                         properties[type] = data[area];
@@ -83,7 +89,7 @@ function renderZoneAndData(map, geoDistriSeries) {
             properties[MAP_PROP.DISPLAY_NAME] = areaName;
 
             layer.setStyle({
-                fillColor: getHeatMapColor(geoDistriSeries.highestPopulationCount, properties['population']),
+                fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties['population']),
                 weight: 2,
                 opacity: 1,
                 color: 'grey',
@@ -100,7 +106,7 @@ function renderZoneAndData(map, geoDistriSeries) {
             layer.on({
                 mouseover: hoverLayer,
                 mouseout: resetLayer,
-                click: (e => clickLayer(e, map))
+                click: (e => clickLayer(e, map, geoCharts))
             });
         });
     }).addTo(map);

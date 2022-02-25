@@ -8,17 +8,6 @@ const UTIL = {
     convertToNumber: (value) => isNaN(value) ? 0 : Number(value),
     getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
 };
-const MAP = {
-    ZOOM_INITIAL: 12.4,
-    COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
-};
-const MAP_PROP = {
-    POPULATION: 'population',
-    AGE_GROUP: 'ageGroup',
-    ETHNIC_GROUP: 'ethnicGroup',
-    DISPLAY_NAME: 'display_name',
-    TOTAL: 'Total'
-};
 const DATA_GOV_API = {
     STORE_URL: 'assets/data/map'
 };
@@ -96,6 +85,17 @@ const CHART_LABELS = {
     INDIANS: 'Indian',
     OTHERS: 'Other'
 };
+const MAP = {
+    ZOOM_INITIAL: 12.4,
+    COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
+};
+const MAP_PROP = {
+    POPULATION: 'population',
+    AGE_GROUP: 'ageGroup',
+    ETHNIC_GROUP: 'ethnicGroup',
+    DISPLAY_NAME: 'display_name',
+    TOTAL: 'Total'
+};
 const ELEMENT_IDS = {
     POPULATION: 'population',
     RESIDENCY: 'residency',
@@ -103,5 +103,8 @@ const ELEMENT_IDS = {
     RACE: 'race',
     AGE_GROUP: 'age-group',
     MED_AGE_CITIZEN: 'mage-citizen',
-    MED_AGE_RESIDENT: 'mage-resident'
+    MED_AGE_RESIDENT: 'mage-resident',
+    GEO_AGE_GROUP: 'geo-age-group',
+    GEO_RACE: 'geo-race',
+    GEO_DWELLING: 'geo-dwelling'
 };
