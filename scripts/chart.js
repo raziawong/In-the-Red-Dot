@@ -315,9 +315,18 @@ function updateOverviewCharts(charts, populationData) {
         }
     };
 
-    charts[ELEMENT_IDS.RESIDENCY].updateSeries([populationData[DOS_DATA_KEYS.CITIZEN_PPLT], populationData[DOS_DATA_KEYS.PR_PPLT], populationData[DOS_DATA_KEYS.NON_RES_PPLT]]);
+    charts[ELEMENT_IDS.RESIDENCY].updateSeries([
+        populationData[DOS_DATA_KEYS.CITIZEN_PPLT],
+        populationData[DOS_DATA_KEYS.PR_PPLT],
+        populationData[DOS_DATA_KEYS.NON_RES_PPLT]
+    ]);
     charts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
-    charts[ELEMENT_IDS.RACE].updateSeries([populationData[DOS_DATA_KEYS.TOTAL_CHINESE], populationData[DOS_DATA_KEYS.TOTAL_MALAYS], populationData[DOS_DATA_KEYS.TOTAL_INDIANS], populationData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]]);
+    charts[ELEMENT_IDS.RACE].updateSeries([
+        populationData[DOS_DATA_KEYS.TOTAL_CHINESE],
+        populationData[DOS_DATA_KEYS.TOTAL_MALAYS],
+        populationData[DOS_DATA_KEYS.TOTAL_INDIANS],
+        populationData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
+    ]);
     charts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
 }
 
@@ -363,17 +372,28 @@ function getGeoDistrCharts() {
         }
     );
 
+    geoCharts[ELEMENT_IDS.GEO_RACE] = createApexChart(
+        ELEMENT_IDS.GEO_RACE, CHART_TYPES.PIE,
+        'Ethnicity', false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
+    );
+
+    geoCharts[ELEMENT_IDS.GEO_DWELLING] = createApexChart(
+        ELEMENT_IDS.GEO_DWELLING, CHART_TYPES.TREE_MAP,
+        'Dwelling Type', false, { dataLabels: { show: true } }
+    );
+
     return geoCharts;
 }
 
 function updateGeoDistrCharts(charts, mLayerProp) {
     let ageGroupData = mLayerProp.ageGroup;
-    let ageGroupLabels = Object.keys(ageGroupData).filter(k => !k.includes(MAP_PROP.TOTAL));
-    console.log(ageGroupData);
-    console.log(ageGroupLabels.map(k => ageGroupData.hasOwnProperty(k) ? ageGroupData[k] : 0));
+    let raceData = mLayerProp.ethnicGroup;
+    let dwellData = mLayerProp.dwellingType;
 
+    let ageGroupLabels = Object.keys(ageGroupData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
     let ageGroupOpt = {
         series: [{
+            name: 'Age Group',
             data: ageGroupLabels.map(k => ageGroupData.hasOwnProperty(k) ? ageGroupData[k] : 0)
         }],
         xaxis: {
@@ -381,5 +401,27 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         }
     };
 
+    let dwellOpt = {
+        series: [{
+            data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => !d.x.includes('Total'))
+        }],
+        dataLabels: {
+            formatter: function(text, op) {
+                let label = text == MAP_LAYER_PROPS.HDB_DWELL ? CHART_LABELS.HDB :
+                    text == MAP_LAYER_PROPS.CONDO_OTH ? CHART_LABELS.CONDO :
+                    text == MAP_LAYER_PROPS.LANDED_PROP ? CHART_LABELS.LANDED :
+                    CHART_LABELS.OTHERS;
+                let percentage = Math.round((op.value / dwellData[MAP_LAYER_PROPS.TOTAL]) * 100) + '%';
+                return [label, percentage];
+            }
+        }
+    };
     charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
+    charts[ELEMENT_IDS.GEO_RACE].updateSeries([
+        raceData[MAP_LAYER_PROPS.CHINESE],
+        raceData[MAP_LAYER_PROPS.MALAYS],
+        raceData[MAP_LAYER_PROPS.INDIANS],
+        raceData[MAP_LAYER_PROPS.OTHERS]
+    ]);
+    charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
 }

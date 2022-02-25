@@ -85,8 +85,8 @@ function renderZoneAndData(map, geoDistrData) {
                 }
             }
 
-            properties[MAP_PROP.POPULATION] = properties[MAP_PROP.AGE_GROUP][MAP_PROP.TOTAL] || properties[MAP_PROP.ETHNIC_GROUP][MAP_PROP.TOTAL];
-            properties[MAP_PROP.DISPLAY_NAME] = areaName;
+            properties[MAP_LAYER_PROPS.POPULATION] = properties[MAP_LAYER_PROPS.AGE_GROUP][MAP_LAYER_PROPS.TOTAL] || properties[MAP_LAYER_PROPS.ETHNIC_GROUP][MAP_LAYER_PROPS.TOTAL];
+            properties[MAP_LAYER_PROPS.DISPLAY_NAME] = areaName;
 
             layer.setStyle({
                 fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties['population']),
@@ -97,7 +97,7 @@ function renderZoneAndData(map, geoDistrData) {
                 fillOpacity: 0.7
             });
 
-            layer.bindTooltip(layer.feature.properties[MAP_PROP.DISPLAY_NAME], {
+            layer.bindTooltip(layer.feature.properties[MAP_LAYER_PROPS.DISPLAY_NAME], {
                 className: 'map-country-tooltip',
                 permanent: false,
                 direction: "center"

@@ -18,9 +18,6 @@ function main() {
     function initApexChartOptions() {
         window.Apex = {
             animations: {
-                enabled: true,
-                easing: 'easeinout',
-                speed: 800,
                 animateGradually: {
                     enabled: true,
                     delay: 150
@@ -28,26 +25,35 @@ function main() {
                 dynamicAnimation: {
                     enabled: true,
                     speed: 350
-                }
+                },
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800
             },
             chart: {
                 height: '100%',
+                fontFamily: 'Nunito Sans,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif',
                 width: '100%',
                 zoom: {
                     enabled: true
                 }
             },
             legend: {
-                show: true,
+                horizontalAlign: 'center',
                 position: 'bottom',
-                horizontalAlign: 'center'
+                show: true
             },
             markers: {
-                size: 0,
-                style: 'hollow',
-                strokeWidth: 8,
-                strokeColor: "#fff",
-                strokeOpacity: 0.25,
+                style: 'hollow'
+            },
+            plotOptions: {
+                radar: {
+                    size: 180
+                },
+                treemap: {
+                    distributed: true,
+                    enableShades: false
+                }
             },
             stroke: {
                 curve: 'smooth'
@@ -65,14 +71,6 @@ function main() {
                 style: {
                     fontFamily: 'Montserrat,sans-serif',
                     fontSize: '1.3rem'
-                }
-            },
-            xaxis: {
-                axisBorder: {
-                    show: false
-                },
-                labels: {
-                    show: false
                 }
             }
         };

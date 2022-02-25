@@ -62,7 +62,9 @@ const CHART_TYPES = {
     DONUT: 'donut',
     LINE: 'line',
     PIE: 'pie',
-    RADIAL_BAR: 'radialBar'
+    RADAR: 'radar',
+    RADIAL_BAR: 'radialBar',
+    TREE_MAP: 'treemap'
 };
 const CHART_LABELS = {
     CITIZEN: 'Singapore Citizen',
@@ -81,20 +83,31 @@ const CHART_LABELS = {
     FEMALE: 'Female',
     GENDER_RATIO: 'Gender Ratio',
     CHINESE: 'Chinese',
-    MALAYS: 'Malay',
-    INDIANS: 'Indian',
-    OTHERS: 'Other'
+    MALAYS: 'Malays',
+    INDIANS: 'Indians',
+    OTHERS: 'Others',
+    CONDO: 'Condo/Apartments',
+    HDB: 'HDB',
+    LANDED: 'Landed'
 };
 const MAP = {
     ZOOM_INITIAL: 12.4,
     COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
 };
-const MAP_PROP = {
+const MAP_LAYER_PROPS = {
     POPULATION: 'population',
     AGE_GROUP: 'ageGroup',
     ETHNIC_GROUP: 'ethnicGroup',
     DISPLAY_NAME: 'display_name',
-    TOTAL: 'Total'
+    TOTAL: 'Total',
+    CONDO_OTH: 'Condominiums and Other Apartments',
+    HDB_DWELL: 'HDB Dwellings',
+    LANDED_PROP: 'Landed Properties',
+    OTHERS: 'Others',
+    CHINESE: 'Chinese',
+    MALAYS: 'Malays',
+    INDIANS: 'Indians',
+    OTHERS: 'Others'
 };
 const ELEMENT_IDS = {
     POPULATION: 'population',
