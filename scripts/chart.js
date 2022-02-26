@@ -56,9 +56,6 @@ function renderGroupedSparkLines(id, name, labels, seriesData) {
                 enabled: true
             },
         },
-        stroke: {
-            curve: 'smooth'
-        },
         series: [{
             name: name,
             data: seriesData
@@ -367,14 +364,30 @@ function getGeoDistrCharts() {
             plotOptions: {
                 bar: {
                     horizontal: true
-                },
+                }
+            },
+            subtitle: {
+                text: 'Click bar to see gender breakdown'
+            },
+            xaxis: {
+                labels: {
+                    show: false
+                }
             }
         }
     );
 
+    geoCharts[ELEMENT_IDS.GEO_AGE_GENDER] = createApexChart(
+        ELEMENT_IDS.GEO_AGE_GENDER, CHART_TYPES.RADIAL_BAR,
+        'Age Group Gender', false, {
+            labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
+        });
+
     geoCharts[ELEMENT_IDS.GEO_RACE] = createApexChart(
         ELEMENT_IDS.GEO_RACE, CHART_TYPES.PIE,
-        'Ethnicity', false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
+        'Ethnicity', false, {
+            labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS]
+        }
     );
 
     geoCharts[ELEMENT_IDS.GEO_DWELLING] = createApexChart(
@@ -382,22 +395,135 @@ function getGeoDistrCharts() {
         'Dwelling Type', false, { dataLabels: { show: true } }
     );
 
+    geoCharts[ELEMENT_IDS.GEO_EDUCATION] = createApexChart(
+        ELEMENT_IDS.GEO_EDUCATION, CHART_TYPES.RADAR,
+        'Qualification', false, { dataLabels: { show: true } }
+    );
+
+    geoCharts[ELEMENT_IDS.GEO_LITERACY] = createApexChart(
+        ELEMENT_IDS.GEO_LITERACY, CHART_TYPES.RADAR,
+        'Literacy', false, { dataLabels: { show: true } }
+    );
+
     return geoCharts;
+}
+
+function updateAgeBreakdown(gChart, data) {
+    console.log(gChart);
+    gChart.updateSeries([data.agFemale[key], data.agMale[key]]);
 }
 
 function updateGeoDistrCharts(charts, mLayerProp) {
     let ageGroupData = mLayerProp.ageGroup;
     let raceData = mLayerProp.ethnicGroup;
     let dwellData = mLayerProp.dwellingType;
+    let incomeData = mLayerProp.grossIncome;
+    let litData = mLayerProp.literacy;
+    let ocptData = mLayerProp.occupation;
+    let qlfctData = mLayerProp.qualification;
+    let transportData = mLayerProp.transportMode;
 
-    let ageGroupLabels = Object.keys(ageGroupData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    // let ageGroup = Object.keys(ageGroupData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
+    // let ageGroupOpt = {
+    //     dataLabels: {
+    //         formatter: (val, opts) => {
+    //             return Math.round((Math.abs(val) / totalCount) * 100) + '%';
+    //         }
+    //     },
+    //     series: [{
+    //             name: CHART_LABELS.MALE,
+    //             data: ageGroup.map(k => populationData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
+    //         },
+    //         {
+    //             name: CHART_LABELS.FEMALE,
+    //             data: ageGroup.map(k => -populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
+    //         }
+    //     ],
+    //     tooltip: {
+    //         shared: false,
+    //         x: { formatter: v => v },
+    //         y: { formatter: v => Math.abs(v) }
+    //     },
+    //     xaxis: {
+    //         categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
+    //     },
+    //     yaxis: {
+    //         axisBorder: { show: true },
+    //         labels: { show: true }
+    //     }
+    // };
+
+    let {
+        [MAP_LAYER_PROPS.TOTAL]: agTotal, [MAP_LAYER_PROPS.FEMALES]: agFemale, [MAP_LAYER_PROPS.MALES]: agMale
+    } = ageGroupData;
+    let ageGroupLabels = Object.keys(agTotal).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL)).sort(UTIL.compareAlphaNumDesc);
     let ageGroupOpt = {
+        chart: {
+            events: {
+                dataPointSelection: function(evt, mChart, opt) {
+                    let agEle = document.getElementById(ELEMENT_IDS.GEO_AGE_GROUP);
+                    let genderEle = document.getElementById(ELEMENT_IDS.GEO_AGE_GENDER);
+                    let selDataPoints = opt.selectedDataPoints;
+
+                    if (selDataPoints[0].length === 1) {
+                        let key = ageGroupLabels[selDataPoints[0]];
+                        let genderPrctArr = [agMale[key], agFemale[key]].map(v => Math.round((v / agTotal[key]) * 100));
+                        charts[ELEMENT_IDS.GEO_AGE_GENDER].updateOptions({
+                            chart: {
+                                width: '50%'
+                            },
+                            series: genderPrctArr
+                        });
+
+                        if (!genderEle.classList.contains("active")) {
+                            mChart.updateOptions({
+                                chart: {
+                                    width: '50%'
+                                }
+                            });
+                            agEle.classList.add("gender-activated");
+                            genderEle.classList.add("active");
+                        }
+                    } else if (selDataPoints[0].length === 0) {
+                        agEle.classList.remove("gender-activated")
+                        genderEle.classList.remove("active");
+                        mChart.updateOptions({
+                            chart: {
+                                width: '100%'
+                            }
+                        });
+                    }
+                }
+            }
+        },
         series: [{
-            name: 'Age Group',
-            data: ageGroupLabels.map(k => ageGroupData.hasOwnProperty(k) ? ageGroupData[k] : 0)
+            data: ageGroupLabels.map(k => agTotal.hasOwnProperty(k) ? agTotal[k] : 0)
         }],
         xaxis: {
             categories: ageGroupLabels
+        }
+    };
+
+    let eduTypeLabels = Object.keys(qlfctData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let educationOpt = {
+        series: [{
+            name: CHART_LABELS.POPULATION,
+            data: eduTypeLabels.map(k => qlfctData.hasOwnProperty(k) ? qlfctData[k] : 0)
+        }],
+        xaxis: {
+            categories: eduTypeLabels,
+            labels: {
+                formatter: function(val, ts, op) {
+                    return val == MAP_LAYER_PROPS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
+                        val == MAP_LAYER_PROPS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
+                        val == MAP_LAYER_PROPS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
+                        val == MAP_LAYER_PROPS.POST_SEC ? CHART_LABELS.POST_SEC :
+                        val == MAP_LAYER_PROPS.SECONDARY ? CHART_LABELS.SECONDARY :
+                        val == MAP_LAYER_PROPS.LOW_SEC ? CHART_LABELS.LOW_SECONDARY :
+                        val == MAP_LAYER_PROPS.PRIMARY ? CHART_LABELS.PRIMARY :
+                        CHART_LABELS.NONE;
+                }
+            }
         }
     };
 
@@ -424,4 +550,5 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         raceData[MAP_LAYER_PROPS.OTHERS]
     ]);
     charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
+    charts[ELEMENT_IDS.GEO_EDUCATION].updateOptions(educationOpt);
 }

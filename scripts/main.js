@@ -48,7 +48,7 @@ function main() {
             },
             plotOptions: {
                 radar: {
-                    size: 180
+                    size: 150
                 },
                 treemap: {
                     distributed: true,

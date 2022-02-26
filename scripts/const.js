@@ -5,7 +5,7 @@ const UTIL = {
     compareAlphaNumAsc: (a, b) => a.localeCompare(b, undefined, { numeric: true }),
     convertDOSKeys: str => str.trim().toLowerCase().replaceAll(/\s+/g, ' ').replaceAll(' ', '_'),
     convertToTitleCase: str => str.trim().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
-    convertToNumber: (value) => isNaN(value) ? 0 : Number(value),
+    convertToNumber: (value) => isNaN(value) ? null : Number(value),
     getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
 };
 const DATA_GOV_API = {
@@ -89,7 +89,20 @@ const CHART_LABELS = {
     OTHERS: 'Others',
     CONDO: 'Condo/Apartments',
     HDB: 'HDB',
-    LANDED: 'Landed'
+    LANDED: 'Landed',
+    NONE: 'None',
+    PRIMARY: 'Primary',
+    LOW_SEC: 'Lower Sec.',
+    SECONDARY: 'Secondary',
+    POLYTECHNIC: 'Polytechnic',
+    POST_SEC: 'Post Sec.',
+    PROFESSIONAL: 'Professional',
+    UNIVERSITY: 'University',
+    LITERATE: 'Literate',
+    NOT_LIT: 'Not Literate',
+    LIT_ONE: 'One Language Only',
+    LIT_TWO: 'Two Languages Only',
+    LIT_THREE: 'Three or More Languages'
 };
 const MAP = {
     ZOOM_INITIAL: 12.4,
@@ -99,8 +112,11 @@ const MAP_LAYER_PROPS = {
     POPULATION: 'population',
     AGE_GROUP: 'ageGroup',
     ETHNIC_GROUP: 'ethnicGroup',
+    GENDER_POP: 'genderPopulation',
     DISPLAY_NAME: 'display_name',
     TOTAL: 'Total',
+    FEMALES: 'Females',
+    MALES: 'Males',
     CONDO_OTH: 'Condominiums and Other Apartments',
     HDB_DWELL: 'HDB Dwellings',
     LANDED_PROP: 'Landed Properties',
@@ -108,7 +124,15 @@ const MAP_LAYER_PROPS = {
     CHINESE: 'Chinese',
     MALAYS: 'Malays',
     INDIANS: 'Indians',
-    OTHERS: 'Others'
+    OTHERS: 'Others',
+    NO_QUALIFICATION: 'No Qualification',
+    PRIMARY: 'Primary',
+    LOW_SECONDARY: 'Lower Secondary',
+    SECONDARY: 'Secondary',
+    POLYTECHNIC: 'Polytechnic Diploma',
+    POST_SEC: 'Post-Secondary (Non-Tertiary)',
+    PROFESSIONAL: 'Professional Qualification and Other Diploma',
+    UNIVERSITY: 'University'
 };
 const ELEMENT_IDS = {
     POPULATION: 'population',
@@ -119,6 +143,10 @@ const ELEMENT_IDS = {
     MED_AGE_CITIZEN: 'mage-citizen',
     MED_AGE_RESIDENT: 'mage-resident',
     GEO_AGE_GROUP: 'geo-age-group',
+    GEO_AGE_GENDER: 'geo-age-gender',
     GEO_RACE: 'geo-race',
+    GEO_EDUCATION: 'geo-education',
+    GEO_LITERACY: 'geo-literacy',
+    GEO_OCCUPATION: 'geo-occupation',
     GEO_DWELLING: 'geo-dwelling'
 };

@@ -102,8 +102,24 @@ header .content {
     opacity: 0.8;
 }
 
-#gd-content {
-    display: none;
+#geo-age-group.gender-activated {
+    transform: translateX(0);
+    transition: 1s ease transform;
 }
+
+#geo-age-gender {
+    transform: translateX(250%);
+}
+
+#geo-age-gender.active {
+    transition: 1.1s ease-in-out transform;
+    transform: translateX(0);
+    z-index: 1;
+}
+
+
+/* #gd-content {
+    display: none;
+} */
 
 @media screen and (max-width:767px) {}

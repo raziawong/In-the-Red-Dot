@@ -87,7 +87,7 @@ function renderZoneAndData(map, geoDistrData) {
                 }
             }
 
-            properties[MAP_LAYER_PROPS.POPULATION] = properties[MAP_LAYER_PROPS.AGE_GROUP][MAP_LAYER_PROPS.TOTAL] || properties[MAP_LAYER_PROPS.ETHNIC_GROUP][MAP_LAYER_PROPS.TOTAL];
+            properties[MAP_LAYER_PROPS.POPULATION] = properties[MAP_LAYER_PROPS.GENDER_POP][MAP_LAYER_PROPS.TOTAL];
             properties[MAP_LAYER_PROPS.DISPLAY_NAME] = areaName;
 
             layer.setStyle({
