@@ -70,21 +70,6 @@ function transformGeoDistributionData(rawData) {
     let dataByArea = { highestPopulationCount: 0 };
     let ageGroupByArea = rawData.ageGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
 
-            if (dataByArea.qualification.hasOwnProperty(areaName)) {
-                Object.assign(dataByArea.qualification[areaName], {
-                    [dataKey]: value
-                });
-            } else {
-                dataByArea.qualification[areaName] = {
-                    [dataKey]: value
-                };
-            }
-        }
-    }
-
-    for (let rowObj of rawData.transportMode) {
-        let areaName = rowObj['rowText'];
-
     dataByArea.genderPopulation = getObjModelForGeoDistribution(ageGroupByArea, false);
     dataByArea.ageGroup = getObjModelForGeoDistribution(ageGroupByArea, true);
     dataByArea.ethnicGroup = getObjModelForGeoDistribution(rawData.ethnicGroup
