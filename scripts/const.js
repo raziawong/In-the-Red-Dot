@@ -68,6 +68,7 @@ const CHART_TYPES = {
     TREE_MAP: 'treemap'
 };
 const CHART_LABELS = {
+    TOTAL: 'Total',
     POPULATION: 'Population',
     CITIZEN: 'Singapore Citizen',
     RESIDENT: 'Resident',
@@ -101,9 +102,9 @@ const CHART_LABELS = {
     UNIVERSITY: 'University',
     LITERATE: 'Literate',
     NOT_LIT: 'Not Literate',
-    LIT_ONE: 'One Language Only',
-    LIT_TWO: 'Two Languages Only',
-    LIT_THREE: 'Three or More Languages',
+    LIT_ONE: '1 Language',
+    LIT_TWO: '2 Languages',
+    LIT_THREE: '>= 3 Languages',
     CAR: 'Car',
     LORRY: 'Lorry',
     TRAIN_BUS: 'Train & Public Bus',
@@ -143,6 +144,11 @@ const MAP_LAYER_PROPS = {
     POST_SEC: 'Post-Secondary (Non-Tertiary)',
     PROFESSIONAL: 'Professional Qualification and Other Diploma',
     UNIVERSITY: 'University',
+    NOT_LIT: 'Not Literate',
+    LIT: 'Literate',
+    ONE_LANG: 'One Language Only',
+    TWO_LANG: 'Two Languages Only',
+    THREE_LANG: 'Three or More Languages',
     CAR: 'Car Only',
     LORRY_PICKUP: 'Lorry/Pickup Only',
     MRT_LRT_BUS: 'MRT/LRT & Public Bus Only',

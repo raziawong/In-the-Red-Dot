@@ -401,8 +401,19 @@ function getGeoDistrCharts() {
     );
 
     geoCharts[ELEMENT_IDS.GEO_LITERACY] = createApexChart(
-        ELEMENT_IDS.GEO_LITERACY, CHART_TYPES.RADAR,
-        'Literacy', false, { dataLabels: { show: true } }
+        ELEMENT_IDS.GEO_LITERACY, CHART_TYPES.RADIAL_BAR,
+        'Literacy', false, {
+            plotOptions: {
+                radialBar: {
+                    dataLabels: {
+                        total: {
+                            show: true,
+                            label: CHART_LABELS.TOTAL
+                        }
+                    }
+                }
+            }
+        }
     );
 
     geoCharts[ELEMENT_IDS.GEO_OCCUPATION] = createApexChart(
@@ -452,7 +463,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let ageGroupOpt = {
         chart: {
             events: {
-                dataPointSelection: function(evt, mChart, op) {
+                dataPointSelection: (evt, mChart, op) => {
                     let agEle = document.getElementById(ELEMENT_IDS.GEO_AGE_GROUP);
                     let genderEle = document.getElementById(ELEMENT_IDS.GEO_AGE_GENDER);
                     let selDataPoints = op.selectedDataPoints;
@@ -489,7 +500,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             }
         },
         series: [{
-            data: ageGroupLabels.map(k => agTotal.hasOwnProperty(k) ? agTotal[k] : null)
+            data: ageGroupLabels.map(k => agTotal[k])
         }],
         xaxis: {
             categories: ageGroupLabels
@@ -501,7 +512,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes('Total') && d.y))
         }],
         dataLabels: {
-            formatter: function(text, op) {
+            formatter: (text, op) => {
                 let label = text == MAP_LAYER_PROPS.HDB_DWELL ? CHART_LABELS.HDB :
                     text == MAP_LAYER_PROPS.CONDO_OTH ? CHART_LABELS.CONDO :
                     text == MAP_LAYER_PROPS.LANDED_PROP ? CHART_LABELS.LANDED :
@@ -516,12 +527,12 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let educationOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
-            data: eduTypeLabels.map(k => eduData.hasOwnProperty(k) ? eduData[k] : null)
+            data: eduTypeLabels.map(k => eduData[k])
         }],
         xaxis: {
             categories: eduTypeLabels,
             labels: {
-                formatter: function(text) {
+                formatter: (text) => {
                     return text == MAP_LAYER_PROPS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
                         text == MAP_LAYER_PROPS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
                         text == MAP_LAYER_PROPS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
@@ -535,11 +546,39 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         }
     };
 
+    let litLabels = Object.keys(litData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL) && !k.startsWith(MAP_LAYER_PROPS.LIT));
+    let litSeries = litLabels.map(k => {
+        let val = litData[k];
+        val = Array.isArray(val) ?
+            val.map(o => UTIL.convertToNumber(o.value)).reduce((p, a) => a += p) :
+            val;
+        val = Math.round((val / litData[MAP_LAYER_PROPS.TOTAL]) * 100);
+        return val;
+    });
+    let litOpt = {
+        labels: litLabels.map(k => {
+            return k == MAP_LAYER_PROPS.ONE_LANG ? CHART_LABELS.LIT_ONE :
+                k == MAP_LAYER_PROPS.TWO_LANG ? CHART_LABELS.LIT_TWO :
+                k == MAP_LAYER_PROPS.THREE_LANG ? CHART_LABELS.LIT_THREE :
+                k;
+        }),
+        plotOptions: {
+            radialBar: {
+                dataLabels: {
+                    total: {
+                        formatter: (w) => litData[MAP_LAYER_PROPS.TOTAL]
+                    }
+                }
+            }
+        },
+        series: litSeries
+    };
+
     let occupationLabels = Object.keys(occupationData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
     let occupationOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
-            data: occupationLabels.map(k => occupationData.hasOwnProperty(k) ? occupationData[k] : null)
+            data: occupationLabels.map(k => occupationData[k])
         }],
         xaxis: {
             categories: occupationLabels.map(k => k.replace('1/', ''))
@@ -550,7 +589,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let incomeOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
-            data: incomeLabels.map(k => incomeData.hasOwnProperty(k) ? incomeData[k] : null)
+            data: incomeLabels.map(k => incomeData[k])
         }],
         xaxis: {
             categories: incomeLabels
@@ -561,21 +600,19 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let transportOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
-            data: transportLabels.map(k => transportData.hasOwnProperty(k) ? transportData[k] : null)
+            data: transportLabels.map(k => transportData[k])
         }],
         dataLabels: {
             enable: true,
-            formatter: function(val, op) {
-                return Math.round(val / transportData[MAP_LAYER_PROPS.TOTAL] * 100) + '%';
-            }
+            formatter: (val, op) => Math.round(val / transportData[MAP_LAYER_PROPS.TOTAL] * 100) + '%'
         },
         xaxis: {
             categories: transportLabels.map(k => k.replace('1/', '')),
         },
         yaxis: {
             labels: {
-                formatter: function(text) {
-                    return (text == MAP_LAYER_PROPS.CAR ? CHART_LABELS.CAR :
+                formatter: (text) => {
+                    return text == MAP_LAYER_PROPS.CAR ? CHART_LABELS.CAR :
                         text == MAP_LAYER_PROPS.LORRY_PICKUP ? CHART_LABELS.LORRY :
                         text == MAP_LAYER_PROPS.MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS :
                         text == MAP_LAYER_PROPS.MRT_LRT ? CHART_LABELS.TRAIN :
@@ -584,7 +621,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                         text == MAP_LAYER_PROPS.PRIVATE_BUS_VAN ? CHART_LABELS.PRIVATE_BUS :
                         text == MAP_LAYER_PROPS.PUBLIC_BUS ? CHART_LABELS.PUBLIC_BUS :
                         text == MAP_LAYER_PROPS.PRIVATE_HIRE_CAR ? CHART_LABELS.PRIVATE_HIRE_CAR :
-                        text);
+                        text;
                 }
             }
         }
@@ -593,7 +630,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let travelLabels = Object.keys(travelTimeData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
     let travelOpt = {
         labels: travelLabels,
-        series: travelLabels.map(k => travelTimeData.hasOwnProperty(k) ? travelTimeData[k] : null),
+        series: travelLabels.map(k => travelTimeData[k]),
     };
 
     charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
@@ -605,6 +642,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     ]);
     charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
     charts[ELEMENT_IDS.GEO_EDUCATION].updateOptions(educationOpt);
+    charts[ELEMENT_IDS.GEO_LITERACY].updateOptions(litOpt);
     charts[ELEMENT_IDS.GEO_OCCUPATION].updateOptions(occupationOpt);
     charts[ELEMENT_IDS.GEO_INCOME].updateOptions(incomeOpt);
     charts[ELEMENT_IDS.GEO_TRANSPORT].updateOptions(transportOpt);
