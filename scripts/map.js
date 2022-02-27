@@ -11,25 +11,6 @@ function getHeatMapColor(highestNum, num) {
         MAP.COLOR_RANGE[8];
 }
 
-// function toggleMapView(map, viewLayers, value) {
-//     let planAreaGroup = viewLayers.areas;
-//     let subzoneGroup = viewLayers.subzones;
-
-//     if (map.hasLayer(planAreaGroup)) {
-//         map.removeLayer(planAreaGroup);
-//     }
-
-//     if (map.hasLayer(subzoneGroup)) {
-//         map.removeLayer(planAreaGroup);
-//     }
-
-//     if (value === 'area') {
-//         map.addLayer(planAreaGroup);
-//     } else if (value === 'subzone') {
-//         map.addLayer(subzoneGroup);
-//     }
-// }
-
 function hoverLayer(event) {
     let layer = event.target;
     layer.setStyle({
@@ -62,7 +43,7 @@ function clickLayer(event, map, geoCharts) {
     layer.bringToFront();
     map.fitBounds(layer.getBounds());
 
-    let container = document.getElementById('gd-content');
+    let container = document.getElementById(ELEMENT_IDS.GD_CONTENT);
     container.querySelector('h4 span').innerText = properties[MAP_LAYER_PROPS.POPULATION];
 
     updateGeoDistrCharts(geoCharts, properties);
@@ -91,7 +72,7 @@ function renderZoneAndData(map, geoDistrData) {
             properties[MAP_LAYER_PROPS.DISPLAY_NAME] = areaName;
 
             layer.setStyle({
-                fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties['population']),
+                fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties[MAP_LAYER_PROPS.POPULATION]),
                 weight: 2,
                 opacity: 1,
                 color: 'grey',
@@ -102,7 +83,7 @@ function renderZoneAndData(map, geoDistrData) {
             layer.bindTooltip(layer.feature.properties[MAP_LAYER_PROPS.DISPLAY_NAME], {
                 className: 'map-country-tooltip',
                 permanent: false,
-                direction: "center"
+                direction: 'center'
             });
 
             layer.on({
@@ -119,7 +100,7 @@ function renderZoneAndData(map, geoDistrData) {
         let headerEle = L.DomUtil.create('h3', '', containerEle);
         let legendEle = L.DomUtil.create('div', 'legend', containerEle);
 
-        containerEle.setAttribute('id', 'map-info');
+        containerEle.setAttribute('id', ELEMENT_IDS.MAP_INFO);
         headerEle.innerHTML = '<h3>Population Density</h3>';
 
         legendEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
@@ -130,14 +111,4 @@ function renderZoneAndData(map, geoDistrData) {
         return containerEle;
     };
     info.addTo(map);
-
-    // let viewLayers = {
-    //     'areas': planAreaGroup,
-    //     'subzones': subzoneGroup
-    // }
-
-    // toggleMapView(map, viewLayers, viewSelectEle.selectedOptions[0].value)
-    // viewSelectEle.addEventListener('change', function(event) {
-    //     toggleMapView(map, viewLayers, event.target.selectedOptions[0].value);
-    // });
 }

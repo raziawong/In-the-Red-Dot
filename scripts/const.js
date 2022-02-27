@@ -70,7 +70,7 @@ const CHART_TYPES = {
 const CHART_LABELS = {
     TOTAL: 'Total',
     POPULATION: 'Population',
-    CITIZEN: 'Singapore Citizen',
+    CITIZEN: 'Citizen',
     RESIDENT: 'Resident',
     PR: 'Permanent Resident',
     NON_RES: 'Non-Resident',
@@ -115,6 +115,22 @@ const CHART_LABELS = {
     PUBLIC_BUS: 'Public Bus',
     PRIVATE_HIRE_CAR: 'Private Hire Car'
 };
+const CHART_TITLES = {
+    RESIDENCY: 'Residency',
+    GENDER: 'Gender',
+    ETHNICITY: 'Ethnicity',
+    AGE_GROUP: 'Age Group',
+    MEDIAN_AGE: 'Median Age Insights',
+    AGE_DEPENDENCY_RATIO: 'Age Dependency Ratio Insights',
+    POP_GROWTH: 'Population Growth Insights',
+    DWELLING_TYPE: 'Dwelling Type',
+    QUALIFICATION: 'Qualification',
+    LITERACY: 'Literacy',
+    OCCUPATION: 'Occupation',
+    INCOME: 'Income',
+    TRANSPORT: 'Transport Mode',
+    TRAVEL_TIME: 'Travel Time'
+}
 const MAP = {
     ZOOM_INITIAL: 12.4,
     COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
@@ -168,6 +184,16 @@ const ELEMENT_IDS = {
     AGE_GROUP: 'age-group',
     MED_AGE_CITIZEN: 'mage-citizen',
     MED_AGE_RESIDENT: 'mage-resident',
+    TREND_GENDER: 'trend-gender',
+    TREND_RACE: 'trend-race',
+    TREND_AGE: 'trend-age',
+    TREND_DEPENDCY: 'trend-dependecy',
+    TREND_CITIZEN: 'trend-citizen',
+    TREND_PR: 'trend-pr',
+    TREND_NONRES: 'trend-nonres',
+    TREND_POPINCR: 'trend-popincr',
+    GD_CONTENT: 'gd-content',
+    MAP_INFO: 'map-info',
     GEO_AGE_GROUP: 'geo-age-group',
     GEO_AGE_GENDER: 'geo-age-gender',
     GEO_RACE: 'geo-race',

@@ -19,9 +19,7 @@ function createApexChart(id, type, title, isStack, otherOptObj) {
     }
 
     if (otherOptObj) {
-        for (let opt in otherOptObj) {
-            options[opt] = otherOptObj[opt];
-        }
+        options = {...options, ...otherOptObj };
     }
 
     let chart = new ApexCharts(document.getElementById(id), options);
@@ -30,173 +28,214 @@ function createApexChart(id, type, title, isStack, otherOptObj) {
     return chart;
 }
 
-function renderComparisonChart(type, isStack, title, seriesArray, labelArray, elementId) {
+function createSyncApexChart(id, chartOpt, title) {
     let options = {
-        chart: {
-            type: type,
-            stacked: isStack
-        },
+        chart: chartOpt,
         title: {
             text: title
         },
-        series: seriesArray,
-        labels: labelArray
-    }
-
-    new ApexCharts(document.getElementById(elementId), options).render();
-}
-
-function renderGroupedSparkLines(id, name, labels, seriesData) {
-    let options = {
-        chart: {
-            id: id,
-            group: 'residency',
-            type: CHART_TYPES.AREA,
-            sparkline: {
-                enabled: true
-            },
-        },
-        series: [{
-            name: name,
-            data: seriesData
-        }],
-        labels: labels,
-        title: {
-            text: name
-        }
+        series: []
     };
 
-    new ApexCharts(document.getElementById(id), options).render();
+    let chart = new ApexCharts(document.getElementById(id), options);
+    chart.render();
+
+    return chart;
 }
 
-function doPopulationTrendData(years, yearData) {
-    renderComparisonChart(
-        CHART_TYPES.BAR,
-        false,
-        'Gender', [{
+// function createSyncApexChart(id, name, labels, seriesData) {
+//     let options = {
+//         chart: {
+//             id: id,
+//             group: 'residency',
+//             type: CHART_TYPES.AREA,
+//             sparkline: {
+//                 enabled: true
+//             },
+//         },
+//         series: [{
+//             name: name,
+//             data: seriesData
+//         }],
+//         labels: labels,
+//         title: {
+//             text: name
+//         }
+//     };
+
+//     new ApexCharts(document.getElementById(id), options).render();
+// }
+
+function getTrendCharts() {
+    let trendCharts = {};
+
+    trendCharts[ELEMENT_IDS.TREND_GENDER] = createApexChart(
+        ELEMENT_IDS.TREND_GENDER, CHART_TYPES.BAR,
+        CHART_TITLES.GENDER, false, null
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_RACE] = createApexChart(
+        ELEMENT_IDS.TREND_RACE, CHART_TYPES.BAR,
+        CHART_TITLES.ETHNICITY, true, null
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_AGE] = createApexChart(
+        ELEMENT_IDS.TREND_AGE, CHART_TYPES.BAR,
+        CHART_TITLES.MEDIAN_AGE, false, null
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_DEPENDCY] = createApexChart(
+        ELEMENT_IDS.TREND_DEPENDCY, CHART_TYPES.LINE,
+        CHART_TITLES.AGE_DEPENDENCY_RATIO, false, null
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_CITIZEN] = createSyncApexChart(
+        ELEMENT_IDS.TREND_CITIZEN, {
+            id: ELEMENT_IDS.TREND_CITIZEN,
+            group: 'residency',
+            type: CHART_TYPES.AREA,
+            sparkline: { enabled: true }
+        },
+        CHART_LABELS.CITIZEN
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_PR] = createSyncApexChart(
+        ELEMENT_IDS.TREND_PR, {
+            id: ELEMENT_IDS.TREND_PR,
+            group: 'residency',
+            type: CHART_TYPES.AREA,
+            sparkline: { enabled: true }
+        },
+        CHART_LABELS.PR
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_NONRES] = createSyncApexChart(
+        ELEMENT_IDS.TREND_NONRES, {
+            id: ELEMENT_IDS.TREND_NONRES,
+            group: 'residency',
+            type: CHART_TYPES.AREA,
+            sparkline: { enabled: true }
+        },
+        CHART_LABELS.NON_RES
+    );
+
+    trendCharts[ELEMENT_IDS.TREND_POPINCR] = createApexChart(
+        ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA,
+        CHART_TITLES.POP_GROWTH, true, null
+    );
+
+    return trendCharts;
+}
+
+function updateTrendCharts(charts, years, yearData) {
+    charts[ELEMENT_IDS.TREND_GENDER].updateOptions({
+        series: [{
             name: CHART_LABELS.MALE,
             data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_MALE)
         }, {
             name: CHART_LABELS.FEMALE,
             data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_FEMALE)
         }],
-        years,
-        'gender-trend'
-    );
+        labels: years
+    });
 
-    renderComparisonChart(
-        CHART_TYPES.BAR,
-        true,
-        'Ethnicity', [{
-                name: CHART_LABELS.CHINESE,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_CHINESE)
-            }, {
-                name: CHART_LABELS.MALAYS,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_MALAYS)
-            }, {
-                name: CHART_LABELS.INDIANS,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_INDIANS)
-            },
-            {
-                name: CHART_LABELS.OTHERS,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_OTHER_ETHN)
-            }
-        ],
-        years,
-        'race-trend'
-    );
+    charts[ELEMENT_IDS.TREND_RACE].updateOptions({
+        series: [{
+            name: CHART_LABELS.CHINESE,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_CHINESE)
+        }, {
+            name: CHART_LABELS.MALAYS,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_MALAYS)
+        }, {
+            name: CHART_LABELS.INDIANS,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_INDIANS)
+        }, {
+            name: CHART_LABELS.OTHERS,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_OTHER_ETHN)
+        }],
+        labels: years
+    });
 
-    renderComparisonChart(
-        CHART_TYPES.BAR,
-        true,
-        'Median Age Insights', [{
-                name: CHART_LABELS.CITIZEN,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.MED_AGE_CITIZEN)
-            },
-            {
-                name: CHART_LABELS.RESIDENT,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.MED_AGE_RESIDENT)
-            }
-        ],
-        years,
-        'age-trend'
-    );
+    charts[ELEMENT_IDS.TREND_AGE].updateOptions({
+        series: [{
+            name: CHART_LABELS.CITIZEN,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.MED_AGE_CITIZEN)
+        }, {
+            name: CHART_LABELS.RESIDENT,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.MED_AGE_RESIDENT)
+        }],
+        labels: years
+    });
 
-    renderComparisonChart(
-        CHART_TYPES.LINE,
-        false,
-        'Age Dependency Ratio Insights', [{
-                name: CHART_LABELS.AGE_DEP_15_64,
-                type: CHART_TYPES.COLUMN,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_15_64)
-            },
-            {
-                name: CHART_LABELS.AGE_DEP_20_64,
-                type: CHART_TYPES.COLUMN,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_20_64)
-            },
-            {
-                name: CHART_LABELS.CHILD_DEP_15_64,
-                type: CHART_TYPES.AREA,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_15_64)
-            },
-            {
-                name: CHART_LABELS.CHILD_DEP_20_64,
-                type: CHART_TYPES.AREA,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_20_64)
-            },
-            {
-                name: CHART_LABELS.OLD_DEP_15_64,
-                type: CHART_TYPES.LINE,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_15_64)
-            },
-            {
-                name: CHART_LABELS.OLD_DEP_20_64,
-                type: CHART_TYPES.LINE,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64)
-            }
-        ],
-        years,
-        'dependency-trend'
-    );
+    charts[ELEMENT_IDS.TREND_DEPENDCY].updateOptions({
+        series: [{
+            name: CHART_LABELS.AGE_DEP_15_64,
+            type: CHART_TYPES.COLUMN,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_15_64)
+        }, {
+            name: CHART_LABELS.AGE_DEP_20_64,
+            type: CHART_TYPES.COLUMN,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_20_64)
+        }, {
+            name: CHART_LABELS.CHILD_DEP_15_64,
+            type: CHART_TYPES.AREA,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_15_64)
+        }, {
+            name: CHART_LABELS.CHILD_DEP_20_64,
+            type: CHART_TYPES.AREA,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_20_64)
+        }, {
+            name: CHART_LABELS.OLD_DEP_15_64,
+            type: CHART_TYPES.LINE,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_15_64)
+        }, {
+            name: CHART_LABELS.OLD_DEP_20_64,
+            type: CHART_TYPES.LINE,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64)
+        }],
+        labels: years
+    });
 
-    renderGroupedSparkLines(
-        'citizen-trend',
-        CHART_LABELS.CITIZEN,
-        years,
-        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT)
-    );
+    charts[ELEMENT_IDS.TREND_CITIZEN].updateOptions({
+        series: [{
+            name: CHART_LABELS.CITIZEN,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT)
+        }],
+        labels: years
+    }, true, true, false);
 
-    renderGroupedSparkLines(
-        'pr-trend',
-        CHART_LABELS.PR,
-        years,
-        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT)
-    );
+    charts[ELEMENT_IDS.TREND_PR].updateOptions({
+        series: [{
+            name: CHART_LABELS.PR,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT)
+        }],
+        labels: years
+    }, true, true, false);
 
-    renderGroupedSparkLines(
-        'nonres-trend',
-        CHART_LABELS.NON_RES,
-        years,
-        getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT)
-    );
+    charts[ELEMENT_IDS.TREND_NONRES].updateOptions({
+        series: [{
+            name: CHART_LABELS.NON_RES,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT)
+        }],
+        labels: years
+    }, true, true, false);
 
-    renderComparisonChart(
-        CHART_TYPES.AREA,
-        true,
-        'Population Growth Insights', [{
-                name: CHART_LABELS.RATE_NATURAL_INCR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
-            },
-            {
-                name: CHART_LABELS.RATE_POPLT_INCR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
-            }
-        ],
-        years,
-        'increase-trend'
-    );
 
+    charts[ELEMENT_IDS.TREND_POPINCR].updateOptions({
+        series: [{
+            name: CHART_LABELS.RATE_NATURAL_INCR,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
+        }, {
+            name: CHART_LABELS.RATE_POPLT_INCR,
+            data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
+        }],
+        labels: years
+    });
+}
+
+function doPopulationTrendData(years, yearData) {
+    let tCharts = getTrendCharts();
+    updateTrendCharts(tCharts, years, yearData);
     // let options = {
     //     series: [{
     //         name: LABELS.CITIZEN,
