@@ -80,6 +80,7 @@ function transformGeoDistributionData(rawData) {
     dataByArea.occupation = getObjModelForGeoDistribution(rawData.occupation);
     dataByArea.qualification = getObjModelForGeoDistribution(rawData.qualification, false);
     dataByArea.transportMode = getObjModelForGeoDistribution(rawData.transportMode, false);
+    dataByArea.travelTime = getObjModelForGeoDistribution(rawData.travelTime, false);
 
     for (let areaData in dataByArea.genderPopulation) {
         if (areaData !== 'Total') {

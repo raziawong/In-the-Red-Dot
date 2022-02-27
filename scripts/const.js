@@ -23,7 +23,7 @@ const DOS_TABLE_API = {
         ethnicGroup: '17561',
         qualification: '17568',
         grossIncome: '17571',
-        travelTime: '17572',
+        travelTime: '17573',
         dwellingType: '17574',
         literacy: '17591',
         occupation: '17593',
@@ -62,6 +62,7 @@ const CHART_TYPES = {
     DONUT: 'donut',
     LINE: 'line',
     PIE: 'pie',
+    POLAR_AREA: 'polarArea',
     RADAR: 'radar',
     RADIAL_BAR: 'radialBar',
     TREE_MAP: 'treemap'
@@ -102,7 +103,16 @@ const CHART_LABELS = {
     NOT_LIT: 'Not Literate',
     LIT_ONE: 'One Language Only',
     LIT_TWO: 'Two Languages Only',
-    LIT_THREE: 'Three or More Languages'
+    LIT_THREE: 'Three or More Languages',
+    CAR: 'Car',
+    LORRY: 'Lorry',
+    TRAIN_BUS: 'Train & Public Bus',
+    TRAIN: 'Train',
+    MOTORCYCLE: 'Motorcycle',
+    TRAIN_BUS_OTHERS: 'Train or Public Bus with Others',
+    PRIVATE_BUS: 'Private Bus',
+    PUBLIC_BUS: 'Public Bus',
+    PRIVATE_HIRE_CAR: 'Private Hire Car'
 };
 const MAP = {
     ZOOM_INITIAL: 12.4,
@@ -132,7 +142,17 @@ const MAP_LAYER_PROPS = {
     POLYTECHNIC: 'Polytechnic Diploma',
     POST_SEC: 'Post-Secondary (Non-Tertiary)',
     PROFESSIONAL: 'Professional Qualification and Other Diploma',
-    UNIVERSITY: 'University'
+    UNIVERSITY: 'University',
+    CAR: 'Car Only',
+    LORRY_PICKUP: 'Lorry/Pickup Only',
+    MRT_LRT_BUS: 'MRT/LRT & Public Bus Only',
+    MRT_LRT: 'MRT/LRT Only',
+    MOTORCYCLE_SCOOTER: 'Motorcycle/\nScooter Only',
+    NO_TRANSPORT_REQ: 'No Transport Required',
+    OTHER_MRT_LRT_BUS: 'Other combinations of MRT/LRT or Public Bus',
+    PRIVATE_BUS_VAN: 'Private Chartered Bus/Van Only',
+    PUBLIC_BUS: 'Public Bus Only',
+    PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
 };
 const ELEMENT_IDS = {
     POPULATION: 'population',
@@ -150,5 +170,6 @@ const ELEMENT_IDS = {
     GEO_OCCUPATION: 'geo-occupation',
     GEO_DWELLING: 'geo-dwelling',
     GEO_INCOME: 'geo-income',
-    GEO_TRANSPORT: 'geo-transport'
+    GEO_TRANSPORT: 'geo-transport',
+    GEO_TRAVEL: 'geo-travel'
 };
