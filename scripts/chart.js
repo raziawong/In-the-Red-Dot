@@ -197,7 +197,7 @@ function doPopulationTrendData(years, yearData) {
         'increase-trend'
     );
 
-    // var options = {
+    // let options = {
     //     series: [{
     //         name: LABELS.CITIZEN,
     //         data: years.map(y => { return UTIL.convertToNumber(yearData[y][LABELS.CITIZEN_PPLT]) })
@@ -242,7 +242,7 @@ function doPopulationTrendData(years, yearData) {
     //     }
     // };
 
-    // var chart = new ApexCharts(document.getElementById("population-stack"), options);
+    // let chart = new ApexCharts(document.getElementById("population-stack"), options);
     // chart.render();
 }
 
@@ -405,53 +405,33 @@ function getGeoDistrCharts() {
         'Literacy', false, { dataLabels: { show: true } }
     );
 
-    return geoCharts;
-}
+    geoCharts[ELEMENT_IDS.GEO_OCCUPATION] = createApexChart(
+        ELEMENT_IDS.GEO_OCCUPATION, CHART_TYPES.BAR,
+        'Occupation', false, { dataLabels: { show: true } }
+    );
 
-function updateAgeBreakdown(gChart, data) {
-    console.log(gChart);
-    gChart.updateSeries([data.agFemale[key], data.agMale[key]]);
+    geoCharts[ELEMENT_IDS.GEO_INCOME] = createApexChart(
+        ELEMENT_IDS.GEO_INCOME, CHART_TYPES.LINE,
+        'Income', false, { dataLabels: { show: true } }
+    );
+
+    geoCharts[ELEMENT_IDS.GEO_TRANSPORT] = createApexChart(
+        ELEMENT_IDS.GEO_TRANSPORT, CHART_TYPES.LINE,
+        'Transport', false, { dataLabels: { show: true } }
+    );
+
+    return geoCharts;
 }
 
 function updateGeoDistrCharts(charts, mLayerProp) {
     let ageGroupData = mLayerProp.ageGroup;
     let raceData = mLayerProp.ethnicGroup;
     let dwellData = mLayerProp.dwellingType;
-    let incomeData = mLayerProp.grossIncome;
+    let eduData = mLayerProp.qualification;
     let litData = mLayerProp.literacy;
-    let ocptData = mLayerProp.occupation;
-    let qlfctData = mLayerProp.qualification;
+    let occupationData = mLayerProp.occupation;
+    let incomeData = mLayerProp.grossIncome;
     let transportData = mLayerProp.transportMode;
-
-    // let ageGroup = Object.keys(ageGroupData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
-    // let ageGroupOpt = {
-    //     dataLabels: {
-    //         formatter: (val, opts) => {
-    //             return Math.round((Math.abs(val) / totalCount) * 100) + '%';
-    //         }
-    //     },
-    //     series: [{
-    //             name: CHART_LABELS.MALE,
-    //             data: ageGroup.map(k => populationData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
-    //         },
-    //         {
-    //             name: CHART_LABELS.FEMALE,
-    //             data: ageGroup.map(k => -populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
-    //         }
-    //     ],
-    //     tooltip: {
-    //         shared: false,
-    //         x: { formatter: v => v },
-    //         y: { formatter: v => Math.abs(v) }
-    //     },
-    //     xaxis: {
-    //         categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
-    //     },
-    //     yaxis: {
-    //         axisBorder: { show: true },
-    //         labels: { show: true }
-    //     }
-    // };
 
     let {
         [MAP_LAYER_PROPS.TOTAL]: agTotal, [MAP_LAYER_PROPS.FEMALES]: agFemale, [MAP_LAYER_PROPS.MALES]: agMale
@@ -470,7 +450,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                         let genderPrctArr = [agMale[key], agFemale[key]].map(v => Math.round((v / agTotal[key]) * 100));
                         charts[ELEMENT_IDS.GEO_AGE_GENDER].updateOptions({
                             chart: {
-                                width: '50%'
+                                width: '30%'
                             },
                             series: genderPrctArr
                         });
@@ -478,7 +458,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                         if (!genderEle.classList.contains("active")) {
                             mChart.updateOptions({
                                 chart: {
-                                    width: '50%'
+                                    width: '70%'
                                 }
                             });
                             agEle.classList.add("gender-activated");
@@ -497,33 +477,10 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             }
         },
         series: [{
-            data: ageGroupLabels.map(k => agTotal.hasOwnProperty(k) ? agTotal[k] : 0)
+            data: ageGroupLabels.map(k => agTotal.hasOwnProperty(k) ? agTotal[k] : null)
         }],
         xaxis: {
             categories: ageGroupLabels
-        }
-    };
-
-    let eduTypeLabels = Object.keys(qlfctData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
-    let educationOpt = {
-        series: [{
-            name: CHART_LABELS.POPULATION,
-            data: eduTypeLabels.map(k => qlfctData.hasOwnProperty(k) ? qlfctData[k] : 0)
-        }],
-        xaxis: {
-            categories: eduTypeLabels,
-            labels: {
-                formatter: function(val, ts, op) {
-                    return val == MAP_LAYER_PROPS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
-                        val == MAP_LAYER_PROPS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
-                        val == MAP_LAYER_PROPS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
-                        val == MAP_LAYER_PROPS.POST_SEC ? CHART_LABELS.POST_SEC :
-                        val == MAP_LAYER_PROPS.SECONDARY ? CHART_LABELS.SECONDARY :
-                        val == MAP_LAYER_PROPS.LOW_SEC ? CHART_LABELS.LOW_SECONDARY :
-                        val == MAP_LAYER_PROPS.PRIMARY ? CHART_LABELS.PRIMARY :
-                        CHART_LABELS.NONE;
-                }
-            }
         }
     };
 
@@ -542,6 +499,52 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             }
         }
     };
+
+    let eduTypeLabels = Object.keys(eduData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let educationOpt = {
+        series: [{
+            name: CHART_LABELS.POPULATION,
+            data: eduTypeLabels.map(k => eduData.hasOwnProperty(k) ? eduData[k] : null)
+        }],
+        xaxis: {
+            categories: eduTypeLabels,
+            labels: {
+                formatter: function(val, ts, op) {
+                    return val == MAP_LAYER_PROPS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
+                        val == MAP_LAYER_PROPS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
+                        val == MAP_LAYER_PROPS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
+                        val == MAP_LAYER_PROPS.POST_SEC ? CHART_LABELS.POST_SEC :
+                        val == MAP_LAYER_PROPS.SECONDARY ? CHART_LABELS.SECONDARY :
+                        val == MAP_LAYER_PROPS.LOW_SEC ? CHART_LABELS.LOW_SECONDARY :
+                        val == MAP_LAYER_PROPS.PRIMARY ? CHART_LABELS.PRIMARY :
+                        CHART_LABELS.NONE;
+                }
+            }
+        }
+    };
+
+    let occupationLabels = Object.keys(occupationData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let occupationOpt = {
+        series: [{
+            name: 'Population',
+            data: occupationLabels.map(k => occupationData.hasOwnProperty(k) ? occupationData[k] : null)
+        }],
+        xaxis: {
+            categories: occupationLabels.map(k => k.replace('1/', ''))
+        }
+    };
+
+    let incomeLabels = Object.keys(incomeData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let incomeOpt = {
+        series: [{
+            name: 'Population',
+            data: incomeLabels.map(k => incomeData.hasOwnProperty(k) ? incomeData[k] : null)
+        }],
+        xaxis: {
+            categories: incomeLabels
+        }
+    };
+
     charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
     charts[ELEMENT_IDS.GEO_RACE].updateSeries([
         raceData[MAP_LAYER_PROPS.CHINESE],
@@ -551,4 +554,6 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     ]);
     charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
     charts[ELEMENT_IDS.GEO_EDUCATION].updateOptions(educationOpt);
+    charts[ELEMENT_IDS.GEO_OCCUPATION].updateOptions(occupationOpt);
+    charts[ELEMENT_IDS.GEO_INCOME].updateOptions(incomeOpt);
 }

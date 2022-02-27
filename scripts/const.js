@@ -148,5 +148,7 @@ const ELEMENT_IDS = {
     GEO_EDUCATION: 'geo-education',
     GEO_LITERACY: 'geo-literacy',
     GEO_OCCUPATION: 'geo-occupation',
-    GEO_DWELLING: 'geo-dwelling'
+    GEO_DWELLING: 'geo-dwelling',
+    GEO_INCOME: 'geo-income',
+    GEO_TRANSPORT: 'geo-transport'
 };
