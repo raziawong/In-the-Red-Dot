@@ -133,6 +133,9 @@ const CHART_TITLES = {
 }
 const MAP = {
     ZOOM_INITIAL: 12.4,
+    DEFAULT_BORDER_COLOR: 'grey',
+    HOVER_BORDER_COLOR: '#F6AE2D',
+    CLICK_BORDER_COLOR: '#E73340',
     COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
 };
 const MAP_LAYER_PROPS = {
@@ -177,6 +180,9 @@ const MAP_LAYER_PROPS = {
     PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
 };
 const ELEMENT_IDS = {
+    SECT_OVERVIEW: 'overview',
+    SECT_TREND: 'trend',
+    SECT_PLAN_AREA: 'plan-area',
     POPULATION: 'population',
     RESIDENCY: 'residency',
     GENDER: 'gender',
@@ -195,8 +201,8 @@ const ELEMENT_IDS = {
     TREND_PR: 'trend-pr',
     TREND_NONRES: 'trend-nonres',
     TREND_POPINCR: 'trend-popincr',
-    GD_CONTENT: 'gd-content',
     MAP_INFO: 'map-info',
+    MAP_AREA_INFO: 'area-info',
     GEO_AGE_GROUP: 'geo-age-group',
     GEO_AGE_GENDER: 'geo-age-gender',
     GEO_RACE: 'geo-race',

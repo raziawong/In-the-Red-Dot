@@ -67,8 +67,15 @@ header .content {
     height: 80vh;
 }
 
+#ura-zones-map .info h5,
+#ura-zones-map .info p,
+#ura-zones-map .map-country-tooltip p {
+    margin: 0;
+}
+
 #ura-zones-map .map-country-tooltip {
-    background-color: transparent;
+    background-color: rgb(237, 242, 239, 0.5);
+    text-align: center;
     border: 0px;
     color: #57423F;
     font-weight: bold;
@@ -77,15 +84,25 @@ header .content {
 }
 
 #ura-zones-map .info {
+    background-color: rgb(255, 255, 255, 0.8);
+    padding: 0.5rem;
     float: none;
     clear: none;
     position: absolute;
     bottom: 20px;
 }
 
-#ura-zones-map .info h3 {
+#ura-zones-map .info>* {
     color: #57423F;
+}
+
+#ura-zones-map .info h3 {
     font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+#ura-zones-map .info #area-info,
+#ura-zones-map .info p {
     margin-bottom: 0.5rem;
 }
 
@@ -120,10 +137,5 @@ header .content {
     transform: translate(70%, -105%);
     z-index: 1;
 }
-
-
-/* #gd-content {
-    display: none;
-} */
 
 @media screen and (max-width:767px) {}

@@ -211,9 +211,10 @@ function updateTrendCharts(charts, years, yearData) {
 }
 
 function doPopulationTrend(years, yearData) {
-    let yearGroupEle = document.getElementById('trend-sel');
-    let yearStartEle = document.getElementById('trend-sel-from');
-    let yearEndEle = document.getElementById('trend-sel-to');
+    let yearGroupEle = document.getElementById(ELEMENT_IDS.TREND_SEL);
+    let yearStartEle = document.getElementById(ELEMENT_IDS.TREND_SEL_FROM);
+    let yearEndEle = document.getElementById(ELEMENT_IDS.TREND_SEL_TO);
+    let rangeErrorEle = yearGroupEle.querySelector('span');
 
     for (let year of years) {
         let optEle = document.createElement('option');
@@ -231,7 +232,7 @@ function doPopulationTrend(years, yearData) {
     updateTrendCharts(tCharts, range, yearData);
 
     yearGroupEle.addEventListener('change', evt => {
-        yearGroupEle.querySelector('span').style.display = 'none';
+        rangeErrorEle.style.display = 'none';
         yearStartEle.classList.remove('input-error');
         yearEndEle.classList.remove('input-error');
 
@@ -239,7 +240,7 @@ function doPopulationTrend(years, yearData) {
         if (diff > 10) {
             yearStartEle.classList.add('input-error');
             yearEndEle.classList.add('input-error');
-            yearGroupEle.querySelector('span').style.display = 'initial';
+            rangeErrorEle.style.display = 'initial';
         } else {
             let newRange = years.slice(years.indexOf(yearStartEle.value), years.indexOf(yearEndEle.value) + 1)
             updateTrendCharts(tCharts, newRange, yearData);
