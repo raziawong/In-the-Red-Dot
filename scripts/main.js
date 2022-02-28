@@ -6,10 +6,10 @@ function main() {
 
         window.addEventListener('DOMContentLoaded', async function() {
             let populationSeries = await initPopulation();
-            let years = populationSeries.ascYear.slice(-10);
+            let years = populationSeries.ascYear.slice(-40);
             let yearData = populationSeries.dataByYear;
             doPopulationOverview(years, yearData);
-            doPopulationTrendData(years, yearData);
+            doPopulationTrend(years, yearData);
 
             renderZoneAndData(map, await initGeoDistribution());
         });

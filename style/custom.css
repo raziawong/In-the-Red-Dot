@@ -59,6 +59,10 @@ header .content {
     width: 10rem;
 }
 
+#trend-sel span {
+    display: none;
+}
+
 #ura-zones-map {
     height: 80vh;
 }

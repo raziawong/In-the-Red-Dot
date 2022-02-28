@@ -36,7 +36,6 @@ function getObjModelForGeoDistribution(rawDataByCat, isAgeGroup) {
     for (let rowObj of rawDataByCat) {
         let areaName = UTIL.convertToTitleCase(rowObj['rowText'].toLowerCase().replace('- total', '').trim());
 
-
         for (let colData of rowObj.columns) {
             let dataKey = colData['key'];
             let dataToAdd = {};
@@ -69,6 +68,28 @@ function getObjModelForGeoDistribution(rawDataByCat, isAgeGroup) {
 function transformGeoDistributionData(rawData) {
     let dataByArea = { highestPopulationCount: 0 };
     let ageGroupByArea = rawData.ageGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
+
+    // dataByArea.dwellingType = rawData.dwellingType.map(row => {
+    //     return {
+    //         [row.rowText]: row.columns.map(col => {
+    //             return {
+    //                 [col.key]: UTIL.convertToNumber(
+    //                     col.value ? col.value : col.columns.find(hdb => hdb['key'].toLowerCase() === 'total')['value']
+    //                 )
+    //             }
+    //         })
+    //     }
+    // });
+
+    // dataByArea.grossIncome = rawData.grossIncome.map(row => {
+    //     return {
+    //         [row.rowText]: row.columns.map(col => {
+    //             return {
+    //                 [col.key]: UTIL.convertToNumber(col.value)
+    //             }
+    //         })
+    //     }
+    // });
 
     dataByArea.genderPopulation = getObjModelForGeoDistribution(ageGroupByArea, false);
     dataByArea.ageGroup = getObjModelForGeoDistribution(ageGroupByArea, true);
@@ -154,7 +175,7 @@ function transformAnnualPopulationData(rawData) {
     }
 
     let populationData = {
-        ascYear: Object.keys(dataByYear).sort(UTIL.compareAsc),
+        ascYear: Object.keys(dataByYear).sort(UTIL.compareAlphaNumAsc),
         dataByYear: dataByYear
     }
 

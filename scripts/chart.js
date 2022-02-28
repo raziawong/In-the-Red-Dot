@@ -43,29 +43,6 @@ function createSyncApexChart(id, chartOpt, title) {
     return chart;
 }
 
-// function createSyncApexChart(id, name, labels, seriesData) {
-//     let options = {
-//         chart: {
-//             id: id,
-//             group: 'residency',
-//             type: CHART_TYPES.AREA,
-//             sparkline: {
-//                 enabled: true
-//             },
-//         },
-//         series: [{
-//             name: name,
-//             data: seriesData
-//         }],
-//         labels: labels,
-//         title: {
-//             text: name
-//         }
-//     };
-
-//     new ApexCharts(document.getElementById(id), options).render();
-// }
-
 function getTrendCharts() {
     let trendCharts = {};
 
@@ -233,9 +210,43 @@ function updateTrendCharts(charts, years, yearData) {
     });
 }
 
-function doPopulationTrendData(years, yearData) {
+function doPopulationTrend(years, yearData) {
+    let yearGroupEle = document.getElementById('trend-sel');
+    let yearStartEle = document.getElementById('trend-sel-from');
+    let yearEndEle = document.getElementById('trend-sel-to');
+
+    for (let year of years) {
+        let optEle = document.createElement('option');
+        optEle.value = year;
+        optEle.innerText = year;
+        yearStartEle.appendChild(optEle);
+        yearEndEle.prepend(optEle.cloneNode(true));
+    }
+
+    yearEndEle.querySelector('option').selected = true;
+    yearStartEle.value = yearEndEle.value - 10;
+
     let tCharts = getTrendCharts();
-    updateTrendCharts(tCharts, years, yearData);
+    let range = years.slice(years.indexOf(yearStartEle.value), years.indexOf(yearEndEle.value) + 1);
+    updateTrendCharts(tCharts, range, yearData);
+
+    yearGroupEle.addEventListener('change', evt => {
+        yearGroupEle.querySelector('span').style.display = 'none';
+        yearStartEle.classList.remove('input-error');
+        yearEndEle.classList.remove('input-error');
+
+        let diff = yearEndEle.value - yearStartEle.value;
+        if (diff > 10) {
+            yearStartEle.classList.add('input-error');
+            yearEndEle.classList.add('input-error');
+            yearGroupEle.querySelector('span').style.display = 'initial';
+        } else {
+            let newRange = years.slice(years.indexOf(yearStartEle.value), years.indexOf(yearEndEle.value) + 1)
+            updateTrendCharts(tCharts, newRange, yearData);
+        }
+    });
+
+
     // let options = {
     //     series: [{
     //         name: LABELS.CITIZEN,
@@ -374,7 +385,8 @@ function updateOverviewElements(populationData) {
 
 function doPopulationOverview(years, dataByYear) {
     let yearSelectEle = document.getElementById(ELEMENT_IDS.POPULATION).getElementsByTagName('select')[0];
-    for (let year of years.sort(UTIL.compareDesc)) {
+    let descYear = [...years].sort(UTIL.compareAlphaNumDesc);
+    for (let year of descYear) {
         let optEle = document.createElement('option');
         optEle.value = year;
         optEle.innerText = year;
@@ -385,8 +397,8 @@ function doPopulationOverview(years, dataByYear) {
     updateOverviewCharts(chartObj, dataByYear[yearSelectEle.value]);
     updateOverviewElements(dataByYear[yearSelectEle.value]);
 
-    yearSelectEle.addEventListener('change', event => {
-        let selectedYear = event.target.value || 0;
+    yearSelectEle.addEventListener('change', evt => {
+        let selectedYear = evt.target.value || 0;
         if (selectedYear) {
             updateOverviewCharts(chartObj, dataByYear[selectedYear]);
             updateOverviewElements(dataByYear[selectedYear]);
