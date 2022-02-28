@@ -117,11 +117,11 @@ function renderZoneAndData(map, geoDistrData) {
     info.onAdd = function(map) {
         let containerEle = L.DomUtil.create('div', 'info');
         let areaContainerEle = L.DomUtil.create('div');
-        let headerEle = L.DomUtil.create('h3', '', containerEle);
+        let headerEle = L.DomUtil.create('h6', '', containerEle);
         let legendEle = L.DomUtil.create('div', 'legend', containerEle);
 
         containerEle.setAttribute('id', ELEMENT_IDS.MAP_INFO);
-        headerEle.innerHTML = '<h3>Population Density</h3>';
+        headerEle.innerText = 'Population Density';
 
         legendEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
         for (let color of MAP.COLOR_RANGE) {

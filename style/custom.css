@@ -32,13 +32,13 @@ body {
     height: 350px;
 }
 
-.ct-body section .row>* {
+.ct-body section:not(#plan-area) .row>* {
     margin: 2rem 0;
 }
 
 .ct-body .form-group .form-group-label {
     background-color: var(--pri-accent);
-    border: 1px solid var(--sec-color);
+    border: 0;
     color: var(--pri-color);
 }
 
@@ -75,6 +75,10 @@ body {
     width: 9vw;
 }
 
+.ct-body .tree-nav-body .tree-nav-content {
+    padding: 0 0;
+}
+
 #population {
     text-align: center;
 }
@@ -83,8 +87,39 @@ body {
     display: none;
 }
 
+#plan-area {
+    height: 100vh;
+    overflow: hidden;
+}
+
+#plan-area .tab-container ul.row {
+    height: 5vh;
+    padding: 0 0;
+    margin: 0 0;
+    border: 0;
+}
+
+#plan-area .tab-container li .tab-item-content {
+    background-color: var(--pri-accent);
+    color: var(--gen-text);
+}
+
+#plan-area .tab-container li:hover .tab-item-content {
+    border-bottom-color: var(--pri-color);
+}
+
+#plan-area .tab-container li.selected .tab-item-content {
+    border-bottom-color: var(--pri-color);
+    color: var(--pri-color);
+}
+
+#plan-area .tab-content {
+    position: relative;
+    transform: translateX(-150%);
+}
+
 #ura-zones-map {
-    height: 80vh;
+    height: 95vh;
 }
 
 #ura-zones-map .info h5,
@@ -110,14 +145,15 @@ body {
     clear: none;
     position: absolute;
     bottom: 20px;
+    text-align: center;
 }
 
 #ura-zones-map .info>* {
     color: #57423F;
 }
 
-#ura-zones-map .info h3 {
-    font-size: 1.6rem;
+#ura-zones-map .info h6 {
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
@@ -158,4 +194,8 @@ body {
     z-index: 1;
 }
 
-@media screen and (max-width:767px) {}
+@media screen and (max-width: 640px) {
+    #plan-area .tab-container li:nth-child(odd) {
+        border-right: 1px solid var(--ter-color);
+    }
+}
