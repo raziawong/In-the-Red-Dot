@@ -379,13 +379,13 @@ function updateOverviewCharts(charts, populationData) {
 }
 
 function updateOverviewElements(populationData) {
-    document.getElementById(ELEMENT_IDS.POPULATION).getElementsByTagName('span')[0].innerText = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
-    document.getElementById(ELEMENT_IDS.MED_AGE_CITIZEN).getElementsByTagName('span')[0].innerText = populationData[DOS_DATA_KEYS.MED_AGE_CITIZEN];
-    document.getElementById(ELEMENT_IDS.MED_AGE_RESIDENT).getElementsByTagName('span')[0].innerText = populationData[DOS_DATA_KEYS.MED_AGE_RESIDENT];
+    document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
+    document.getElementById(ELEMENT_IDS.MED_AGE_CITIZEN).querySelector('span').innerText = populationData[DOS_DATA_KEYS.MED_AGE_CITIZEN];
+    document.getElementById(ELEMENT_IDS.MED_AGE_RESIDENT).querySelector('span').innerText = populationData[DOS_DATA_KEYS.MED_AGE_RESIDENT];
 }
 
 function doPopulationOverview(years, dataByYear) {
-    let yearSelectEle = document.getElementById(ELEMENT_IDS.POPULATION).getElementsByTagName('select')[0];
+    let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
     let descYear = [...years].sort(UTIL.compareAlphaNumDesc);
     for (let year of descYear) {
         let optEle = document.createElement('option');

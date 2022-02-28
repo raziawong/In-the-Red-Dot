@@ -1,23 +1,51 @@
-.ct-body {
-    background-color: #FFF6F5;
+:root {
+    --pri-color: #E73340;
+    --pri-accent: #F3EED9;
+    --sec-color: #F6AE2D;
+    --sec-accent: #EDF2EF;
+    --sec-accent-o8: rgba(237, 242, 239, 0.8);
+    --ter-color: #285943;
+    --gen-text: #57423F;
+}
+
+body {
+    background-color: var(--sec-accent);
 }
 
 .ct-body a {
-    color: #57423F;
+    color: var(--gen-text);
 }
 
 .ct-body header.tree-nav {
     z-index: 400000;
 }
 
-header .content {
+.ct-body header .content {
     margin: 0 0 1.5rem;
+}
+
+.ct-body .chart {
+    height: 500px;
+}
+
+.ct-body .chart.short {
+    height: 350px;
+}
+
+.ct-body section .row>* {
+    margin: 2rem 0;
+}
+
+.ct-body .form-group .form-group-label {
+    background-color: var(--pri-accent);
+    border: 1px solid var(--sec-color);
+    color: var(--pri-color);
 }
 
 #sidebar-toggle .icon {
     transform: translate(-40%);
     border-radius: 0 0 9vw 0;
-    background-color: #F3EED9;
+    background-color: var(--pri-accent);
     writing-mode: vertical-rl;
     text-orientation: upright;
     width: 10vw;
@@ -29,7 +57,7 @@ header .content {
 }
 
 #sidebar {
-    background-color: #F3EED9;
+    background-color: var(--pri-accent);
     padding-top: 2vh;
 }
 
@@ -39,7 +67,7 @@ header .content {
 }
 
 #sidebar .content a h6 {
-    color: #E73340;
+    color: var(--pri-color);
     text-transform: uppercase;
 }
 
@@ -47,16 +75,8 @@ header .content {
     width: 9vw;
 }
 
-.ct-body .chart {
-    height: 400px;
-}
-
-.ct-body .chart.short {
-    height: 280px;
-}
-
-#population select {
-    width: 10rem;
+#population {
+    text-align: center;
 }
 
 #trend-sel span {
@@ -74,17 +94,17 @@ header .content {
 }
 
 #ura-zones-map .map-country-tooltip {
-    background-color: rgb(237, 242, 239, 0.5);
+    background-color: var(--sec-accent-o8);
     text-align: center;
     border: 0px;
-    color: #57423F;
+    color: var(--gen-text);
     font-weight: bold;
     font-size: 1rem;
     box-shadow: none;
 }
 
 #ura-zones-map .info {
-    background-color: rgb(255, 255, 255, 0.8);
+    background-color: var(--sec-accent-o8);
     padding: 0.5rem;
     float: none;
     clear: none;
@@ -108,8 +128,8 @@ header .content {
 
 #ura-zones-map .info .legend {
     line-height: 1.4rem;
-    background-color: #57423F;
-    color: #FFF6F5;
+    background-color: var(--gen-text);
+    color: var(--sec-accent);
     font-weight: 500;
     display: inline-flex;
     align-items: center;

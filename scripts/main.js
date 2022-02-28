@@ -30,6 +30,7 @@ function main() {
                 easing: 'easeinout',
                 speed: 800
             },
+            colors: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535'],
             chart: {
                 height: '100%',
                 fontFamily: 'Nunito Sans,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif',

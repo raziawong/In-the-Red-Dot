@@ -136,7 +136,7 @@ const MAP = {
     DEFAULT_BORDER_COLOR: 'grey',
     HOVER_BORDER_COLOR: '#F6AE2D',
     CLICK_BORDER_COLOR: '#E73340',
-    COLOR_RANGE: ['#ffffe5', '#fff7bc', '#fee391', '#fec44f', '#fe9929', '#ec7014', '#cc4c02', '#993404', '#662506']
+    COLOR_RANGE: ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026']
 };
 const MAP_LAYER_PROPS = {
     POPULATION: 'population',
@@ -183,6 +183,7 @@ const ELEMENT_IDS = {
     SECT_OVERVIEW: 'overview',
     SECT_TREND: 'trend',
     SECT_PLAN_AREA: 'plan-area',
+    OVERVIEW_SEL_YEAR: 'overview-sel-year',
     POPULATION: 'population',
     RESIDENCY: 'residency',
     GENDER: 'gender',
