@@ -11,10 +11,9 @@ function getHeatMapColor(highestNum, num) {
         MAP.COLOR_RANGE[8];
 }
 
-
-function renderZoneAndData(map, geoDistrData) {
-    function hoverLayer(event) {
-        let layer = event.target;
+function doURAZoneAndData(map, geoDistrData) {
+    function hoverLayer(evt) {
+        let layer = evt.target;
         layer.setStyle({
             weight: 5,
             color: MAP.HOVER_BORDER_COLOR,
@@ -24,8 +23,8 @@ function renderZoneAndData(map, geoDistrData) {
         layer.bringToFront();
     }
 
-    function resetLayer(event) {
-        let layer = event.target;
+    function resetLayer(evt) {
+        let layer = evt.target;
         if (layer.options.color && layer.options.color !== MAP.CLICK_BORDER_COLOR) {
             layer.setStyle({
                 weight: 2,
@@ -35,8 +34,8 @@ function renderZoneAndData(map, geoDistrData) {
         }
     }
 
-    function clickLayer(event, map, geoCharts, prevClickLayer) {
-        let layer = event.target;
+    function clickLayer(evt, map, geoCharts, prevClickLayer) {
+        let layer = evt.target;
         let properties = layer.feature.properties;
 
         console.log(prevClickLayer);
