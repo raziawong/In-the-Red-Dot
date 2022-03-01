@@ -188,7 +188,7 @@ function doPopulationTrend(years, yearData) {
 
         trendCharts[ELEMENT_IDS.TREND_POPINCR] = createApexChart(
             ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA,
-            CHART_TITLES.POP_GROWTH, true, {
+            CHART_TITLES.POP_GROWTH, false, {
                 xaxis: { labels: { show: false } },
                 yaxis: { labels: { show: false } }
             }
@@ -263,14 +263,41 @@ function doPopulationTrend(years, yearData) {
 
     function updateTrendCharts(charts, years, yearData) {
         charts[ELEMENT_IDS.TREND_POPINCR].updateOptions({
+            dataLabels: {
+                enabled: true,
+                enabledOnSeries: [1, 2]
+            },
             series: [{
-                name: CHART_LABELS.RATE_NATURAL_INCR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
-            }, {
-                name: CHART_LABELS.RATE_POPLT_INCR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
-            }],
-            labels: years
+                    name: CHART_LABELS.POPULATION,
+                    data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT),
+                    type: CHART_TYPES.COLUMN
+                },
+                {
+                    name: CHART_LABELS.RATE_NATURAL_INCR,
+                    data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
+                }, {
+                    name: CHART_LABELS.RATE_POPLT_INCR,
+                    data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
+                }
+            ],
+            labels: years,
+            stroke: {
+                width: [2, 3, 4]
+            },
+            yaxis: [{
+                    labels: { show: false },
+                    seriesName: CHART_LABELS.POPULATION
+                },
+                {
+                    labels: { show: false },
+                    opposite: true,
+                    seriesName: CHART_LABELS.RATE_NATURAL_INCR
+                }, {
+                    labels: { show: false },
+                    opposite: true,
+                    seriesName: CHART_LABELS.RATE_POPLT_INCR
+                }
+            ]
         });
 
         charts[ELEMENT_IDS.TREND_CITIZEN].updateOptions({
@@ -339,28 +366,28 @@ function doPopulationTrend(years, yearData) {
         charts[ELEMENT_IDS.TREND_DEPENDENCY].updateOptions({
             series: [{
                 name: CHART_LABELS.AGE_DEP_15_64,
-                type: CHART_TYPES.COLUMN,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_15_64)
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_15_64),
+                type: CHART_TYPES.COLUMN
             }, {
                 name: CHART_LABELS.AGE_DEP_20_64,
-                type: CHART_TYPES.COLUMN,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_20_64)
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.AGE_DEP_20_64),
+                type: CHART_TYPES.COLUMN
             }, {
                 name: CHART_LABELS.CHILD_DEP_15_64,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_15_64),
                 type: CHART_TYPES.AREA,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_15_64)
             }, {
                 name: CHART_LABELS.CHILD_DEP_20_64,
-                type: CHART_TYPES.AREA,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_20_64)
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CHILD_DEP_20_64),
+                type: CHART_TYPES.AREA
             }, {
                 name: CHART_LABELS.OLD_DEP_15_64,
-                type: CHART_TYPES.LINE,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_15_64)
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_15_64),
+                type: CHART_TYPES.LINE
             }, {
                 name: CHART_LABELS.OLD_DEP_20_64,
-                type: CHART_TYPES.LINE,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64)
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64),
+                type: CHART_TYPES.LINE
             }],
             labels: years
         });
