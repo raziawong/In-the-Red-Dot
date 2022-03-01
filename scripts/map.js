@@ -37,22 +37,13 @@ function doURAZoneAndData(map, geoDistrData) {
     function clickLayer(evt, map, geoCharts) {
         let layer = evt.target;
         let properties = layer.feature.properties;
-
-        layer.setStyle({
-            weight: 5,
-            color: MAP.CLICK_BORDER_COLOR,
-            dashArray: ''
-        });
-
-        map.fitBounds(layer.getBounds());
-
         let subtext = properties[MAP_LAYER_PROPS.POPULATION] || 'No Data';
         let container = document.getElementById(ELEMENT_IDS.MAP_AREA_INFO);
-        container.innerHTML = `<p>Click on plan area to see population number</p>
-        <h5>${properties[MAP_LAYER_PROPS.DISPLAY_NAME]}</h5>
-        <p>Population: <span>${subtext}</span></p>`;
-        container.style.display = 'initial';
 
+        container.innerHTML = `<h5>${properties[MAP_LAYER_PROPS.DISPLAY_NAME]}</h5>
+        <p>Population: <span>${subtext}</span></p>`;
+
+        map.fitBounds(layer.getBounds());
         updateGeoDistrCharts(geoCharts, properties);
 
         document.querySelector('#plan-area .tab-container').classList.remove('disabled');

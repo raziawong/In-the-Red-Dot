@@ -1,6 +1,7 @@
 :root {
     --pri-color: #E73340;
     --pri-accent: #F3EED9;
+    --pri-accent-o8: rgb(243, 237, 216, 0.8);
     --sec-color: #F6AE2D;
     --sec-accent: rgb(246, 240, 237 0.3);
     --sec-accent-o8: rgb(246, 240, 237, 0.8);
@@ -16,10 +17,14 @@ body {
     color: var(--gen-text);
 }
 
+.ct-body .tree-nav-body {
+    position: relative;
+}
+
 .ct-body .tree-nav {
     background-color: var(--pri-accent);
     padding: 0.2rem 1.5rem;
-    z-index: 400001;
+    z-index: 400002;
 }
 
 .ct-body .tree-nav img {
@@ -39,10 +44,6 @@ body {
 .ct-body .tree-nav .tree-item-header {
     margin: 0 0;
     font-size: 1.1rem;
-}
-
-.ct-body .ct-content {
-    overflow: hidden;
 }
 
 .ct-body .chart {
@@ -67,23 +68,40 @@ body {
     margin: 2rem 0;
 }
 
+.ct-body .form-group {
+    margin: 0 0;
+}
+
 .ct-body .form-group .form-group-label {
     background-color: var(--pri-accent);
     border: 0;
     color: var(--pri-color);
+    padding: 0.8rem 8vw;
 }
 
 .ct-body .tree-nav-body .tree-nav-content {
     padding: 0 0;
+    overflow: hidden;
+}
+
+#sidebar-toggle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 400001;
+    padding: 0;
 }
 
 #sidebar-toggle .icon {
     transform: translate(-40%);
+    border-right: 1px dotted var(--pri-accent);
+    border-bottom: 1px dotted var(--pri-accent);
     border-radius: 0 0 9vw 0;
-    background-color: var(--pri-accent);
+    background-color: var(--sec-color);
     writing-mode: vertical-rl;
     text-orientation: upright;
-    width: 10vw;
+    width: 3rem;
+    opacity: 0.7;
 }
 
 #sidebar-close .icon {
@@ -158,6 +176,10 @@ body {
     height: 95vh;
 }
 
+#ura-zones-map:focus {
+    box-shadow: none;
+}
+
 #ura-zones-map .info h5,
 #ura-zones-map .info p,
 #ura-zones-map .map-country-tooltip p {
@@ -185,7 +207,7 @@ body {
 }
 
 #ura-zones-map .info>* {
-    color: #57423F;
+    color: var(--gen-text);
 }
 
 #ura-zones-map .info h6 {
@@ -196,6 +218,10 @@ body {
 #ura-zones-map .info #area-info,
 #ura-zones-map .info p {
     margin-bottom: 0.5rem;
+}
+
+#ura-zones-map .leaflet-control a {
+    padding: 0;
 }
 
 #ura-zones-map .info .legend {
@@ -240,6 +266,50 @@ body {
 @media screen and (max-width: 640px) {
     .ct-body header.tree-nav {
         padding: 0.2rem 0.8rem;
+    }
+    .tree-nav-content .form-group {
+        display: block;
+        width: 100vw;
+    }
+    .ct-body .form-group .form-group-label {
+        width: 100%;
+        padding: 0.2rem;
+        text-align: center;
+    }
+    .ct-body .form-group select {
+        width: 100%;
+        padding: 0.2rem 1rem;
+        text-align: center;
+    }
+    .ct-body .form-group span.info {
+        text-align: center;
+    }
+    #plan-area .tab-container ul.row {
+        height: 10vh;
+    }
+    #plan-area .tab-content-container {
+        top: 10vh
+    }
+    #ura-zones-map {
+        height: 90vh;
+    }
+    #ura-zones-map .info {
+        width: 100vw;
+        bottom: 23.2px;
+    }
+    #ura-zones-map .info #area-info,
+    #ura-zones-map .info p {
+        margin: 0.1rem 1rem;
+    }
+    #ura-zones-map .leaflet-right .leaflet-control-zoom {
+        margin-right: 0.2rem;
+    }
+    #ura-zones-map .leaflet-bottom .leaflet-control-zoom {
+        margin-bottom: 1.5rem;
+    }
+    #plan-area .tab-container li .tab-item-content {
+        padding: 0.2rem 0.4rem;
+        border-bottom: 0;
     }
     #plan-area .tab-container li:nth-child(odd) {
         border-right: 1px solid var(--ter-color);
