@@ -19,7 +19,7 @@ body {
 .ct-body .tree-nav {
     background-color: var(--pri-accent);
     padding: 0.2rem 1.5rem;
-    z-index: 400000;
+    z-index: 400001;
 }
 
 .ct-body .tree-nav img {
@@ -55,6 +55,11 @@ body {
 
 .ct-body section {
     height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.ct-body section:not(#plan-area) {
     overflow: scroll;
 }
 
@@ -66,6 +71,10 @@ body {
     background-color: var(--pri-accent);
     border: 0;
     color: var(--pri-color);
+}
+
+.ct-body .tree-nav-body .tree-nav-content {
+    padding: 0 0;
 }
 
 #sidebar-toggle .icon {
@@ -99,6 +108,14 @@ body {
     font-size: var(--font-size-m);
 }
 
+#plan-area .tab-container.disabled li .tab-item-content,
+#plan-area .tab-container.disabled li:hover .tab-item-content {
+    border-bottom: 0;
+    background-color: var(--cirrus-light-gray);
+    color: var(--cirrus-dark-gray);
+    cursor: not-allowed;
+}
+
 #plan-area .tab-container li .tab-item-content {
     box-sizing: border-box;
     background-color: var(--pri-accent);
@@ -115,9 +132,26 @@ body {
     color: var(--pri-color);
 }
 
+#plan-area .tab-content-container {
+    padding: 0.5rem;
+    position: absolute;
+    right: 0;
+    top: 5vh;
+    height: 95vh;
+    width: 100%;
+    transform: translateX(200%);
+    transition: .5s ease-in-out transform;
+    background-color: var(--sec-accent-o8);
+}
+
+#plan-area .tab-content-container.active {
+    z-index: 400000;
+    transform: translate(0, 0);
+    transition: .5s ease-in-out transform;
+}
+
 #plan-area .tab-content {
-    position: relative;
-    transform: translateX(-150%);
+    padding: 1.3rem;
 }
 
 #ura-zones-map {
