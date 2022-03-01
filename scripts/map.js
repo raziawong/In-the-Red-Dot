@@ -34,18 +34,9 @@ function doURAZoneAndData(map, geoDistrData) {
         }
     }
 
-    function clickLayer(evt, map, geoCharts, prevClickLayer) {
+    function clickLayer(evt, map, geoCharts) {
         let layer = evt.target;
         let properties = layer.feature.properties;
-
-        console.log(prevClickLayer);
-        if (prevClickLayer) {
-            prevClickLayer.setStyle({
-                weight: 2,
-                color: MAP.DEFAULT_BORDER_COLOR,
-                dashArray: '4'
-            });
-        }
 
         layer.setStyle({
             weight: 5,
@@ -64,7 +55,7 @@ function doURAZoneAndData(map, geoDistrData) {
 
         updateGeoDistrCharts(geoCharts, properties);
 
-        return layer;
+        document.querySelector('#plan-area .tab-container').classList.remove('disabled');
     }
 
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
@@ -103,11 +94,10 @@ function doURAZoneAndData(map, geoDistrData) {
                 direction: 'center'
             });
 
-            let prevClickLayer = null;
             layer.on({
                 mouseover: hoverLayer,
                 mouseout: resetLayer,
-                click: (e => { prevClickLayer = clickLayer(e, map, geoCharts, prevClickLayer) })
+                click: (e => clickLayer(e, map, geoCharts))
             });
         });
     }).addTo(map);

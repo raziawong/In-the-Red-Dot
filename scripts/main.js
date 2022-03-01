@@ -126,6 +126,30 @@ function main() {
         return populationSeries;
     }
 
+    function doTabInteraction() {
+        let tabEle = document.querySelector('#plan-area .tab-container');
+        let tabNavEles = tabEle.querySelectorAll('li');
+
+        for (let tab of tabNavEles) {
+            tab.addEventListener('click', (evt) => {
+                if (!tabEle.classList.contains('disabled')) {
+                    let paTabContents = document.querySelectorAll('#plan-area .tab-content-container');
+
+                    for (let ot of tabNavEles) {
+                        ot.classList.remove('selected');
+                    }
+                    for (let content of paTabContents) {
+                        content.classList.remove('active');
+                    }
+                    tab.classList.add('selected');
+
+                    let targetId = tab.dataset.target;
+                    document.getElementById(targetId).classList.add('active');
+                }
+            });
+        }
+    }
+
     init();
 }
 

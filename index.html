@@ -139,49 +139,74 @@
                         <div id="trend-dependecy"></div>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="col-12 chart">
-                        <div id="population-stack"></div>
-                    </div>
-                </div> -->
             </section>
             <section id="plan-area">
-                <div>
-                    <div class="tab-container">
-                        <ul class="row no-space">
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
-                                <div class="tab-item-content">Residents</div>
-                            </li>
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-dwelling">
-                                <div class="tab-item-content">Dwelling</div>
-                            </li>
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
-                                <div class="tab-item-content">Education</div>
-                            </li>
-                            <li class="col-xs-6 col-sm-3 selected" data-target="tab-content-empl">
-                                <div class="tab-item-content">Employed</div>
-                            </li>
-                        </ul>
+                <div class="tab-container disabled">
+                    <ul class="row no-space">
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
+                            <div class="tab-item-content">Residents</div>
+                        </li>
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-dwelling">
+                            <div class="tab-item-content">Dwelling</div>
+                        </li>
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
+                            <div class="tab-item-content">Education</div>
+                        </li>
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-empl">
+                            <div class="tab-item-content">Employed</div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="ura-zones-map"></div>
+                <div class="tab-content-container" id="tab-content-res">
+                    <div class="u-pull-right">
+                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
                     </div>
-                    <!-- <div class="tab-content" id="tab-content-res">
-                        <div id="geo-age-group"></div>
-                        <div id="geo-age-gender"></div>
-                        <div id="geo-race"></div>
+                    <div class="row tab-content">
+                        <div class="col-12 chart">
+                            <div id="geo-age-group"></div>
+                            <div id="geo-age-gender"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="geo-race"></div>
+                        </div>
                     </div>
-                    <div class="tab-content" id="tab-content-dwelling">
+                </div>
+                <div class="tab-content-container" id="tab-content-dwelling">
+                    <div class="u-pull-right">
+                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <div class="tab-content">
                         <div id="geo-dwelling"></div>
                     </div>
-                    <div class="tab-content" id="tab-content-edu">
+                </div>
+                <div class="tab-content-container" id="tab-content-edu">
+                    <div class="u-pull-right">
+                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <div class="tab-content">
                         <div id="geo-education"></div>
                         <div id="geo-literacy"></div>
                     </div>
-                    <div class="tab-content" id="tab-content-empl">
+                </div>
+                <div class="tab-content-container" id="tab-content-empl">
+                    <div class="u-pull-right">
+                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <div class="tab-content">
                         <div id="geo-occupation"></div>
                         <div id="geo-income"></div>
                         <div id="geo-transport"></div>
                         <div id="geo-travel"></div>
-                    </div> -->
-                    <div id="ura-zones-map"></div>
+                    </div>
+                </div>
+                <div class="tab-content-container" id="tab-content-none">
+                    <div class="u-pull-right">
+                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <div>
+                        <h4>No Data To Show</h4>
+                    </div>
                 </div>
             </section>
         </main>
