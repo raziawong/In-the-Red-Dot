@@ -47,24 +47,30 @@ function doPopulationTrend(years, yearData) {
     function getTrendCharts() {
         let trendCharts = {};
 
+        trendCharts[ELEMENT_IDS.TREND_POPINCR] = createApexChart(
+            ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA,
+            CHART_TITLES.POP_GROWTH, true, {
+                xaxis: { labels: { show: false } },
+                yaxis: { labels: { show: false } }
+            }
+        );
+
         trendCharts[ELEMENT_IDS.TREND_GENDER] = createApexChart(
             ELEMENT_IDS.TREND_GENDER, CHART_TYPES.BAR,
-            CHART_TITLES.GENDER, false, null
+            CHART_TITLES.GENDER, false, {
+                dataLabels: { enabled: false },
+                xaxis: { labels: { show: false } },
+                yaxis: { labels: { show: false } }
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_RACE] = createApexChart(
             ELEMENT_IDS.TREND_RACE, CHART_TYPES.BAR,
-            CHART_TITLES.ETHNICITY, true, null
-        );
-
-        trendCharts[ELEMENT_IDS.TREND_AGE] = createApexChart(
-            ELEMENT_IDS.TREND_AGE, CHART_TYPES.BAR,
-            CHART_TITLES.MEDIAN_AGE, false, null
-        );
-
-        trendCharts[ELEMENT_IDS.TREND_DEPENDCY] = createApexChart(
-            ELEMENT_IDS.TREND_DEPENDCY, CHART_TYPES.LINE,
-            CHART_TITLES.AGE_DEPENDENCY_RATIO, false, null
+            CHART_TITLES.ETHNICITY, true, {
+                dataLabels: { enabled: false },
+                xaxis: { labels: { show: false } },
+                yaxis: { labels: { show: false } }
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_CITIZEN] = createSyncApexChart(
@@ -97,15 +103,61 @@ function doPopulationTrend(years, yearData) {
             CHART_LABELS.NON_RES
         );
 
-        trendCharts[ELEMENT_IDS.TREND_POPINCR] = createApexChart(
-            ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA,
-            CHART_TITLES.POP_GROWTH, true, null
+        trendCharts[ELEMENT_IDS.TREND_AGE] = createApexChart(
+            ELEMENT_IDS.TREND_AGE, CHART_TYPES.BAR,
+            CHART_TITLES.MEDIAN_AGE, false, {
+                xaxis: { labels: { show: false } },
+                yaxis: { labels: { show: false } }
+            }
+        );
+
+        trendCharts[ELEMENT_IDS.TREND_DEPENDENCY] = createApexChart(
+            ELEMENT_IDS.TREND_DEPENDENCY, CHART_TYPES.LINE,
+            CHART_TITLES.AGE_DEPENDENCY_RATIO, false, {
+                xaxis: { labels: { show: false } },
+                yaxis: { labels: { show: false } }
+            }
         );
 
         return trendCharts;
     }
 
     function updateTrendCharts(charts, years, yearData) {
+        charts[ELEMENT_IDS.TREND_POPINCR].updateOptions({
+            series: [{
+                name: CHART_LABELS.RATE_NATURAL_INCR,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
+            }, {
+                name: CHART_LABELS.RATE_POPLT_INCR,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
+            }],
+            labels: years
+        });
+
+        charts[ELEMENT_IDS.TREND_CITIZEN].updateOptions({
+            series: [{
+                name: CHART_LABELS.CITIZEN,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT)
+            }],
+            labels: years
+        }, true, true, false);
+
+        charts[ELEMENT_IDS.TREND_PR].updateOptions({
+            series: [{
+                name: CHART_LABELS.PR,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT)
+            }],
+            labels: years
+        }, true, true, false);
+
+        charts[ELEMENT_IDS.TREND_NONRES].updateOptions({
+            series: [{
+                name: CHART_LABELS.NON_RES,
+                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT)
+            }],
+            labels: years
+        }, true, true, false);
+
         charts[ELEMENT_IDS.TREND_GENDER].updateOptions({
             series: [{
                 name: CHART_LABELS.MALE,
@@ -145,7 +197,7 @@ function doPopulationTrend(years, yearData) {
             labels: years
         });
 
-        charts[ELEMENT_IDS.TREND_DEPENDCY].updateOptions({
+        charts[ELEMENT_IDS.TREND_DEPENDENCY].updateOptions({
             series: [{
                 name: CHART_LABELS.AGE_DEP_15_64,
                 type: CHART_TYPES.COLUMN,
@@ -170,42 +222,6 @@ function doPopulationTrend(years, yearData) {
                 name: CHART_LABELS.OLD_DEP_20_64,
                 type: CHART_TYPES.LINE,
                 data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.OLD_DEP_20_64)
-            }],
-            labels: years
-        });
-
-        charts[ELEMENT_IDS.TREND_CITIZEN].updateOptions({
-            series: [{
-                name: CHART_LABELS.CITIZEN,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.CITIZEN_PPLT)
-            }],
-            labels: years
-        }, true, true, false);
-
-        charts[ELEMENT_IDS.TREND_PR].updateOptions({
-            series: [{
-                name: CHART_LABELS.PR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.PR_PPLT)
-            }],
-            labels: years
-        }, true, true, false);
-
-        charts[ELEMENT_IDS.TREND_NONRES].updateOptions({
-            series: [{
-                name: CHART_LABELS.NON_RES,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.NON_RES_PPLT)
-            }],
-            labels: years
-        }, true, true, false);
-
-
-        charts[ELEMENT_IDS.TREND_POPINCR].updateOptions({
-            series: [{
-                name: CHART_LABELS.RATE_NATURAL_INCR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
-            }, {
-                name: CHART_LABELS.RATE_POPLT_INCR,
-                data: getYearSeriesChartData(years, yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
             }],
             labels: years
         });
@@ -303,27 +319,29 @@ function doPopulationOverview(years, dataByYear) {
 
         overviewCharts[ELEMENT_IDS.RESIDENCY] = createApexChart(
             ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
-            'Residency', false, { labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES] }
+            CHART_TITLES.RESIDENCY, false, { labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES] }
         );
 
         overviewCharts[ELEMENT_IDS.GENDER] = createApexChart(
             ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
-            'Gender', false, { labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE] }
+            CHART_TITLES.GENDER, false, { labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE] }
         );
 
         overviewCharts[ELEMENT_IDS.RACE] = createApexChart(
             ELEMENT_IDS.RACE, CHART_TYPES.PIE,
-            'Ethnicity', false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
+            CHART_TITLES.ETHNICITY, false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
         );
 
         overviewCharts[ELEMENT_IDS.AGE_GROUP] = createApexChart(
             ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
-            'Age Group', true, {
+            CHART_TITLES.AGE_GROUP, true, {
                 plotOptions: {
                     bar: {
                         horizontal: true
                     },
-                }
+                },
+                xaxis: { labels: { show: false } },
+                yaxis: { labels: { show: false } }
             }
         );
 
@@ -412,7 +430,7 @@ function getGeoDistrCharts() {
 
     geoCharts[ELEMENT_IDS.GEO_AGE_GROUP] = createApexChart(
         ELEMENT_IDS.GEO_AGE_GROUP, CHART_TYPES.BAR,
-        'Age Group', false, {
+        CHART_TITLES.AGE_GROUP, false, {
             plotOptions: {
                 bar: {
                     horizontal: true
@@ -431,30 +449,30 @@ function getGeoDistrCharts() {
 
     geoCharts[ELEMENT_IDS.GEO_AGE_GENDER] = createApexChart(
         ELEMENT_IDS.GEO_AGE_GENDER, CHART_TYPES.RADIAL_BAR,
-        'Age Group Gender', false, {
+        CHART_TITLES.AGE_GROUP + ' ' + CHART_TITLES.GENDER, false, {
             labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
         });
 
     geoCharts[ELEMENT_IDS.GEO_RACE] = createApexChart(
         ELEMENT_IDS.GEO_RACE, CHART_TYPES.PIE,
-        'Ethnicity', false, {
+        CHART_TITLES.ETHNICITY, false, {
             labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS]
         }
     );
 
     geoCharts[ELEMENT_IDS.GEO_DWELLING] = createApexChart(
         ELEMENT_IDS.GEO_DWELLING, CHART_TYPES.TREE_MAP,
-        'Dwelling Type', false, { dataLabels: { show: true } }
+        CHART_TITLES.DWELLING_TYPE, false, { dataLabels: { show: true } }
     );
 
     geoCharts[ELEMENT_IDS.GEO_EDUCATION] = createApexChart(
         ELEMENT_IDS.GEO_EDUCATION, CHART_TYPES.RADAR,
-        'Qualification', false, { dataLabels: { show: true } }
+        CHART_TITLES.QUALIFICATION, false, { dataLabels: { show: true } }
     );
 
     geoCharts[ELEMENT_IDS.GEO_LITERACY] = createApexChart(
         ELEMENT_IDS.GEO_LITERACY, CHART_TYPES.RADIAL_BAR,
-        'Literacy', false, {
+        CHART_TITLES.LITERACY, false, {
             plotOptions: {
                 radialBar: {
                     dataLabels: {
@@ -470,17 +488,17 @@ function getGeoDistrCharts() {
 
     geoCharts[ELEMENT_IDS.GEO_OCCUPATION] = createApexChart(
         ELEMENT_IDS.GEO_OCCUPATION, CHART_TYPES.BAR,
-        'Occupation', false, { dataLabels: { show: true } }
+        CHART_TITLES.OCCUPATION, false, { dataLabels: { show: true } }
     );
 
     geoCharts[ELEMENT_IDS.GEO_INCOME] = createApexChart(
         ELEMENT_IDS.GEO_INCOME, CHART_TYPES.LINE,
-        'Income', false, { dataLabels: { show: true } }
+        CHART_TITLES.INCOME, false, { dataLabels: { show: true } }
     );
 
     geoCharts[ELEMENT_IDS.GEO_TRANSPORT] = createApexChart(
         ELEMENT_IDS.GEO_TRANSPORT, CHART_TYPES.BAR,
-        'Transport Mode', false, {
+        CHART_TITLES.TRANSPORT, false, {
             plotOptions: {
                 bar: {
                     horizontal: true
@@ -491,7 +509,7 @@ function getGeoDistrCharts() {
 
     geoCharts[ELEMENT_IDS.GEO_TRAVEL] = createApexChart(
         ELEMENT_IDS.GEO_TRAVEL, CHART_TYPES.POLAR_AREA,
-        'Travel Time', false, { dataLabels: { show: true } }
+        CHART_TITLES.TRAVEL_TIME, false, { dataLabels: { show: true } }
     );
 
     return geoCharts;

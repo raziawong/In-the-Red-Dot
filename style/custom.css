@@ -2,8 +2,8 @@
     --pri-color: #E73340;
     --pri-accent: #F3EED9;
     --sec-color: #F6AE2D;
-    --sec-accent: #EDF2EF;
-    --sec-accent-o8: rgba(237, 242, 239, 0.8);
+    --sec-accent: rgb(246, 240, 237 0.3);
+    --sec-accent-o8: rgb(246, 240, 237, 0.8);
     --ter-color: #285943;
     --gen-text: #57423F;
 }
@@ -16,12 +16,33 @@ body {
     color: var(--gen-text);
 }
 
-.ct-body header.tree-nav {
+.ct-body .tree-nav {
+    background-color: var(--pri-accent);
+    padding: 0.2rem 1.5rem;
     z-index: 400000;
 }
 
-.ct-body header .content {
-    margin: 0 0 1.5rem;
+.ct-body .tree-nav img {
+    width: 9vw;
+}
+
+.ct-body .tree-nav .content a.row {
+    justify-content: center;
+    align-items: center;
+}
+
+.ct-body .tree-nav .content a h6 {
+    color: var(--pri-color);
+    text-transform: uppercase;
+}
+
+.ct-body .tree-nav .tree-item-header {
+    margin: 0 0;
+    font-size: 1.1rem;
+}
+
+.ct-body .ct-content {
+    overflow: hidden;
 }
 
 .ct-body .chart {
@@ -30,6 +51,11 @@ body {
 
 .ct-body .chart.short {
     height: 350px;
+}
+
+.ct-body section {
+    height: 100vh;
+    overflow: scroll;
 }
 
 .ct-body section:not(#plan-area) .row>* {
@@ -54,29 +80,7 @@ body {
 #sidebar-close .icon {
     width: 100%;
     text-align: right;
-}
-
-#sidebar {
-    background-color: var(--pri-accent);
-    padding-top: 2vh;
-}
-
-#sidebar .content a.row {
-    justify-content: center;
-    align-items: center;
-}
-
-#sidebar .content a h6 {
-    color: var(--pri-color);
-    text-transform: uppercase;
-}
-
-#sidebar img {
-    width: 9vw;
-}
-
-.ct-body .tree-nav-body .tree-nav-content {
-    padding: 0 0;
+    padding-right: 0.2rem;
 }
 
 #population {
@@ -87,21 +91,19 @@ body {
     display: none;
 }
 
-#plan-area {
-    height: 100vh;
-    overflow: hidden;
-}
-
 #plan-area .tab-container ul.row {
-    height: 5vh;
+    min-height: 5vh;
     padding: 0 0;
     margin: 0 0;
     border: 0;
+    font-size: var(--font-size-m);
 }
 
 #plan-area .tab-container li .tab-item-content {
+    box-sizing: border-box;
     background-color: var(--pri-accent);
     color: var(--gen-text);
+    height: 100%;
 }
 
 #plan-area .tab-container li:hover .tab-item-content {
@@ -194,7 +196,17 @@ body {
     z-index: 1;
 }
 
+@media screen and (max-width: 1024px) {
+    .ct-body header.tree-nav {
+        padding: 0.2rem 0.2rem;
+        min-width: 17rem;
+    }
+}
+
 @media screen and (max-width: 640px) {
+    .ct-body header.tree-nav {
+        padding: 0.2rem 0.8rem;
+    }
     #plan-area .tab-container li:nth-child(odd) {
         border-right: 1px solid var(--ter-color);
     }

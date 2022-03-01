@@ -49,7 +49,12 @@ function main() {
             },
             plotOptions: {
                 radar: {
-                    size: 150
+                    polygons: {
+                        fill: ['#285943'],
+                        strokeColors: '#7B9E89',
+                        strokeWidth: 1.5
+                    },
+                    size: 140
                 },
                 treemap: {
                     distributed: true,

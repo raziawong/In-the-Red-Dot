@@ -197,7 +197,7 @@ const ELEMENT_IDS = {
     TREND_GENDER: 'trend-gender',
     TREND_RACE: 'trend-race',
     TREND_AGE: 'trend-age',
-    TREND_DEPENDCY: 'trend-dependecy',
+    TREND_DEPENDENCY: 'trend-dependecy',
     TREND_CITIZEN: 'trend-citizen',
     TREND_PR: 'trend-pr',
     TREND_NONRES: 'trend-nonres',
