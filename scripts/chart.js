@@ -43,6 +43,145 @@ function createSyncApexChart(id, chartOpt, title) {
     return chart;
 }
 
+function doPopulationOverview(years, dataByYear) {
+    function getOverviewCharts() {
+        let overviewCharts = {};
+
+        overviewCharts[ELEMENT_IDS.RESIDENCY] = createApexChart(
+            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
+            CHART_TITLES.RESIDENCY, false, { labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES] }
+        );
+
+        overviewCharts[ELEMENT_IDS.RACE] = createApexChart(
+            ELEMENT_IDS.RACE, CHART_TYPES.PIE,
+            CHART_TITLES.ETHNICITY, false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
+        );
+
+        overviewCharts[ELEMENT_IDS.GENDER] = createApexChart(
+            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
+            CHART_TITLES.GENDER, false, {
+                labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE],
+                plotOptions: {
+                    radialBar: {
+                        startAngle: -90,
+                        endAngle: 90
+                    }
+                },
+            }
+        );
+
+        overviewCharts[ELEMENT_IDS.MED_AGE] = createApexChart(
+            ELEMENT_IDS.MED_AGE, CHART_TYPES.RADIAL_BAR,
+            CHART_TITLES.MEDIAN_AGE, false, {
+                labels: [CHART_LABELS.CITIZEN, CHART_LABELS.RESIDENT],
+                plotOptions: {
+                    radialBar: {
+                        dataLabels: {
+                            value: {
+                                formatter: (val) => val
+                            }
+                        },
+                        startAngle: -90,
+                        endAngle: 90
+                    }
+                },
+            }
+        );
+
+        overviewCharts[ELEMENT_IDS.AGE_GROUP] = createApexChart(
+            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
+            CHART_TITLES.AGE_GROUP, true, {
+                plotOptions: {
+                    bar: {
+                        horizontal: true
+                    },
+                },
+                xaxis: { labels: { show: false } },
+                yaxis: {
+                    axisBorder: { show: true },
+                    labels: { show: true }
+                }
+            }
+        );
+
+        return overviewCharts;
+    }
+
+    function updateOverviewCharts(charts, populationData) {
+        let totalCount = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
+        let genderPrctArr = [populationData[DOS_DATA_KEYS.TOTAL_MALE], populationData[DOS_DATA_KEYS.TOTAL_FEMALE]].map(v => Math.round((v / totalCount) * 100));
+
+        let ageGroup = Object.keys(populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
+        let ageGroupOpt = {
+            dataLabels: {
+                formatter: (val, opts) => {
+                    return Math.round((Math.abs(val) / totalCount) * 100) + '%';
+                }
+            },
+            series: [{
+                    name: CHART_LABELS.MALE,
+                    data: ageGroup.map(k => populationData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
+                },
+                {
+                    name: CHART_LABELS.FEMALE,
+                    data: ageGroup.map(k => -populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
+                }
+            ],
+            tooltip: {
+                shared: false,
+                x: { formatter: v => v },
+                y: { formatter: v => Math.abs(v) }
+            },
+            xaxis: {
+                categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
+            }
+        };
+
+        charts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
+        charts[ELEMENT_IDS.MED_AGE].updateSeries([
+            populationData[DOS_DATA_KEYS.MED_AGE_CITIZEN],
+            populationData[DOS_DATA_KEYS.MED_AGE_RESIDENT]
+        ]);
+        charts[ELEMENT_IDS.RESIDENCY].updateSeries([
+            populationData[DOS_DATA_KEYS.CITIZEN_PPLT],
+            populationData[DOS_DATA_KEYS.PR_PPLT],
+            populationData[DOS_DATA_KEYS.NON_RES_PPLT]
+        ]);
+        charts[ELEMENT_IDS.RACE].updateSeries([
+            populationData[DOS_DATA_KEYS.TOTAL_CHINESE],
+            populationData[DOS_DATA_KEYS.TOTAL_MALAYS],
+            populationData[DOS_DATA_KEYS.TOTAL_INDIANS],
+            populationData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
+        ]);
+        charts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
+    }
+
+    function updateOverviewElements(populationData) {
+        document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
+    }
+
+    let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
+    let descYear = [...years].sort(UTIL.compareAlphaNumDesc);
+    for (let year of descYear) {
+        let optEle = document.createElement('option');
+        optEle.value = year;
+        optEle.innerText = year;
+        yearSelectEle.appendChild(optEle);
+    }
+
+    let chartObj = getOverviewCharts();
+    updateOverviewCharts(chartObj, dataByYear[yearSelectEle.value]);
+    updateOverviewElements(dataByYear[yearSelectEle.value]);
+
+    yearSelectEle.addEventListener('change', evt => {
+        let selectedYear = evt.target.value || 0;
+        if (selectedYear) {
+            updateOverviewCharts(chartObj, dataByYear[selectedYear]);
+            updateOverviewElements(dataByYear[selectedYear]);
+        }
+    });
+}
+
 function doPopulationTrend(years, yearData) {
     function getTrendCharts() {
         let trendCharts = {};
@@ -105,7 +244,7 @@ function doPopulationTrend(years, yearData) {
 
         trendCharts[ELEMENT_IDS.TREND_AGE] = createApexChart(
             ELEMENT_IDS.TREND_AGE, CHART_TYPES.BAR,
-            CHART_TITLES.MEDIAN_AGE, false, {
+            CHART_TITLES.MEDIAN_AGE_INS, false, {
                 xaxis: { labels: { show: false } },
                 yaxis: { labels: { show: false } }
             }
@@ -311,118 +450,6 @@ function doPopulationTrend(years, yearData) {
 
     // let chart = new ApexCharts(document.getElementById("population-stack"), options);
     // chart.render();
-}
-
-function doPopulationOverview(years, dataByYear) {
-    function getOverviewCharts() {
-        let overviewCharts = {};
-
-        overviewCharts[ELEMENT_IDS.RESIDENCY] = createApexChart(
-            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
-            CHART_TITLES.RESIDENCY, false, { labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES] }
-        );
-
-        overviewCharts[ELEMENT_IDS.GENDER] = createApexChart(
-            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
-            CHART_TITLES.GENDER, false, { labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE] }
-        );
-
-        overviewCharts[ELEMENT_IDS.RACE] = createApexChart(
-            ELEMENT_IDS.RACE, CHART_TYPES.PIE,
-            CHART_TITLES.ETHNICITY, false, { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
-        );
-
-        overviewCharts[ELEMENT_IDS.AGE_GROUP] = createApexChart(
-            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
-            CHART_TITLES.AGE_GROUP, true, {
-                plotOptions: {
-                    bar: {
-                        horizontal: true
-                    },
-                },
-                xaxis: { labels: { show: false } },
-                yaxis: { labels: { show: false } }
-            }
-        );
-
-        return overviewCharts;
-    }
-
-    function updateOverviewCharts(charts, populationData) {
-        let totalCount = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
-        let genderPrctArr = [populationData[DOS_DATA_KEYS.TOTAL_MALE], populationData[DOS_DATA_KEYS.TOTAL_FEMALE]].map(v => Math.round((v / totalCount) * 100));
-
-        let ageGroup = Object.keys(populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
-        let ageGroupOpt = {
-            dataLabels: {
-                formatter: (val, opts) => {
-                    return Math.round((Math.abs(val) / totalCount) * 100) + '%';
-                }
-            },
-            series: [{
-                    name: CHART_LABELS.MALE,
-                    data: ageGroup.map(k => populationData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
-                },
-                {
-                    name: CHART_LABELS.FEMALE,
-                    data: ageGroup.map(k => -populationData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
-                }
-            ],
-            tooltip: {
-                shared: false,
-                x: { formatter: v => v },
-                y: { formatter: v => Math.abs(v) }
-            },
-            xaxis: {
-                categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
-            },
-            yaxis: {
-                axisBorder: { show: true },
-                labels: { show: true }
-            }
-        };
-
-        charts[ELEMENT_IDS.RESIDENCY].updateSeries([
-            populationData[DOS_DATA_KEYS.CITIZEN_PPLT],
-            populationData[DOS_DATA_KEYS.PR_PPLT],
-            populationData[DOS_DATA_KEYS.NON_RES_PPLT]
-        ]);
-        charts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
-        charts[ELEMENT_IDS.RACE].updateSeries([
-            populationData[DOS_DATA_KEYS.TOTAL_CHINESE],
-            populationData[DOS_DATA_KEYS.TOTAL_MALAYS],
-            populationData[DOS_DATA_KEYS.TOTAL_INDIANS],
-            populationData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
-        ]);
-        charts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
-    }
-
-    function updateOverviewElements(populationData) {
-        document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
-        document.getElementById(ELEMENT_IDS.MED_AGE_CITIZEN).querySelector('span').innerText = populationData[DOS_DATA_KEYS.MED_AGE_CITIZEN];
-        document.getElementById(ELEMENT_IDS.MED_AGE_RESIDENT).querySelector('span').innerText = populationData[DOS_DATA_KEYS.MED_AGE_RESIDENT];
-    }
-
-    let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
-    let descYear = [...years].sort(UTIL.compareAlphaNumDesc);
-    for (let year of descYear) {
-        let optEle = document.createElement('option');
-        optEle.value = year;
-        optEle.innerText = year;
-        yearSelectEle.appendChild(optEle);
-    }
-
-    let chartObj = getOverviewCharts();
-    updateOverviewCharts(chartObj, dataByYear[yearSelectEle.value]);
-    updateOverviewElements(dataByYear[yearSelectEle.value]);
-
-    yearSelectEle.addEventListener('change', evt => {
-        let selectedYear = evt.target.value || 0;
-        if (selectedYear) {
-            updateOverviewCharts(chartObj, dataByYear[selectedYear]);
-            updateOverviewElements(dataByYear[selectedYear]);
-        }
-    });
 }
 
 function getGeoDistrCharts() {

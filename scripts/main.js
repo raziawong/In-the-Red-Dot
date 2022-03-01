@@ -34,6 +34,8 @@ function main() {
             chart: {
                 height: '100%',
                 fontFamily: 'Nunito Sans,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif',
+                redrawOnParentResize: true,
+                redrawOnWindowResize: true,
                 width: '100%',
                 zoom: {
                     enabled: true
