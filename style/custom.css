@@ -93,15 +93,15 @@ body {
 }
 
 #sidebar-toggle .icon {
-    transform: translate(-40%);
-    border-right: 1px dotted var(--pri-accent);
-    border-bottom: 1px dotted var(--pri-accent);
-    border-radius: 0 0 9vw 0;
-    background-color: var(--sec-color);
-    writing-mode: vertical-rl;
-    text-orientation: upright;
+    transform: translate(-30%);
+    box-shadow: 1px 1px 1px var(--cirrus-light-gray);
+    border-radius: 0 0 80px 0;
+    background-color: var(--sec-accent-o8);
     width: 3rem;
-    opacity: 0.7;
+}
+
+#sidebar-toggle .icon img {
+    padding-top: 5px;
 }
 
 #sidebar-close .icon {
