@@ -13,76 +13,55 @@ body {
     background-color: var(--sec-accent);
 }
 
-.ct-body a {
+.tree-nav-body a {
     color: var(--gen-text);
 }
 
-.ct-body .tree-nav-body {
-    position: relative;
-}
 
-.ct-body .tree-nav {
+/* --- start tree navigation menu --- */
+
+header.tree-nav {
     background-color: var(--pri-accent);
     padding: 0.2rem 1.5rem;
     z-index: 400002;
 }
 
-.ct-body .tree-nav img {
+header.tree-nav img {
     width: 9vw;
 }
 
-.ct-body .tree-nav .content a.row {
+header.tree-nav .content a.row {
     justify-content: center;
     align-items: center;
 }
 
-.ct-body .tree-nav .content a h6 {
+header.tree-nav .content a h6 {
     color: var(--pri-color);
     text-transform: uppercase;
 }
 
-.ct-body .tree-nav .tree-item-header {
+header.tree-nav .tree-item-header {
     margin: 0 0;
     font-size: 1.1rem;
 }
 
-.ct-body .chart {
-    height: 500px;
-}
-
-.ct-body .chart.short {
-    height: 350px;
-}
-
-.ct-body section {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-}
-
-.ct-body section:not(#plan-area) {
-    overflow: scroll;
-}
-
-.ct-body section:not(#plan-area) .row>* {
-    margin: 2rem 0;
-}
-
-.ct-body .form-group {
-    margin: 0 0;
-}
-
-.ct-body .form-group .form-group-label {
-    background-color: var(--pri-accent);
-    border: 0;
+header.tree-nav .menu-item:hove>a {
     color: var(--pri-color);
-    padding: 0.8rem 8vw;
 }
 
-.ct-body .tree-nav-body .tree-nav-content {
-    padding: 0 0;
-    overflow: hidden;
+header.tree-nav .menu-item a.selected {
+    background-color: rgba(208, 208, 208, .3);
+    color: var(--pri-color);
 }
+
+#sidebar-close .icon {
+    width: 100%;
+    text-align: right;
+    padding-right: 0.2rem;
+}
+
+
+/* --- start tree navigation toggle (mobile hamburger) --- */
 
 #sidebar-toggle {
     position: absolute;
@@ -104,19 +83,92 @@ body {
     padding-top: 5px;
 }
 
-#sidebar-close .icon {
+
+/* --- start main content body --- */
+
+.tree-nav-body main.tree-nav-content {
+    padding: 0 0;
+    overflow: hidden;
+    position: relative;
+}
+
+main.tree-nav-content section {
+    height: 100vh;
     width: 100%;
-    text-align: right;
-    padding-right: 0.2rem;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-110%, 0);
+}
+
+main.tree-nav-content section.active {
+    transform: translate(0, 0);
+    transition: 0.4s ease-in transform;
+}
+
+main section:not(#plan-area) div.section-content {
+    overflow: scroll;
+}
+
+main section:not(#plan-area) div.section-content .row>* {
+    margin: 2rem 0;
+}
+
+
+/* --- start filter form groups --- */
+
+main.tree-nav-content .form-group {
+    margin: 0 0;
+}
+
+main.tree-nav-content .form-group .form-group-label {
+    background-color: var(--pri-accent);
+    border: 0;
+    color: var(--pri-color);
+    padding: 0.8rem 8vw;
+}
+
+main.tree-nav-content .form-group select {
+    border-radius: 0;
+}
+
+#trend-sel span {
+    display: none;
+}
+
+
+/* --- start charts / graphs --- */
+
+.ct-body .chart {
+    height: 500px;
+}
+
+.ct-body .chart.short {
+    height: 350px;
 }
 
 #population {
     text-align: center;
 }
 
-#trend-sel span {
-    display: none;
+#geo-age-group.gender-activated {
+    transform: translateX(0);
+    transition: 1s ease transform;
 }
+
+#geo-age-gender {
+    transform: translateX(-150%);
+}
+
+#geo-age-gender.active {
+    transition: 1.1s ease-in-out transform;
+    transform: translate(70%, -105%);
+    z-index: 1;
+}
+
+
+/* --- start tab menu and content --- */
 
 #plan-area .tab-container ul.row {
     min-height: 5vh;
@@ -171,6 +223,9 @@ body {
 #plan-area .tab-content {
     padding: 1.3rem;
 }
+
+
+/* --- start map and controls --- */
 
 #ura-zones-map {
     height: 95vh;
@@ -241,55 +296,57 @@ body {
     opacity: 0.8;
 }
 
-#geo-age-group.gender-activated {
-    transform: translateX(0);
-    transition: 1s ease transform;
-}
 
-#geo-age-gender {
-    transform: translateX(-150%);
-}
-
-#geo-age-gender.active {
-    transition: 1.1s ease-in-out transform;
-    transform: translate(70%, -105%);
-    z-index: 1;
-}
+/* --- start medium devices --- */
 
 @media screen and (max-width: 1024px) {
-    .ct-body header.tree-nav {
+    /* --- start tree navigation menu --- */
+    header.tree-nav {
         padding: 0.2rem 0.2rem;
         min-width: 17rem;
     }
 }
 
+
+/* --- start smaller devices --- */
+
 @media screen and (max-width: 640px) {
-    .ct-body header.tree-nav {
+    /* --- start tree navigation menu --- */
+    header.tree-nav {
         padding: 0.2rem 0.8rem;
     }
-    .tree-nav-content .form-group {
+    /* --- start filter form groups --- */
+    main.tree-nav-content .form-group {
         display: block;
-        width: 100vw;
     }
-    .ct-body .form-group .form-group-label {
+    main.tree-nav-content .form-group .form-group-label {
         width: 100%;
         padding: 0.2rem;
         text-align: center;
     }
-    .ct-body .form-group select {
+    main.tree-nav-content .form-group select {
         width: 100%;
         padding: 0.2rem 1rem;
         text-align: center;
     }
-    .ct-body .form-group span.info {
+    main.tree-nav-content .form-group span.info {
         text-align: center;
     }
+    /* --- start tab menu and content --- */
     #plan-area .tab-container ul.row {
         height: 10vh;
     }
     #plan-area .tab-content-container {
         top: 10vh
     }
+    #plan-area .tab-container li .tab-item-content {
+        padding: 0.2rem 0.4rem;
+        border-bottom: 0;
+    }
+    #plan-area .tab-container li:nth-child(odd) {
+        border-right: 1px solid var(--ter-color);
+    }
+    /* --- start map and controls --- */
     #ura-zones-map {
         height: 90vh;
     }
@@ -298,7 +355,7 @@ body {
     }
     #ura-zones-map .info {
         width: 100vw;
-        bottom: 23.2px;
+        bottom: 4vh;
         left: 0;
         margin: 0.5rem 0;
     }
@@ -307,13 +364,6 @@ body {
         margin: 2px 12px;
     }
     #ura-zones-map .leaflet-right .leaflet-control-zoom {
-        margin: 0 0 5px 25px;
-    }
-    #plan-area .tab-container li .tab-item-content {
-        padding: 0.2rem 0.4rem;
-        border-bottom: 0;
-    }
-    #plan-area .tab-container li:nth-child(odd) {
-        border-right: 1px solid var(--ter-color);
+        margin: 0 0 4vh 88vw;
     }
 }
