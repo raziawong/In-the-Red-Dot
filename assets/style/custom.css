@@ -361,12 +361,13 @@ main.tree-nav-content .chart-xs {
     }
     main.tree-nav-content .form-group .form-group-label {
         width: 100%;
-        padding: 0.2rem;
+        padding: 0.4rem;
         text-align: center;
+        font-size: 1rem;
     }
     main.tree-nav-content .form-group select {
         width: 100%;
-        padding: 0.2rem 1rem;
+        padding: 0.4rem 1rem;
         text-align: center;
     }
     main.tree-nav-content .form-group span.info {
