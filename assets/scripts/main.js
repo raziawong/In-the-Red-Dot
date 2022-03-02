@@ -5,7 +5,7 @@ function main() {
         let map = initMap();
 
         window.addEventListener('DOMContentLoaded', async function() {
-            initInteractions();
+            initMenuInteractions();
 
             let populationSeries = await initPopulation();
             let years = populationSeries.ascYear.slice(-40);
@@ -13,6 +13,7 @@ function main() {
 
             doPopulationOverview(years, yearData);
             doPopulationTrend(years, yearData);
+
             doURAZoneAndData(map, await initGeoDistribution());
         });
     }
@@ -128,7 +129,7 @@ function main() {
         return populationSeries;
     }
 
-    function initInteractions() {
+    function initMenuInteractions() {
         function setActiveEleById(id) {
             document.getElementById(id).classList.add(ELEMENT_STATES.ACTIVE);
         }

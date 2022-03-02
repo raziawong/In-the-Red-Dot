@@ -393,90 +393,59 @@ function doPopulationTrend(years, yearData) {
         });
     }
 
-    let yearGroupEle = document.getElementById(ELEMENT_IDS.TREND_SEL);
-    let yearStartEle = document.getElementById(ELEMENT_IDS.TREND_SEL_FROM);
-    let yearEndEle = document.getElementById(ELEMENT_IDS.TREND_SEL_TO);
-    let rangeErrorEle = yearGroupEle.querySelector('span');
+    function initTrendSelect(charts, years, yearData) {
+        let yearGroupEle = document.getElementById(ELEMENT_IDS.TREND_SEL);
+        let yearStartEle = document.getElementById(ELEMENT_IDS.TREND_SEL_FROM);
+        let yearEndEle = document.getElementById(ELEMENT_IDS.TREND_SEL_TO);
+        let rangeErrorEle = yearGroupEle.querySelector('span');
 
-    for (let year of years) {
-        let optEle = document.createElement('option');
-        optEle.value = year;
-        optEle.innerText = year;
-        yearStartEle.appendChild(optEle);
-        yearEndEle.prepend(optEle.cloneNode(true));
+        for (let year of years) {
+            let optEle = document.createElement('option');
+            optEle.value = year;
+            optEle.innerText = year;
+            yearStartEle.appendChild(optEle);
+            yearEndEle.prepend(optEle.cloneNode(true));
+        }
+
+        let yearStartEmpty = document.createElement('option');
+        let yearEndEmpty = document.createElement('option');
+        yearStartEmpty.setAttribute('value', '');
+        yearStartEmpty.innerText = 'From';
+        yearEndEmpty.setAttribute('value', '');
+        yearEndEmpty.innerText = 'To';
+
+        yearEndEle.insertBefore(yearEndEmpty, yearEndEle.childNodes[0]);
+        yearStartEle.insertBefore(yearStartEmpty, yearStartEle.childNodes[0]);
+        yearEndEle.value = years[years.length - 1];
+        yearStartEle.value = yearEndEle.value - 10;
+
+        yearGroupEle.addEventListener('change', evt => {
+            rangeErrorEle.style.display = 'none';
+            yearStartEle.classList.remove('input-error');
+            yearEndEle.classList.remove('input-error');
+
+            let diff = yearEndEle.value - yearStartEle.value;
+            if (diff <= 0 || diff < 1 || diff > 10) {
+                yearStartEle.classList.add('input-error');
+                yearEndEle.classList.add('input-error');
+                rangeErrorEle.style.display = 'initial';
+                rangeErrorEle.innerText =
+                    diff > 10 ? ERROR_MSG.YEAR_10 :
+                    diff <= 0 ? ERROR_MSG.YEAR_NEG :
+                    ERROR_MSG.YEAR_2;
+            } else {
+                let newRange = years.slice(years.indexOf(yearStartEle.value), years.indexOf(yearEndEle.value) + 1)
+                updateTrendCharts(charts, newRange, yearData);
+            }
+        });
+
+        return [yearStartEle.value, yearEndEle.value]
     }
 
-    yearEndEle.querySelector('option').selected = true;
-    yearStartEle.value = yearEndEle.value - 10;
-
     let tCharts = getTrendCharts();
-    let range = years.slice(years.indexOf(yearStartEle.value), years.indexOf(yearEndEle.value) + 1);
-    updateTrendCharts(tCharts, range, yearData);
-
-    yearGroupEle.addEventListener('change', evt => {
-        rangeErrorEle.style.display = 'none';
-        yearStartEle.classList.remove('input-error');
-        yearEndEle.classList.remove('input-error');
-
-        let diff = yearEndEle.value - yearStartEle.value;
-        if (diff > 10) {
-            yearStartEle.classList.add('input-error');
-            yearEndEle.classList.add('input-error');
-            rangeErrorEle.style.display = 'initial';
-        } else {
-            let newRange = years.slice(years.indexOf(yearStartEle.value), years.indexOf(yearEndEle.value) + 1)
-            updateTrendCharts(tCharts, newRange, yearData);
-        }
-    });
-
-
-    // let options = {
-    //     series: [{
-    //         name: LABELS.CITIZEN,
-    //         data: years.map(y => { return UTIL.convertToNumber(yearData[y][LABELS.CITIZEN_PPLT]) })
-    //     }, {
-    //         name: LABELS.PR,
-    //         data: years.map(y => { return UTIL.convertToNumber(yearData[y][LABELS.PR_PPLT]) })
-    //     }, {
-    //         name: LABELS.NON_RES,
-    //         data: years.map(y => { return UTIL.convertToNumber(yearData[y][LABELS.PR_PPLT]) })
-    //     }],
-    //     chart: {
-    //         type: 'bar',
-    //         height: 700,
-    //         stacked: true,
-    //         zoom: {
-    //             enabled: true
-    //         }
-    //     },
-    //     responsive: [{
-    //         breakpoint: 480,
-    //         options: {
-    //             legend: {
-    //                 position: 'bottom',
-    //                 offsetX: -10,
-    //                 offsetY: 0
-    //             }
-    //         }
-    //     }],
-    //     plotOptions: {
-    //         bar: {
-    //             horizontal: true
-    //         }
-    //     },
-    //     xaxis: {
-    //         categories: years
-    //     },
-    //     legend: {
-    //         position: 'top'
-    //     },
-    //     fill: {
-    //         opacity: 1
-    //     }
-    // };
-
-    // let chart = new ApexCharts(document.getElementById("population-stack"), options);
-    // chart.render();
+    let initYears = initTrendSelect(tCharts, years, yearData);
+    let initRange = years.slice(years.indexOf(initYears[0]), years.indexOf(initYears[1]) + 1);
+    updateTrendCharts(tCharts, initRange, yearData);
 }
 
 function getGeoDistrCharts() {

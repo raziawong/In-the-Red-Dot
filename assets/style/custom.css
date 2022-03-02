@@ -146,13 +146,22 @@ main.tree-nav-content .form-group .form-group-label {
     font-weight: bold;
 }
 
-main.tree-nav-content .form-group select {
+main.tree-nav-content .form-group select:not(.input-error) {
     border-radius: 0;
     border-color: var(--ter-color);
 }
 
+main.tree-nav-content .form-group select.input-error {
+    color: #b31e1d;
+}
+
+#trend-sel {
+    text-align: center;
+}
+
 #trend-sel span {
     display: none;
+    font-size: var(--font-size-m);
 }
 
 
