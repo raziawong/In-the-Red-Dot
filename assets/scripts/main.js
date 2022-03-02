@@ -3,7 +3,6 @@ function main() {
     function init() {
         initApexChartOptions();
         let map = initMap();
-        //initSwiper();
 
         window.addEventListener('DOMContentLoaded', async function() {
             initInteractions();
@@ -85,13 +84,6 @@ function main() {
                 }
             }
         };
-    }
-
-    function initSwiper() {
-        let swiper = new Swiper('.swiper', {
-            speed: 400,
-            spaceBetween: 100,
-        });
     }
 
     function initMap() {
