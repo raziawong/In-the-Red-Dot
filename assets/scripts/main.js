@@ -194,8 +194,15 @@ function main() {
         for (let tc of tabCloseEles) {
             tc.addEventListener('click', (evt) => {
                 let container = tc.parentNode;
-                if (container.classList.contains(ELEMENT_STATES.ACTIVE)) {
-                    container.classList.remove(ELEMENT_STATES.ACTIVE);
+                if (container) {
+                    let activeTab = document.querySelector(`[data-target="${container.id}"]`);
+                    console.log(activeTab);
+                    if (activeTab.classList.contains(ELEMENT_STATES.SELECTED)) {
+                        activeTab.classList.remove(ELEMENT_STATES.SELECTED);
+                    }
+                    if (container.classList.contains(ELEMENT_STATES.ACTIVE)) {
+                        container.classList.remove(ELEMENT_STATES.ACTIVE);
+                    }
                 }
             });
         }
