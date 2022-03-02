@@ -365,21 +365,20 @@ main.tree-nav-content .chart-xs {
     }
     /* --- start tab menu and content --- */
     #plan-area .tab-container ul.row {
-        height: 10vh;
+        height: 12vh;
     }
     #plan-area .tab-content-container {
-        top: 10vh;
+        top: 12vh;
     }
     #plan-area .tab-container li .tab-item-content {
         padding: 0.2rem 0.4rem;
         border-bottom: 0;
-    }
-    #plan-area .tab-container li:nth-child(odd) {
-        border-right: 1px solid var(--ter-color);
+        border: 1px solid var(--ter-color);
+        border-right: 0;
     }
     /* --- start map and controls --- */
     #ura-zones-map {
-        height: 90vh;
+        height: 88vh;
     }
     #ura-zones-map .leaflet-control-container .leaflet-right {
         right: unset;
