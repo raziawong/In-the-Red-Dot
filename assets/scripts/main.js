@@ -92,16 +92,18 @@ function main() {
         let bounds = L.latLng(1.3552, 103.7972).toBounds(28000);
         let map = L.map(ELEMENT_IDS.URA_ZONES_MAP, {
             dragging: false,
-            zoomControl: false
-                // maxZoom: MAP.ZOOM_INITIAL + 4,
-                // minZoom: MAP.ZOOM_INITIAL - 1
+            zoomControl: false,
+            trackResize: true,
+            scrollWheelZoom: false,
+            maxBounds: bounds,
+            maxZoom: MAP_CONF.ZOOM_INITIAL + 2,
+            minZoom: MAP_CONF.ZOOM_INITIAL - 3
         }).setView(singapore, MAP_CONF.ZOOM_INITIAL);
 
         map.fitBounds(bounds);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
             id: 'mapbox/light-v10',
             tileSize: 512,
             zoomOffset: -1,
