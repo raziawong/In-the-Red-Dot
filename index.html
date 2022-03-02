@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In the Red Dot</title>
+    <link rel="icon" type="image/x-icon" href="assets/media/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
@@ -14,18 +15,19 @@
     <link rel="stylesheet" href="style/custom.css">
 </head>
 
-<body class="ct-body">
-    <!-- header + navbar -->
+<body>
     <div class="tree-nav-body">
+        <!-- hamburger toggle for tree nav -->
         <a href="#sidebar" class="u-none-md" id="sidebar-toggle">
             <span class="icon">
                 <img class="col" src="assets/media/logo_sgmap.svg" alt="Menu Icon"/>
             </span>
         </a>
+        <!-- header + tree nav -->
         <header class="tree-nav" id="sidebar">
             <a href="#sidebar-close" class="u-none-md" id="sidebar-close" class="tree-nav-close">
                 <span class="icon">
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                 </span>
             </a>
             <div class="content">
@@ -40,17 +42,17 @@
                         <input type="checkbox" id="structure" class="u-none" name="structure" checked>
                         <label class="tree-item-header" for="structure">
                             <span class="icon">
-                                <i class="fa fa-chevron-right small" aria-hidden="true"></i>
+                                <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
                             </span>
                             Population Structure
                         </label>
                         <div class="tree-item-body">
                             <ul class="menu">
                                 <li class="menu-item">
-                                    <a href="#overview">Single Year Overview</a>
+                                    <a data-target="overview">Single Year Overview</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#trend">10 Years Trend</a>
+                                    <a data-target="trend">10 Years Trend</a>
                                 </li>
                             </ul>
                         </div>
@@ -59,14 +61,14 @@
                         <input type="checkbox" id="geodistribution" class="u-none" name="geodistribution" checked>
                         <label class="tree-item-header" for="geodistribution">
                             <span class="icon">
-                                <i class="fa fa-chevron-right small" aria-hidden="true"></i>
+                                <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
                             </span>
                             Geographical Distribution
                         </label>
                         <div class="tree-item-body">
                             <ul class="menu">
                                 <li class="menu-item">
-                                    <a href="#plan-area">Plan Area</a>
+                                    <a data-target="plan-area">Plan Area</a>
                                 </li>
                             </ul>
                         </div>
@@ -75,142 +77,159 @@
             </div>
         </header>
 
+        <!-- main content -->
         <main class="tree-nav-content">
             <!-- population overview charts -->
             <section id="overview">
-                <div id="overview-sel">
-                    <div class="form-group">
-                        <label class="form-group-label" for="overview-sel-year">Year</label>
-                        <select class="select" id="overview-sel-year" placeholder="Year"></select>
+                <div class="section-content">
+                    <div id="overview-sel">
+                        <div class="form-group">
+                            <label class="form-group-label" for="overview-sel-year">Year</label>
+                            <select class="select" id="overview-sel-year" placeholder="Year"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <h4 class="col-12" id="population">
-                        Population: <span></span>
-                    </h4>
-                    <div class="col-6 chart short">
-                        <div id="residency"></div>
-                    </div>
-                    <div class="col-6 chart short">
-                        <div id="race"></div>
-                    </div>
-                    <div class="col-6 chart short">
-                        <div id="gender"></div>
-                    </div>
-                    <div class="col-6 chart short">
-                        <div id="med-age"></div>
-                    </div>
-                    <div class="col-12 chart">
-                        <div id="age-group"></div>
+                    <div class="row">
+                        <h4 class="col-12" id="population">
+                            Population: <span></span>
+                        </h4>
+                        <div class="col-6 chart short">
+                            <div id="residency"></div>
+                        </div>
+                        <div class="col-6 chart short">
+                            <div id="race"></div>
+                        </div>
+                        <div class="col-6 chart short">
+                            <div id="gender"></div>
+                        </div>
+                        <div class="col-6 chart short">
+                            <div id="med-age"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="age-group"></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- population trend charts -->
             <section id="trend">
-                <div id="trend-sel">
-                    <div class="form-group">
-                        <label class="form-group-label">Range</label>
-                        <select class="select" id="trend-sel-from" placeholder="From"></select>
-                        <select class="select" id="trend-sel-to" placeholder="To"></select>
+                <div class="section-content">
+                    <div id="trend-sel">
+                        <div class="form-group">
+                            <label class="form-group-label">Range</label>
+                            <select class="select" id="trend-sel-from" placeholder="From"></select>
+                            <select class="select" id="trend-sel-to" placeholder="To"></select>
+                        </div>
+                        <span class="required font-bold info">Please select years in range of 10 or less.</span>
                     </div>
-                    <span class="required font-bold info">Please select years in range of 10 or less.</span>
-                </div>
-                <div class="row">
-                    <div class="col-12 chart">
-                        <div id="trend-popincr"></div>
-                    </div>
-                    <div class="col-4 chart short">
-                        <div id="trend-citizen"></div>
-                    </div>
-                    <div class="col-4 chart short">
-                        <div id="trend-pr"></div>
-                    </div>
-                    <div class="col-4 chart short">
-                        <div id="trend-nonres"></div>
-                    </div>
-                    <div class="col-12 chart">
-                        <div id="trend-gender"></div>
-                    </div>
-                    <div class="col-12 chart">
-                        <div id="trend-race"></div>
-                    </div>
-                    <div class="col-12 chart">
-                        <div id="trend-age"></div>
-                    </div>
-                    <div class="col-12 chart">
-                        <div id="trend-dependecy"></div>
+                    <div class="row">
+                        <div class="col-12 chart">
+                            <div id="trend-popincr"></div>
+                        </div>
+                        <div class="col-4 chart short">
+                            <div id="trend-citizen"></div>
+                        </div>
+                        <div class="col-4 chart short">
+                            <div id="trend-pr"></div>
+                        </div>
+                        <div class="col-4 chart short">
+                            <div id="trend-nonres"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="trend-gender"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="trend-race"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="trend-age"></div>
+                        </div>
+                        <div class="col-12 chart">
+                            <div id="trend-dependecy"></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- geographic distribution charts -->
             <section id="plan-area">
-                <div class="tab-container disabled">
-                    <ul class="row no-space">
-                        <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
-                            <div class="tab-item-content">Residents</div>
-                        </li>
-                        <li class="col-xs-6 col-sm-3" data-target="tab-content-dwelling">
-                            <div class="tab-item-content">Dwelling</div>
-                        </li>
-                        <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
-                            <div class="tab-item-content">Education</div>
-                        </li>
-                        <li class="col-xs-6 col-sm-3" data-target="tab-content-empl">
-                            <div class="tab-item-content">Employed</div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="ura-zones-map"></div>
-                <div class="tab-content-container" id="tab-content-res">
-                    <div class="u-pull-right">
-                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                <div class="section-content">
+                    <div class="tab-container disabled">
+                        <ul class="row no-space">
+                            <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
+                                <div class="tab-item-content">Residents</div>
+                            </li>
+                            <li class="col-xs-6 col-sm-3" data-target="tab-content-dwelling">
+                                <div class="tab-item-content">Dwelling</div>
+                            </li>
+                            <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
+                                <div class="tab-item-content">Education</div>
+                            </li>
+                            <li class="col-xs-6 col-sm-3" data-target="tab-content-empl">
+                                <div class="tab-item-content">Employed</div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="row tab-content">
-                        <div class="col-12 chart">
-                            <div id="geo-age-group"></div>
-                            <div id="geo-age-gender"></div>
+                    <div id="ura-zones-map"></div>
+                    <div class="tab-content-container" id="tab-content-res">
+                        <div class="tab-close u-pull-right">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
                         </div>
-                        <div class="col-12 chart">
-                            <div id="geo-race"></div>
+                        <div class="row tab-content">
+                            <div class="col-12 chart">
+                                <div id="geo-age-group"></div>
+                                <div id="geo-age-gender"></div>
+                            </div>
+                            <div class="col-12 chart">
+                                <div id="geo-race"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-content-container" id="tab-content-dwelling">
-                    <div class="u-pull-right">
-                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="tab-content-container" id="tab-content-dwelling">
+                        <div class="tab-close u-pull-right">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="tab-content">
+                            <div id="geo-dwelling"></div>
+                        </div>
                     </div>
-                    <div class="tab-content">
-                        <div id="geo-dwelling"></div>
+                    <div class="tab-content-container" id="tab-content-edu">
+                        <div class="tab-close u-pull-right">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="tab-content">
+                            <div id="geo-education"></div>
+                            <div id="geo-literacy"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="tab-content-container" id="tab-content-edu">
-                    <div class="u-pull-right">
-                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="tab-content-container" id="tab-content-empl">
+                        <div class="tab-close u-pull-right">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="tab-content">
+                            <div id="geo-occupation"></div>
+                            <div id="geo-income"></div>
+                            <div id="geo-transport"></div>
+                            <div id="geo-travel"></div>
+                        </div>
                     </div>
-                    <div class="tab-content">
-                        <div id="geo-education"></div>
-                        <div id="geo-literacy"></div>
-                    </div>
-                </div>
-                <div class="tab-content-container" id="tab-content-empl">
-                    <div class="u-pull-right">
-                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
-                    </div>
-                    <div class="tab-content">
-                        <div id="geo-occupation"></div>
-                        <div id="geo-income"></div>
-                        <div id="geo-transport"></div>
-                        <div id="geo-travel"></div>
-                    </div>
-                </div>
-                <div class="tab-content-container" id="tab-content-none">
-                    <div class="u-pull-right">
-                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
-                    </div>
-                    <div>
-                        <h4>No Data To Show</h4>
+                    <div class="tab-content-container" id="tab-content-none">
+                        <div class="tab-close u-pull-right">
+                            <span class="icon">
+                                <i class="fa a-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <h4>No Data To Show</h4>
+                        </div>
                     </div>
                 </div>
             </section>

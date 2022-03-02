@@ -5,12 +5,14 @@ function main() {
         let map = initMap();
 
         window.addEventListener('DOMContentLoaded', async function() {
+            initInteractions();
+
             let populationSeries = await initPopulation();
             let years = populationSeries.ascYear.slice(-40);
             let yearData = populationSeries.dataByYear;
+
             doPopulationOverview(years, yearData);
             doPopulationTrend(years, yearData);
-
             doURAZoneAndData(map, await initGeoDistribution());
         });
     }
@@ -126,25 +128,73 @@ function main() {
         return populationSeries;
     }
 
-    function doTabInteraction() {
-        let tabEle = document.querySelector('#plan-area .tab-container');
-        let tabNavEles = tabEle.querySelectorAll('li');
+    function initInteractions() {
+        function setActiveEleById(id) {
+            document.getElementById(id).classList.add(ELEMENT_STATES.ACTIVE);
+        }
 
-        for (let tab of tabNavEles) {
-            tab.addEventListener('click', (evt) => {
-                if (!tabEle.classList.contains('disabled')) {
-                    let paTabContents = document.querySelectorAll('#plan-area .tab-content-container');
+        function closeMobileTreeNav() {
+            document.getElementById(ELEMENT_IDS.SIDEBAR_CLOSE).click();
+        }
 
-                    for (let ot of tabNavEles) {
-                        ot.classList.remove('selected');
+        let treeNavEle = document.querySelector('.tree-nav-container');
+        let treeItemEles = treeNavEle.querySelectorAll('li.menu-item a');
+        let tabNavEle = document.querySelector('#plan-area .tab-container');
+        let tabItemEles = tabNavEle.querySelectorAll('li');
+        let tabCloseEles = document.querySelectorAll('#plan-area .tab-content-container .tab-close');
+
+        for (let mi of treeItemEles) {
+            mi.addEventListener('click', (evt) => {
+                let sTargetId = mi.dataset.target;
+                let activeSect = document.querySelector('section.active');
+                let activeTab = document.querySelector('#plan-area .tab-content-container.active');
+                if (activeSect) {
+                    // hide currently active section
+                    treeNavEle.querySelector('li.menu-item a.selected').classList.remove(ELEMENT_STATES.SELECTED);
+                    activeSect.classList.remove(ELEMENT_STATES.ACTIVE);
+                }
+                mi.classList.add(ELEMENT_STATES.SELECTED);
+                // set the section to be displayed
+                setActiveEleById(sTargetId);
+                // close the rest
+                closeMobileTreeNav();
+                if (activeTab) {
+                    activeTab.querySelector('.tab-close').click();
+                }
+            });
+        }
+
+        treeItemEles[0].click();
+
+        for (let ti of tabItemEles) {
+            ti.addEventListener('click', (evt) => {
+                let activeSect = document.querySelector('section.active');
+
+                // check if active section is plan area
+                // and tab menu is not disabled
+                if (activeSect &&
+                    activeSect.id == ELEMENT_IDS.SECT_PLAN_AREA &&
+                    !tabNavEle.classList.contains(ELEMENT_STATES.DISABLED)) {
+                    let cTargetId = ti.dataset.target;
+                    let selectedTab = tabNavEle.querySelector('li.selected');
+                    // hide currently active tab
+                    if (selectedTab) {
+                        document.getElementById(selectedTab.dataset.target).classList.remove(ELEMENT_STATES.ACTIVE);
+                        selectedTab.classList.remove(ELEMENT_STATES.SELECTED);
                     }
-                    for (let content of paTabContents) {
-                        content.classList.remove('active');
-                    }
-                    tab.classList.add('selected');
+                    // set the tab item to be selected
+                    ti.classList.add(ELEMENT_STATES.SELECTED);
+                    // set the tab content to be displayed
+                    setActiveEleById(cTargetId);
+                }
+            });
+        }
 
-                    let targetId = tab.dataset.target;
-                    document.getElementById(targetId).classList.add('active');
+        for (let tc of tabCloseEles) {
+            tc.addEventListener('click', (evt) => {
+                let container = tc.parentNode;
+                if (container.classList.contains(ELEMENT_STATES.ACTIVE)) {
+                    container.classList.remove(ELEMENT_STATES.ACTIVE);
                 }
             });
         }

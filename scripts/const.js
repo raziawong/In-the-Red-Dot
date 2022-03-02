@@ -184,6 +184,7 @@ const MAP_LAYER_PROPS = {
     PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
 };
 const ELEMENT_IDS = {
+    SIDEBAR_CLOSE: 'sidebar-close',
     SECT_OVERVIEW: 'overview',
     SECT_TREND: 'trend',
     SECT_PLAN_AREA: 'plan-area',
@@ -219,3 +220,8 @@ const ELEMENT_IDS = {
     GEO_TRANSPORT: 'geo-transport',
     GEO_TRAVEL: 'geo-travel'
 };
+const ELEMENT_STATES = {
+    ACTIVE: 'active',
+    DISABLED: 'disabled',
+    SELECTED: 'selected'
+}
