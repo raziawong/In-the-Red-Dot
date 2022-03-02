@@ -3,6 +3,7 @@ function main() {
     function init() {
         initApexChartOptions();
         let map = initMap();
+        //initSwiper();
 
         window.addEventListener('DOMContentLoaded', async function() {
             initInteractions();
@@ -86,14 +87,21 @@ function main() {
         };
     }
 
+    function initSwiper() {
+        let swiper = new Swiper('.swiper', {
+            speed: 400,
+            spaceBetween: 100,
+        });
+    }
+
     function initMap() {
         let singapore = [1.3552, 103.7972];
         let bounds = L.latLng(1.3552, 103.7972).toBounds(28000);
         let map = L.map(ELEMENT_IDS.URA_ZONES_MAP, {
             dragging: false,
-            zoomControl: false,
-            maxZoom: MAP.ZOOM_INITIAL + 4,
-            minZoom: MAP.ZOOM_INITIAL - 1
+            zoomControl: false
+                // maxZoom: MAP.ZOOM_INITIAL + 4,
+                // minZoom: MAP.ZOOM_INITIAL - 1
         }).setView(singapore, MAP_CONF.ZOOM_INITIAL);
 
         map.fitBounds(bounds);

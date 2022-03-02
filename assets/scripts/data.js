@@ -179,6 +179,6 @@ function transformAnnualPopulationData(rawData) {
         dataByYear: dataByYear
     }
 
-    // console.log("Annual Population Indicators:\n", populationData);
+    console.log("Annual Population Indicators:\n", populationData);
     return populationData;
 }
