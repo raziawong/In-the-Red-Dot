@@ -20,7 +20,7 @@
         <!-- hamburger toggle for tree nav -->
         <a href="#sidebar" class="u-none-md" id="sidebar-toggle">
             <span class="icon">
-                <img class="col" src="assets/media/logo_sgmap.svg" alt="Menu Icon"/>
+                <img src="assets/media/logo_sgmap.svg" alt="Menu Icon"/>
             </span>
         </a>
         <!-- header + tree nav -->
@@ -32,8 +32,8 @@
             </a>
             <div class="content">
                 <a class="row" href="index.html">
-                    <img class="col" src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" />
-                    <h6 class="col">In the red dot</h6>
+                    <div class="col-xs-3 col-4"><img src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" /></div>
+                    <h6 class="col-xs-3 col-4">In the red dot</h6>
                 </a>
             </div>
             <div class="tree-nav-container">
@@ -81,27 +81,27 @@
         <main class="tree-nav-content">
             <!-- population overview charts -->
             <section id="overview">
-                <div class="section-content">
-                    <div id="overview-sel">
-                        <div class="form-group">
-                            <label class="form-group-label" for="overview-sel-year">Year</label>
-                            <select class="select" id="overview-sel-year" placeholder="Year"></select>
-                        </div>
+                <div id="overview-sel">
+                    <div class="form-group">
+                        <label class="form-group-label" for="overview-sel-year">Year</label>
+                        <select class="select" id="overview-sel-year" placeholder="Year"></select>
                     </div>
+                </div>
+                <div class="section-content">
                     <div class="row">
                         <h4 class="col-12" id="population">
                             Population: <span></span>
                         </h4>
-                        <div class="col-6 chart short">
+                        <div class="col-6 chart-s">
                             <div id="residency"></div>
                         </div>
-                        <div class="col-6 chart short">
+                        <div class="col-6 chart-s">
                             <div id="race"></div>
                         </div>
-                        <div class="col-6 chart short">
+                        <div class="col-6 chart-xs">
                             <div id="gender"></div>
                         </div>
-                        <div class="col-6 chart short">
+                        <div class="col-6 chart-xs">
                             <div id="med-age"></div>
                         </div>
                         <div class="col-12 chart">
@@ -113,26 +113,26 @@
 
             <!-- population trend charts -->
             <section id="trend">
-                <div class="section-content">
-                    <div id="trend-sel">
-                        <div class="form-group">
-                            <label class="form-group-label">Range</label>
-                            <select class="select" id="trend-sel-from" placeholder="From"></select>
-                            <select class="select" id="trend-sel-to" placeholder="To"></select>
-                        </div>
-                        <span class="required font-bold info">Please select years in range of 10 or less.</span>
+                <div id="trend-sel">
+                    <div class="form-group">
+                        <label class="form-group-label">Range</label>
+                        <select class="select" id="trend-sel-from" placeholder="From"></select>
+                        <select class="select" id="trend-sel-to" placeholder="To"></select>
                     </div>
+                    <span class="required font-bold info">Please select years in range of 10 or less.</span>
+                </div>
+                <div class="section-content">
                     <div class="row">
                         <div class="col-12 chart">
                             <div id="trend-popincr"></div>
                         </div>
-                        <div class="col-4 chart short">
+                        <div class="col-4 chart-s">
                             <div id="trend-citizen"></div>
                         </div>
-                        <div class="col-4 chart short">
+                        <div class="col-4 chart-s">
                             <div id="trend-pr"></div>
                         </div>
-                        <div class="col-4 chart short">
+                        <div class="col-4 chart-s">
                             <div id="trend-nonres"></div>
                         </div>
                         <div class="col-12 chart">
@@ -153,23 +153,25 @@
 
             <!-- geographic distribution charts -->
             <section id="plan-area">
+                <div class="tab-container disabled">
+                    <ul class="row no-space">
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
+                            <div class="tab-item-content">
+                                Residents
+                            </div>
+                        </li>
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-dwelling">
+                            <div class="tab-item-content">Dwelling</div>
+                        </li>
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
+                            <div class="tab-item-content">Education</div>
+                        </li>
+                        <li class="col-xs-6 col-sm-3" data-target="tab-content-empl">
+                            <div class="tab-item-content">Employed</div>
+                        </li>
+                    </ul>
+                </div>
                 <div class="section-content">
-                    <div class="tab-container disabled">
-                        <ul class="row no-space">
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
-                                <div class="tab-item-content">Residents</div>
-                            </li>
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-dwelling">
-                                <div class="tab-item-content">Dwelling</div>
-                            </li>
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
-                                <div class="tab-item-content">Education</div>
-                            </li>
-                            <li class="col-xs-6 col-sm-3" data-target="tab-content-empl">
-                                <div class="tab-item-content">Employed</div>
-                            </li>
-                        </ul>
-                    </div>
                     <div id="ura-zones-map"></div>
                     <div class="tab-content-container" id="tab-content-res">
                         <div class="tab-close u-pull-right">
@@ -177,7 +179,7 @@
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="row tab-content">
+                        <div class="row no-space tab-content">
                             <div class="col-12 chart">
                                 <div id="geo-age-group"></div>
                                 <div id="geo-age-gender"></div>
@@ -193,8 +195,10 @@
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="tab-content">
-                            <div id="geo-dwelling"></div>
+                        <div class="row tab-content">
+                            <div class="col-12 chart">
+                                <div id="geo-dwelling"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-edu">
@@ -203,9 +207,13 @@
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="tab-content">
-                            <div id="geo-education"></div>
-                            <div id="geo-literacy"></div>
+                        <div class="row no-space tab-content">
+                            <div class="col-12 chart">
+                                <div id="geo-education"></div>
+                            </div>
+                            <div class="col-12 chart">
+                                <div id="geo-literacy"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-empl">
@@ -214,11 +222,19 @@
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="tab-content">
-                            <div id="geo-occupation"></div>
-                            <div id="geo-income"></div>
-                            <div id="geo-transport"></div>
-                            <div id="geo-travel"></div>
+                        <div class="row no-space tab-content">
+                            <div class="col-6 chart">
+                                <div id="geo-occupation"></div>
+                            </div>
+                            <div class="col-6 chart">
+                                <div id="geo-income"></div>
+                            </div>
+                            <div class="col-6 chart">
+                                <div id="geo-transport"></div>
+                            </div>
+                            <div class="col-6 chart">
+                                <div id="geo-travel"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-none">

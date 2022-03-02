@@ -3,10 +3,11 @@
     --pri-accent: #F3EED9;
     --pri-accent-o8: rgb(243, 237, 216, 0.8);
     --sec-color: #F6AE2D;
-    --sec-accent: rgb(246, 240, 237 0.3);
+    --sec-accent: rgb(246, 240, 237);
     --sec-accent-o8: rgb(246, 240, 237, 0.8);
-    --ter-color: #285943;
+    --ter-color: rgb(40, 89, 67, 0.5);
     --gen-text: #57423F;
+    --bg-color: rgb(229, 252, 255, 0.95);
 }
 
 body {
@@ -20,19 +21,26 @@ body {
 
 /* --- start tree navigation menu --- */
 
-header.tree-nav {
+.tree-nav-body header.tree-nav {
     background-color: var(--pri-accent);
-    padding: 0.2rem 1.5rem;
+    padding: 1.5rem;
     z-index: 400002;
 }
 
-header.tree-nav img {
-    width: 9vw;
+header.tree-nav ul .menu-item a {
+    font-size: 0.9rem;
 }
 
-header.tree-nav .content a.row {
+header.tree-nav .row {
+    padding-left: 0;
+    padding-right: 0;
     justify-content: center;
     align-items: center;
+}
+
+header.tree-nav .row img {
+    max-width: 10vw;
+    padding-right: 0.5rem;
 }
 
 header.tree-nav .content a h6 {
@@ -45,7 +53,7 @@ header.tree-nav .tree-item-header {
     font-size: 1.1rem;
 }
 
-header.tree-nav .menu-item:hove>a {
+header.tree-nav .menu-item:hover>a {
     color: var(--pri-color);
 }
 
@@ -95,7 +103,6 @@ header.tree-nav .menu-item a.selected {
 main.tree-nav-content section {
     height: 100vh;
     width: 100%;
-    overflow: hidden;
     position: absolute;
     top: 0;
     right: 0;
@@ -107,12 +114,20 @@ main.tree-nav-content section.active {
     transition: 0.4s ease-in transform;
 }
 
-main section:not(#plan-area) div.section-content {
+main.tree-nav-content section:not(#plan-area) {
     overflow: scroll;
 }
 
+main.tree-nav-content section:not(#plan-area) .section-content {
+    margin: 1rem 1rem;
+}
+
 main section:not(#plan-area) div.section-content .row>* {
-    margin: 2rem 0;
+    margin: 1rem 0;
+}
+
+main #plan-area .tab-content.row>* {
+    margin: 0.5rem 0;
 }
 
 
@@ -120,6 +135,7 @@ main section:not(#plan-area) div.section-content .row>* {
 
 main.tree-nav-content .form-group {
     margin: 0 0;
+    background-color: var(--pri-accent);
 }
 
 main.tree-nav-content .form-group .form-group-label {
@@ -127,10 +143,12 @@ main.tree-nav-content .form-group .form-group-label {
     border: 0;
     color: var(--pri-color);
     padding: 0.8rem 8vw;
+    font-weight: bold;
 }
 
 main.tree-nav-content .form-group select {
     border-radius: 0;
+    border-color: var(--ter-color);
 }
 
 #trend-sel span {
@@ -140,12 +158,16 @@ main.tree-nav-content .form-group select {
 
 /* --- start charts / graphs --- */
 
-.ct-body .chart {
-    height: 500px;
+main.tree-nav-content .chart {
+    height: 45vh;
 }
 
-.ct-body .chart.short {
-    height: 350px;
+main.tree-nav-content .chart-s {
+    height: 25vh;
+}
+
+main.tree-nav-content .chart-xs {
+    height: 20vh;
 }
 
 #population {
@@ -176,6 +198,7 @@ main.tree-nav-content .form-group select {
     margin: 0 0;
     border: 0;
     font-size: var(--font-size-m);
+    font-weight: bold;
 }
 
 #plan-area .tab-container.disabled li .tab-item-content,
@@ -209,9 +232,9 @@ main.tree-nav-content .form-group select {
     top: 5vh;
     height: 95vh;
     width: 100%;
-    transform: translateX(200%);
+    transform: translateX(-200%);
     transition: .5s ease-in-out transform;
-    background-color: var(--sec-accent-o8);
+    background-color: var(--bg-color);
 }
 
 #plan-area .tab-content-container.active {
@@ -244,7 +267,7 @@ main.tree-nav-content .form-group select {
 #ura-zones-map .map-country-tooltip {
     background-color: var(--sec-accent-o8);
     text-align: center;
-    border: 0px;
+    border: 0;
     color: var(--gen-text);
     font-weight: bold;
     font-size: 1rem;
@@ -301,9 +324,11 @@ main.tree-nav-content .form-group select {
 
 @media screen and (max-width: 1024px) {
     /* --- start tree navigation menu --- */
-    header.tree-nav {
-        padding: 0.2rem 0.2rem;
-        min-width: 17rem;
+    .tree-nav-body header.tree-nav {
+        padding: 1rem;
+    }
+    header.tree-nav .row img {
+        max-width: 20vw;
     }
 }
 
@@ -312,12 +337,18 @@ main.tree-nav-content .form-group select {
 
 @media screen and (max-width: 640px) {
     /* --- start tree navigation menu --- */
-    header.tree-nav {
-        padding: 0.2rem 0.8rem;
+    .tree-nav-body header.tree-nav {
+        padding: 0.5rem;
+    }
+    /* --- start main content body --- */
+    main.tree-nav-content section {
+        height: 100%;
+        width: 100vw;
     }
     /* --- start filter form groups --- */
     main.tree-nav-content .form-group {
         display: block;
+        font-size: var(--font-size-s);
     }
     main.tree-nav-content .form-group .form-group-label {
         width: 100%;
@@ -337,7 +368,7 @@ main.tree-nav-content .form-group select {
         height: 10vh;
     }
     #plan-area .tab-content-container {
-        top: 10vh
+        top: 10vh;
     }
     #plan-area .tab-container li .tab-item-content {
         padding: 0.2rem 0.4rem;
