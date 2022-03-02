@@ -55,6 +55,9 @@ const DOS_DATA_KEYS = {
     TOTAL_INDIANS: 'total_indians',
     TOTAL_OTHER_ETHN: 'other_ethnic_groups_(total)'
 };
+const CHART_CONF = {
+    COLOR_RANGE: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535']
+}
 const CHART_TYPES = {
     AREA: 'area',
     BAR: 'bar',
@@ -132,7 +135,7 @@ const CHART_TITLES = {
     TRANSPORT: 'Transport Mode',
     TRAVEL_TIME: 'Travel Time'
 }
-const MAP = {
+const MAP_CONF = {
     ZOOM_INITIAL: 12.4,
     DEFAULT_BORDER_COLOR: 'grey',
     HOVER_BORDER_COLOR: '#F6AE2D',
@@ -202,6 +205,7 @@ const ELEMENT_IDS = {
     TREND_PR: 'trend-pr',
     TREND_NONRES: 'trend-nonres',
     TREND_POPINCR: 'trend-popincr',
+    URA_ZONES_MAP: 'ura-zones-map',
     MAP_INFO: 'map-info',
     MAP_AREA_INFO: 'area-info',
     GEO_AGE_GROUP: 'geo-age-group',

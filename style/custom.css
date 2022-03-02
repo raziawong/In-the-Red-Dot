@@ -293,19 +293,21 @@ body {
     #ura-zones-map {
         height: 90vh;
     }
+    #ura-zones-map .leaflet-control-container .leaflet-right {
+        right: unset;
+    }
     #ura-zones-map .info {
         width: 100vw;
         bottom: 23.2px;
+        left: 0;
+        margin: 0.5rem 0;
     }
     #ura-zones-map .info #area-info,
     #ura-zones-map .info p {
-        margin: 0.1rem 1rem;
+        margin: 2px 12px;
     }
     #ura-zones-map .leaflet-right .leaflet-control-zoom {
-        margin-right: 0.2rem;
-    }
-    #ura-zones-map .leaflet-bottom .leaflet-control-zoom {
-        margin-bottom: 1.5rem;
+        margin: 0 0 5px 25px;
     }
     #plan-area .tab-container li .tab-item-content {
         padding: 0.2rem 0.4rem;

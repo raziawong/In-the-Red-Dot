@@ -30,7 +30,7 @@ function main() {
                 easing: 'easeinout',
                 speed: 800
             },
-            colors: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535'],
+            colors: CHART_CONF.COLOR_RANGE,
             chart: {
                 height: '100%',
                 fontFamily: 'Nunito Sans,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif',
@@ -86,15 +86,15 @@ function main() {
 
     function initMap() {
         let singapore = [1.3552, 103.7972];
-        //let bounds = L.latLng(1.3552, 103.7972).toBounds(28000);
-        let map = L.map('ura-zones-map', {
+        let bounds = L.latLng(1.3552, 103.7972).toBounds(28000);
+        let map = L.map(ELEMENT_IDS.URA_ZONES_MAP, {
             dragging: false,
             zoomControl: false,
             maxZoom: MAP.ZOOM_INITIAL + 4,
             minZoom: MAP.ZOOM_INITIAL - 1
-        }).setView(singapore, MAP.ZOOM_INITIAL);
+        }).setView(singapore, MAP_CONF.ZOOM_INITIAL);
 
-        //map.fitBounds(bounds);
+        map.fitBounds(bounds);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',

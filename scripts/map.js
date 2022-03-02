@@ -1,14 +1,14 @@
 function getHeatMapColor(highestNum, num) {
     let percentage = (highestNum - num) / highestNum * 100;
-    return percentage > 90 ? MAP.COLOR_RANGE[0] :
-        percentage > 80 ? MAP.COLOR_RANGE[1] :
-        percentage > 70 ? MAP.COLOR_RANGE[2] :
-        percentage > 50 ? MAP.COLOR_RANGE[3] :
-        percentage > 40 ? MAP.COLOR_RANGE[4] :
-        percentage > 30 ? MAP.COLOR_RANGE[5] :
-        percentage > 20 ? MAP.COLOR_RANGE[6] :
-        percentage > 10 ? MAP.COLOR_RANGE[7] :
-        MAP.COLOR_RANGE[8];
+    return percentage > 90 ? MAP_CONF.COLOR_RANGE[0] :
+        percentage > 80 ? MAP_CONF.COLOR_RANGE[1] :
+        percentage > 70 ? MAP_CONF.COLOR_RANGE[2] :
+        percentage > 50 ? MAP_CONF.COLOR_RANGE[3] :
+        percentage > 40 ? MAP_CONF.COLOR_RANGE[4] :
+        percentage > 30 ? MAP_CONF.COLOR_RANGE[5] :
+        percentage > 20 ? MAP_CONF.COLOR_RANGE[6] :
+        percentage > 10 ? MAP_CONF.COLOR_RANGE[7] :
+        MAP_CONF.COLOR_RANGE[8];
 }
 
 function doURAZoneAndData(map, geoDistrData) {
@@ -16,7 +16,7 @@ function doURAZoneAndData(map, geoDistrData) {
         let layer = evt.target;
         layer.setStyle({
             weight: 5,
-            color: MAP.HOVER_BORDER_COLOR,
+            color: MAP_CONF.HOVER_BORDER_COLOR,
             dashArray: ''
         });
         layer.openTooltip();
@@ -25,10 +25,10 @@ function doURAZoneAndData(map, geoDistrData) {
 
     function resetLayer(evt) {
         let layer = evt.target;
-        if (layer.options.color && layer.options.color !== MAP.CLICK_BORDER_COLOR) {
+        if (layer.options.color && layer.options.color !== MAP_CONF.CLICK_BORDER_COLOR) {
             layer.setStyle({
                 weight: 2,
-                color: MAP.DEFAULT_BORDER_COLOR,
+                color: MAP_CONF.DEFAULT_BORDER_COLOR,
                 dashArray: '4'
             });
         }
@@ -74,7 +74,7 @@ function doURAZoneAndData(map, geoDistrData) {
                 fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties[MAP_LAYER_PROPS.POPULATION]),
                 weight: 2,
                 opacity: 1,
-                color: MAP.DEFAULT_BORDER_COLOR,
+                color: MAP_CONF.DEFAULT_BORDER_COLOR,
                 dashArray: '4',
                 fillOpacity: 0.7
             });
@@ -104,7 +104,7 @@ function doURAZoneAndData(map, geoDistrData) {
         headerEle.innerText = 'Population Density';
 
         legendEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
-        for (let color of MAP.COLOR_RANGE) {
+        for (let color of MAP_CONF.COLOR_RANGE) {
             legendEle.innerHTML += '<i style="background:' + color + '"></i> ';
         }
         legendEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
