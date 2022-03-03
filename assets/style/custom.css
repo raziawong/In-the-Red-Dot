@@ -100,6 +100,7 @@ header.tree-nav .menu-item a.selected {
     padding: 0 0;
     overflow: hidden;
     position: relative;
+    background-color: var(--bg-color);
 }
 
 main.tree-nav-content section {
@@ -109,7 +110,6 @@ main.tree-nav-content section {
     top: 0;
     right: 0;
     transform: translate(-110%, 0);
-    background-color: var(--bg-color);
 }
 
 main.tree-nav-content section.active {
@@ -118,7 +118,8 @@ main.tree-nav-content section.active {
 }
 
 main.tree-nav-content section:not(#plan-area) {
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 main.tree-nav-content section:not(#plan-area) .section-content {

@@ -233,5 +233,5 @@ const ELEMENT_STATES = {
 const ERROR_MSG = {
     YEAR_2: 'Please select years in range of 2 or more.',
     YEAR_10: 'Please select years in range of 10 or less.',
-    YEAR_NEG: 'Please select a valid range (at least 2 years and within 10 years).'
+    YEAR_NEG: 'Please select a valid range between 2 and 10 years.'
 }
