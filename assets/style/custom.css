@@ -39,7 +39,7 @@ header.tree-nav .row {
 }
 
 header.tree-nav .row img {
-    max-width: 10vw;
+    max-width: 12vw;
     padding-right: 0.5rem;
 }
 
@@ -372,7 +372,7 @@ main.tree-nav-content #plan-area .chart-xs {
         font-size: var(--font-size-xs);
     }
     header.tree-nav .row img {
-        max-width: 20vw;
+        max-width: 15vw;
     }
     /* --- start filter form groups --- */
     main.tree-nav-content .form-group .form-group-label {
