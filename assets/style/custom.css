@@ -224,6 +224,7 @@ main.tree-nav-content .chart-xs {
     background-color: var(--pri-accent);
     color: var(--gen-text);
     height: 100%;
+    padding: 0.3rem 0.5rem 0rem;
 }
 
 #plan-area .tab-container li:hover .tab-item-content {
@@ -347,8 +348,25 @@ main.tree-nav-content .chart-xs {
     .tree-nav-body header.tree-nav {
         padding: 1rem;
     }
+    header.tree-nav .content a h1 {
+        font-size: var(--font-size-m);
+    }
+    header.tree-nav .tree-item-header {
+        font-size: var(--font-size-s);
+    }
+    header.tree-nav ul .menu-item a {
+        font-size: var(--font-size-xs);
+    }
     header.tree-nav .row img {
         max-width: 20vw;
+    }
+    /* --- start filter form groups --- */
+    main.tree-nav-content .form-group .form-group-label {
+        font-size: var(--font-size-s);
+    }
+    /* --- start tab menu and content --- */
+    #plan-area .tab-container li .tab-item-content {
+        font-size: var(--font-size-s);
     }
 }
 
@@ -359,15 +377,6 @@ main.tree-nav-content .chart-xs {
     /* --- start tree navigation menu --- */
     .tree-nav-body header.tree-nav {
         padding: 0.5rem;
-    }
-    header.tree-nav .content a h1 {
-        font-size: var(--font-size-m);
-    }
-    header.tree-nav .tree-item-header {
-        font-size: var(--font-size-s);
-    }
-    header.tree-nav ul .menu-item a {
-        font-size: var(--font-size-xs);
     }
     /* --- start main content body --- */
     main.tree-nav-content section {
@@ -406,7 +415,6 @@ main.tree-nav-content .chart-xs {
         padding: 0.2rem 0.4rem;
         border-bottom: 0;
         border-right: 0;
-        font-size: var(--font-size-s);
     }
     #plan-area .tab-container li.selected .tab-item-content {
         border-bottom: 2px solid var(--pri-color);

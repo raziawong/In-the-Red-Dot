@@ -488,6 +488,11 @@ function getGeoDistrCharts() {
         CHART_TITLES.DWELLING_TYPE, false, { dataLabels: { show: true } }
     );
 
+    geoCharts[ELEMENT_IDS.GEO_TENANCY] = createApexChart(
+        ELEMENT_IDS.GEO_TENANCY, CHART_TYPES.PIE,
+        CHART_TITLES.TENANCY_TYPE, false, { dataLabels: { show: true } }
+    );
+
     geoCharts[ELEMENT_IDS.GEO_EDUCATION] = createApexChart(
         ELEMENT_IDS.GEO_EDUCATION, CHART_TYPES.RADAR,
         CHART_TITLES.QUALIFICATION, false, { dataLabels: { show: true } }
@@ -542,6 +547,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let ageGroupData = mLayerProp.ageGroup;
     let raceData = mLayerProp.ethnicGroup;
     let dwellData = mLayerProp.dwellingType;
+    let tenantData = mLayerProp.tenancyType;
     let eduData = mLayerProp.qualification;
     let litData = mLayerProp.literacy;
     let occupationData = mLayerProp.occupation;
@@ -614,6 +620,11 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                 return [label, percentage];
             }
         }
+    };
+    let tenantLabels = Object.keys(tenantData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let tenantOpt = {
+        series: tenantLabels.map(k => tenantData[k]),
+        labels: tenantLabels
     };
 
     let eduTypeLabels = Object.keys(eduData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
@@ -734,6 +745,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         raceData[MAP_LAYER_PROPS.OTHERS]
     ]);
     charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
+    charts[ELEMENT_IDS.GEO_TENANCY].updateOptions(tenantOpt);
     charts[ELEMENT_IDS.GEO_EDUCATION].updateOptions(educationOpt);
     charts[ELEMENT_IDS.GEO_LITERACY].updateOptions(litOpt);
     charts[ELEMENT_IDS.GEO_OCCUPATION].updateOptions(occupationOpt);

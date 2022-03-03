@@ -25,6 +25,7 @@ const DOS_TABLE_API = {
         grossIncome: '17571',
         travelTime: '17573',
         dwellingType: '17574',
+        tenancyType: '17575',
         literacy: '17591',
         occupation: '17593',
         transportMode: '17594'
@@ -70,6 +71,24 @@ const CHART_TYPES = {
     RADIAL_BAR: 'radialBar',
     TREE_MAP: 'treemap'
 };
+const CHART_TITLES = {
+    RESIDENCY: 'Residency',
+    GENDER: 'Gender',
+    ETHNICITY: 'Ethnicity',
+    AGE_GROUP: 'Age Group',
+    MEDIAN_AGE: 'Median Age',
+    MEDIAN_AGE_INS: 'Median Age Insights',
+    AGE_DEPENDENCY_RATIO: 'Age Dependency Ratio Insights',
+    POP_GROWTH: 'Population Growth Insights',
+    DWELLING_TYPE: 'Dwelling Type',
+    TENANCY_TYPE: 'Tenancy Type',
+    QUALIFICATION: 'Qualification',
+    LITERACY: 'Literacy',
+    OCCUPATION: 'Occupation',
+    INCOME: 'Income',
+    TRANSPORT: 'Transport Mode',
+    TRAVEL_TIME: 'Travel Time'
+}
 const CHART_LABELS = {
     TOTAL: 'Total',
     POPULATION: 'Population',
@@ -96,6 +115,7 @@ const CHART_LABELS = {
     HDB: 'HDB',
     LANDED: 'Landed',
     NONE: 'None',
+    OWNER: 'Owner',
     PRIMARY: 'Primary',
     LOW_SEC: 'Lower Sec.',
     SECONDARY: 'Secondary',
@@ -118,23 +138,6 @@ const CHART_LABELS = {
     PUBLIC_BUS: 'Public Bus',
     PRIVATE_HIRE_CAR: 'Private Hire Car'
 };
-const CHART_TITLES = {
-    RESIDENCY: 'Residency',
-    GENDER: 'Gender',
-    ETHNICITY: 'Ethnicity',
-    AGE_GROUP: 'Age Group',
-    MEDIAN_AGE: 'Median Age',
-    MEDIAN_AGE_INS: 'Median Age Insights',
-    AGE_DEPENDENCY_RATIO: 'Age Dependency Ratio Insights',
-    POP_GROWTH: 'Population Growth Insights',
-    DWELLING_TYPE: 'Dwelling Type',
-    QUALIFICATION: 'Qualification',
-    LITERACY: 'Literacy',
-    OCCUPATION: 'Occupation',
-    INCOME: 'Income',
-    TRANSPORT: 'Transport Mode',
-    TRAVEL_TIME: 'Travel Time'
-}
 const MAP_CONF = {
     ZOOM_INITIAL: 12.4,
     DEFAULT_BORDER_COLOR: 'grey',
@@ -159,6 +162,7 @@ const MAP_LAYER_PROPS = {
     MALAYS: 'Malays',
     INDIANS: 'Indians',
     OTHERS: 'Others',
+    OWNER_OCCUPIED: 'Owner-Occupied',
     NO_QUALIFICATION: 'No Qualification',
     PRIMARY: 'Primary',
     LOW_SECONDARY: 'Lower Secondary',
@@ -216,6 +220,7 @@ const ELEMENT_IDS = {
     GEO_LITERACY: 'geo-literacy',
     GEO_OCCUPATION: 'geo-occupation',
     GEO_DWELLING: 'geo-dwelling',
+    GEO_TENANCY: 'geo-tenancy',
     GEO_INCOME: 'geo-income',
     GEO_TRANSPORT: 'geo-transport',
     GEO_TRAVEL: 'geo-travel'

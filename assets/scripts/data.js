@@ -69,33 +69,12 @@ function transformGeoDistributionData(rawData) {
     let dataByArea = { highestPopulationCount: 0 };
     let ageGroupByArea = rawData.ageGroup.filter(d => d['rowText'].toLowerCase().includes('total'));
 
-    // dataByArea.dwellingType = rawData.dwellingType.map(row => {
-    //     return {
-    //         [row.rowText]: row.columns.map(col => {
-    //             return {
-    //                 [col.key]: UTIL.convertToNumber(
-    //                     col.value ? col.value : col.columns.find(hdb => hdb['key'].toLowerCase() === 'total')['value']
-    //                 )
-    //             }
-    //         })
-    //     }
-    // });
-
-    // dataByArea.grossIncome = rawData.grossIncome.map(row => {
-    //     return {
-    //         [row.rowText]: row.columns.map(col => {
-    //             return {
-    //                 [col.key]: UTIL.convertToNumber(col.value)
-    //             }
-    //         })
-    //     }
-    // });
-
     dataByArea.genderPopulation = getObjModelForGeoDistribution(ageGroupByArea, false);
     dataByArea.ageGroup = getObjModelForGeoDistribution(ageGroupByArea, true);
     dataByArea.ethnicGroup = getObjModelForGeoDistribution(rawData.ethnicGroup
         .filter(d => d['rowText'].toLowerCase().includes('total')), false);
     dataByArea.dwellingType = getObjModelForGeoDistribution(rawData.dwellingType, false);
+    dataByArea.tenancyType = getObjModelForGeoDistribution(rawData.tenancyType, false);
     dataByArea.grossIncome = getObjModelForGeoDistribution(rawData.grossIncome, false);
     dataByArea.literacy = getObjModelForGeoDistribution(rawData.literacy, false);
     dataByArea.occupation = getObjModelForGeoDistribution(rawData.occupation);
@@ -179,6 +158,6 @@ function transformAnnualPopulationData(rawData) {
         dataByYear: dataByYear
     }
 
-    console.log("Annual Population Indicators:\n", populationData);
+    // console.log("Annual Population Indicators:\n", populationData);
     return populationData;
 }
