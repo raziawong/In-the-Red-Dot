@@ -47,6 +47,7 @@ header.tree-nav .content a h1 {
     font-size: var(--font-size-l);
     color: var(--pri-color);
     text-transform: uppercase;
+    text-shadow: -3px 3px var(--cirrus-light-gray);
 }
 
 header.tree-nav .tree-item-header {

@@ -198,10 +198,11 @@ function main() {
                 let container = tc.parentNode;
                 if (container) {
                     let activeTab = document.querySelector(`[data-target="${container.id}"]`);
-                    console.log(activeTab);
+                    // hide selected tab item menu
                     if (activeTab.classList.contains(ELEMENT_STATES.SELECTED)) {
                         activeTab.classList.remove(ELEMENT_STATES.SELECTED);
                     }
+                    // hide tab content
                     if (container.classList.contains(ELEMENT_STATES.ACTIVE)) {
                         container.classList.remove(ELEMENT_STATES.ACTIVE);
                     }
