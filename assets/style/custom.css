@@ -43,7 +43,8 @@ header.tree-nav .row img {
     padding-right: 0.5rem;
 }
 
-header.tree-nav .content a h6 {
+header.tree-nav .content a h1 {
+    font-size: var(--font-size-l);
     color: var(--pri-color);
     text-transform: uppercase;
 }
@@ -135,7 +136,7 @@ main #plan-area .tab-content.row>* {
 
 main.tree-nav-content .form-group {
     margin: 0 0;
-    background-color: var(--pri-accent);
+    color: var(--ter-color);
 }
 
 main.tree-nav-content .form-group .form-group-label {
@@ -148,7 +149,6 @@ main.tree-nav-content .form-group .form-group-label {
 
 main.tree-nav-content .form-group select:not(.input-error) {
     border-radius: 0;
-    border-color: var(--ter-color);
 }
 
 main.tree-nav-content .form-group select.input-error {
@@ -297,14 +297,24 @@ main.tree-nav-content .chart-xs {
     color: var(--gen-text);
 }
 
-#ura-zones-map .info h6 {
-    font-size: 1.2rem;
+#ura-zones-map .info .subtitle {
+    font-weight: bold;
+    font-size: var(--font-size-m);
     margin-bottom: 0.5rem;
 }
 
-#ura-zones-map .info #area-info,
-#ura-zones-map .info p {
+#ura-zones-map .info #area-info h5 {
+    font-size: var(--font-size-xl);
+}
+
+#ura-zones-map .info #area-info p {
+    font-size: var(--font-size-l);
     margin-bottom: 0.5rem;
+}
+
+#ura-zones-map .info .legend {
+    padding: 0.4rem;
+    margin: 0.5rem;
 }
 
 #ura-zones-map .leaflet-control a {
@@ -349,6 +359,15 @@ main.tree-nav-content .chart-xs {
     .tree-nav-body header.tree-nav {
         padding: 0.5rem;
     }
+    header.tree-nav .content a h1 {
+        font-size: var(--font-size-m);
+    }
+    header.tree-nav .tree-item-header {
+        font-size: var(--font-size-s);
+    }
+    header.tree-nav ul .menu-item a {
+        font-size: var(--font-size-xs);
+    }
     /* --- start main content body --- */
     main.tree-nav-content section {
         height: 100%;
@@ -356,19 +375,21 @@ main.tree-nav-content .chart-xs {
     }
     /* --- start filter form groups --- */
     main.tree-nav-content .form-group {
-        display: block;
-        font-size: var(--font-size-s);
+        flex-wrap: wrap;
     }
     main.tree-nav-content .form-group .form-group-label {
         width: 100%;
         padding: 0.4rem;
         text-align: center;
-        font-size: 1rem;
+        font-size: var(--font-size-s);
+        flex: 100%;
     }
     main.tree-nav-content .form-group select {
         width: 100%;
         padding: 0.4rem 1rem;
         text-align: center;
+        font-size: var(--font-size-s);
+        flex: 50%;
     }
     main.tree-nav-content .form-group span.info {
         text-align: center;
@@ -383,8 +404,11 @@ main.tree-nav-content .chart-xs {
     #plan-area .tab-container li .tab-item-content {
         padding: 0.2rem 0.4rem;
         border-bottom: 0;
-        border: 1px solid var(--ter-color);
         border-right: 0;
+        font-size: var(--font-size-s);
+    }
+    #plan-area .tab-container li.selected .tab-item-content {
+        border-bottom: 2px solid var(--pri-color);
     }
     /* --- start map and controls --- */
     #ura-zones-map {
@@ -399,11 +423,50 @@ main.tree-nav-content .chart-xs {
         left: 0;
         margin: 0.5rem 0;
     }
+    #ura-zones-map .info .subtitle {
+        font-size: var(--font-size-s);
+        margin-bottom: 0.5rem;
+    }
+    #ura-zones-map .info #area-info h5 {
+        font-size: var(--font-size-l);
+    }
+    #ura-zones-map .info #area-info p {
+        font-size: var(--font-size-m);
+    }
     #ura-zones-map .info #area-info,
     #ura-zones-map .info p {
         margin: 2px 12px;
     }
+    #ura-zones-map .info .legend {
+        font-size: var(--font-size-xs);
+        padding: 0;
+        margin: 0;
+    }
+    #ura-zones-map .leaflet-control-attribution {
+        font-size: var(--space-size);
+    }
+    .leaflet-touch .leaflet-bar a {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+    }
+    .leaflet-touch .leaflet-control-zoom-in,
+    .leaflet-touch .leaflet-control-zoom-out {
+        font-size: var(--font-size-s);
+    }
     #ura-zones-map .leaflet-right .leaflet-control-zoom {
-        margin: 0 0 4vh 88vw;
+        margin: 0 0 15% 91vw;
+    }
+}
+
+
+/* --- start folding devices --- */
+
+@media screen and (max-width: 300px) {
+    #ura-zones-map .info {
+        bottom: 2.5vh;
+    }
+    #ura-zones-map .leaflet-right .leaflet-control-zoom {
+        margin: 0 0 29% 88vw;
     }
 }

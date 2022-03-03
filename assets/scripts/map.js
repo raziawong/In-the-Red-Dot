@@ -97,11 +97,11 @@ function doURAZoneAndData(map, geoDistrData) {
     info.onAdd = function(map) {
         let containerEle = L.DomUtil.create('div', 'info');
         let areaContainerEle = L.DomUtil.create('div');
-        let headerEle = L.DomUtil.create('h6', '', containerEle);
         let legendEle = L.DomUtil.create('div', 'legend', containerEle);
+        let legTitleEle = L.DomUtil.create('div', 'subtitle', containerEle);
 
-        containerEle.setAttribute('id', ELEMENT_IDS.MAP_INFO);
-        headerEle.innerText = 'Population Density';
+        containerEle.id = ELEMENT_IDS.MAP_INFO;
+        legTitleEle.innerText = 'Population Density';
 
         legendEle.innerHTML = '<span>&nbsp;&nbsp;Low&nbsp;&nbsp;</span>';
         for (let color of MAP_CONF.COLOR_RANGE) {
@@ -109,7 +109,7 @@ function doURAZoneAndData(map, geoDistrData) {
         }
         legendEle.innerHTML += '<span>&nbsp;&nbsp;High&nbsp;&nbsp;</span>';
 
-        areaContainerEle.setAttribute('id', ELEMENT_IDS.MAP_AREA_INFO);
+        areaContainerEle.id = ELEMENT_IDS.MAP_AREA_INFO;
         areaContainerEle.innerHTML = '<p>Click on plan area to see population number</p>';
         containerEle.prepend(areaContainerEle);
 
