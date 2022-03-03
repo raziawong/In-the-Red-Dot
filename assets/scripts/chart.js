@@ -156,30 +156,36 @@ function doPopulationOverview(years, dataByYear) {
         charts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
     }
 
-    function updateOverviewElements(populationData) {
-        document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
-    }
+    function initYearSelect(charts, years, dataByYear) {
+        function updateOverviewElements(populationData) {
+            document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = populationData[DOS_DATA_KEYS.TOTAL_PPLT];
+        }
 
-    let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
-    let descYear = [...years].sort(UTIL.compareAlphaNumDesc);
-    for (let year of descYear) {
-        let optEle = document.createElement('option');
-        optEle.value = year;
-        optEle.innerText = year;
-        yearSelectEle.appendChild(optEle);
+        let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
+        let descYear = [...years].sort(UTIL.compareAlphaNumDesc);
+        for (let year of descYear) {
+            let optEle = document.createElement('option');
+            optEle.value = year;
+            optEle.innerText = year;
+            yearSelectEle.appendChild(optEle);
+        }
+
+        updateOverviewElements(dataByYear[yearSelectEle.value]);
+
+        yearSelectEle.addEventListener('change', evt => {
+            let selectedYear = evt.target.value || 0;
+            if (selectedYear) {
+                updateOverviewCharts(charts, dataByYear[selectedYear]);
+                updateOverviewElements(dataByYear[selectedYear]);
+            }
+        });
+
+        return yearSelectEle.value;
     }
 
     let chartObj = getOverviewCharts();
-    updateOverviewCharts(chartObj, dataByYear[yearSelectEle.value]);
-    updateOverviewElements(dataByYear[yearSelectEle.value]);
-
-    yearSelectEle.addEventListener('change', evt => {
-        let selectedYear = evt.target.value || 0;
-        if (selectedYear) {
-            updateOverviewCharts(chartObj, dataByYear[selectedYear]);
-            updateOverviewElements(dataByYear[selectedYear]);
-        }
-    });
+    let initYear = initYearSelect(chartObj, years, dataByYear)
+    updateOverviewCharts(chartObj, dataByYear[initYear]);
 }
 
 function doPopulationTrend(years, yearData) {
@@ -516,12 +522,18 @@ function getGeoDistrCharts() {
 
     geoCharts[ELEMENT_IDS.GEO_OCCUPATION] = createApexChart(
         ELEMENT_IDS.GEO_OCCUPATION, CHART_TYPES.BAR,
-        CHART_TITLES.OCCUPATION, false, { dataLabels: { show: true } }
+        CHART_TITLES.OCCUPATION, false, {
+            dataLabels: { show: true },
+            yaxis: { labels: { show: false } }
+        }
     );
 
     geoCharts[ELEMENT_IDS.GEO_INCOME] = createApexChart(
         ELEMENT_IDS.GEO_INCOME, CHART_TYPES.LINE,
-        CHART_TITLES.INCOME, false, { dataLabels: { show: true } }
+        CHART_TITLES.INCOME, false, {
+            dataLabels: { show: true },
+            yaxis: { labels: { show: false } }
+        }
     );
 
     geoCharts[ELEMENT_IDS.GEO_TRANSPORT] = createApexChart(
@@ -531,7 +543,8 @@ function getGeoDistrCharts() {
                 bar: {
                     horizontal: true
                 }
-            }
+            },
+            xaxis: { labels: { show: false } }
         }
     );
 
