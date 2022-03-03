@@ -60,13 +60,7 @@ function doPopulationOverview(years, dataByYear) {
         overviewCharts[ELEMENT_IDS.GENDER] = createApexChart(
             ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
             CHART_TITLES.GENDER, false, {
-                labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE],
-                plotOptions: {
-                    radialBar: {
-                        startAngle: -90,
-                        endAngle: 90
-                    }
-                },
+                labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
             }
         );
 
@@ -80,9 +74,7 @@ function doPopulationOverview(years, dataByYear) {
                             value: {
                                 formatter: (val) => val
                             }
-                        },
-                        startAngle: -90,
-                        endAngle: 90
+                        }
                     }
                 },
             }

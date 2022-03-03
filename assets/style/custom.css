@@ -130,10 +130,6 @@ main section:not(#plan-area) div.section-content .row>* {
     margin: 1rem 0;
 }
 
-main #plan-area .tab-content.row>* {
-    margin: 0.5rem 0;
-}
-
 
 /* --- start filter form groups --- */
 
@@ -170,8 +166,8 @@ main.tree-nav-content .form-group select.input-error {
 
 /* --- start charts / graphs --- */
 
-main.tree-nav-content .chart {
-    height: 800px;
+main.tree-nav-content .chart-l {
+    height: 700px;
 }
 
 main.tree-nav-content .chart-s {
@@ -182,20 +178,20 @@ main.tree-nav-content .chart-xs {
     height: 350px;
 }
 
-main.tree-nav-content #plan-area .chart {
+#population {
+    text-align: center;
+}
+
+#plan-area .chart {
     height: 500px;
 }
 
-main.tree-nav-content #plan-area .chart-s {
+#plan-area .chart-s {
     height: 300px;
 }
 
-main.tree-nav-content #plan-area .chart-xs {
+#plan-area .chart-xs {
     height: 280px;
-}
-
-#population {
-    text-align: center;
 }
 
 #geo-age-group.gender-activated {
@@ -270,6 +266,10 @@ main.tree-nav-content #plan-area .chart-xs {
 
 #plan-area .tab-content {
     padding: 1.3rem;
+}
+
+#plan-area .tab-content.row>* {
+    margin: 0.5rem 0;
 }
 
 

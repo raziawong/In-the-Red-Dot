@@ -18,14 +18,14 @@
 <body>
     <div class="tree-nav-body">
         <!-- hamburger toggle for tree nav -->
-        <a href="#sidebar" class="u-none-md" id="sidebar-toggle">
+        <a href="#sidebar" class="u-none-md" id="sidebar-toggle" aria-label="Toggle Menu">
             <span class="icon">
                 <img src="assets/media/logo_sgmap.svg" alt="Menu Icon"/>
             </span>
         </a>
         <!-- header + tree nav -->
         <header class="tree-nav" id="sidebar">
-            <a href="#sidebar-close" class="u-none-md" id="sidebar-close" class="tree-nav-close">
+            <a href="#sidebar-close" class="u-none-md" id="sidebar-close" class="tree-nav-close" aria-label="Close Menu">
                 <span class="icon">
                     <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                 </span>
@@ -40,38 +40,38 @@
                 <div class="tree">
                     <div class="tree-item">
                         <input type="checkbox" id="structure" class="u-none" name="structure" checked>
-                        <label class="tree-item-header" for="structure">
+                        <label class="tree-item-header" for="structure" aria-label="Expand">
                             <span class="icon">
                                 <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
                             </span>
                             Population Structure
                         </label>
-                        <div class="tree-item-body">
+                        <nav class="tree-item-body">
                             <ul class="menu">
                                 <li class="menu-item">
                                     <a data-target="overview">Single Year Overview</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a data-target="trend">10 Years Trend</a>
+                                    <a data-target="trend">Past Years Trend</a>
                                 </li>
                             </ul>
-                        </div>
+                        </nav>
                     </div>
                     <div class="tree-item">
                         <input type="checkbox" id="geodistribution" class="u-none" name="geodistribution" checked>
-                        <label class="tree-item-header" for="geodistribution">
+                        <label class="tree-item-header" for="geodistribution" aria-label="Expand">
                             <span class="icon">
                                 <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
                             </span>
                             Geographical Distribution
                         </label>
-                        <div class="tree-item-body">
+                        <nav class="tree-item-body">
                             <ul class="menu">
                                 <li class="menu-item">
-                                    <a data-target="plan-area">Plan Area</a>
+                                    <a data-target="plan-area">By Plan Area</a>
                                 </li>
                             </ul>
-                        </div>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -188,7 +188,7 @@
                 <div class="section-content">
                     <div id="ura-zones-map"></div>
                     <div class="tab-content-container" id="tab-content-res">
-                        <div class="tab-close u-pull-right">
+                        <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-housing">
-                        <div class="tab-close u-pull-right">
+                        <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
@@ -219,7 +219,7 @@
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-edu">
-                        <div class="tab-close u-pull-right">
+                        <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
@@ -234,7 +234,7 @@
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-empl">
-                        <div class="tab-close u-pull-right">
+                        <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
@@ -255,7 +255,7 @@
                         </div>
                     </div>
                     <div class="tab-content-container" id="tab-content-none">
-                        <div class="tab-close u-pull-right">
+                        <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
