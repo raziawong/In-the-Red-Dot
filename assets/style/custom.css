@@ -7,7 +7,7 @@
     --sec-accent-o8: rgb(246, 240, 237, 0.8);
     --ter-color: rgb(40, 89, 67, 0.5);
     --gen-text: #57423F;
-    --bg-color: rgb(229, 252, 255, 0.95);
+    --bg-color: rgb(241, 238, 243, 0.95);
 }
 
 body {
@@ -109,6 +109,7 @@ main.tree-nav-content section {
     top: 0;
     right: 0;
     transform: translate(-110%, 0);
+    background-color: var(--bg-color);
 }
 
 main.tree-nav-content section.active {
@@ -169,15 +170,27 @@ main.tree-nav-content .form-group select.input-error {
 /* --- start charts / graphs --- */
 
 main.tree-nav-content .chart {
-    height: 45vh;
+    height: 800px;
 }
 
 main.tree-nav-content .chart-s {
-    height: 25vh;
+    height: 400px;
 }
 
 main.tree-nav-content .chart-xs {
-    height: 20vh;
+    height: 350px;
+}
+
+main.tree-nav-content #plan-area .chart {
+    height: 500px;
+}
+
+main.tree-nav-content #plan-area .chart-s {
+    height: 300px;
+}
+
+main.tree-nav-content #plan-area .chart-xs {
+    height: 280px;
 }
 
 #population {
