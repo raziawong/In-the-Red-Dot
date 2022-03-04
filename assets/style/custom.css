@@ -166,7 +166,7 @@ main.tree-nav-content .form-group select.input-error {
 
 /* --- start charts / graphs --- */
 
-main.tree-nav-content .chart-flex-col {
+main.tree-nav-content .chart-flex {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -387,6 +387,12 @@ main.tree-nav-content .chart-xxs {
     /* --- start filter form groups --- */
     main.tree-nav-content .form-group .form-group-label {
         font-size: var(--font-size-s);
+    }
+    /* --- start charts / graphs --- */
+    main.tree-nav-content #trend .chart-flex {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
     /* --- start tab menu and content --- */
     #plan-area .tab-container li .tab-item-content {
