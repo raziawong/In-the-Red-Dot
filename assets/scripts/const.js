@@ -209,7 +209,7 @@ const ELEMENT_IDS = {
     TREND_POPINCR: 'trend-popincr',
     TREND_MEDAGE_CITIZEN: 'trend-medage-citizen',
     TREND_MEDAGE_RES: 'trend-medage-res',
-    TREND_DEPENDENCY: 'trend-dependecy',
+    TREND_DEPENDENCY: 'trend-dependency',
     URA_ZONES_MAP: 'ura-zones-map',
     MAP_INFO: 'map-info',
     MAP_AREA_INFO: 'area-info',
