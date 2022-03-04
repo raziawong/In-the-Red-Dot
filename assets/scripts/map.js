@@ -39,14 +39,21 @@ function doURAZoneAndData(map, geoDistrData) {
         let properties = layer.feature.properties;
         let subtext = properties[MAP_LAYER_PROPS.POPULATION] || 'No Data';
         let container = document.getElementById(ELEMENT_IDS.MAP_AREA_INFO);
+        let tabNavItemEle = document.querySelectorAll('#plan-area .tab-container li');
 
         container.innerHTML = `<h5>${properties[MAP_LAYER_PROPS.DISPLAY_NAME]}</h5>
         <p>Population: <span>${subtext}</span></p>`;
 
         map.fitBounds(layer.getBounds());
-        updateGeoDistrCharts(geoCharts, properties);
 
-        document.querySelector('#plan-area .tab-container').classList.remove('disabled');
+        for (let ti of tabNavItemEle) {
+            if (subtext == 'No Data') {
+                ti.classList.add(ELEMENT_STATES.DISABLED);
+            } else {
+                ti.classList.remove(ELEMENT_STATES.DISABLED);
+                updateGeoDistrCharts(geoCharts, properties);
+            }
+        }
     }
 
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');

@@ -233,8 +233,8 @@ main.tree-nav-content .chart-xxs {
     font-weight: bold;
 }
 
-#plan-area .tab-container.disabled li .tab-item-content,
-#plan-area .tab-container.disabled li:hover .tab-item-content {
+#plan-area .tab-container li.disabled .tab-item-content,
+#plan-area .tab-container li.disabled:hover .tab-item-content {
     border-bottom: 0;
     background-color: var(--cirrus-light-gray);
     color: var(--cirrus-dark-gray);

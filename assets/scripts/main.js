@@ -188,7 +188,7 @@ function main() {
                 // and tab menu is not disabled
                 if (activeSect &&
                     activeSect.id == ELEMENT_IDS.SECT_PLAN_AREA &&
-                    !tabNavEle.classList.contains(ELEMENT_STATES.DISABLED)) {
+                    !ti.classList.contains(ELEMENT_STATES.DISABLED)) {
                     let cTargetId = ti.dataset.target;
                     let selectedTab = tabNavEle.querySelector('li.selected');
                     // hide currently active tab
