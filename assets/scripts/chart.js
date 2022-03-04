@@ -187,28 +187,11 @@ function doPopulationTrend(_years, _yearData) {
         trendCharts[ELEMENT_IDS.TREND_POPINCR] = renderApexChart(
             ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA,
             CHART_TITLES.POP_GROWTH, false, {
+                subtitle: { text: 'Click on Toggle Column Type icon to see different population breakdown' },
                 xaxis: { labels: { show: false } },
                 yaxis: { labels: { show: false } }
             }
         );
-
-        // trendCharts[ELEMENT_IDS.TREND_GENDER] = renderApexChart(
-        //     ELEMENT_IDS.TREND_GENDER, CHART_TYPES.BAR,
-        //     CHART_TITLES.GENDER, false, {
-        //         dataLabels: { enabled: false },
-        //         xaxis: { labels: { show: false } },
-        //         yaxis: { labels: { show: false } }
-        //     }
-        // );
-
-        // trendCharts[ELEMENT_IDS.TREND_RACE] = renderApexChart(
-        //     ELEMENT_IDS.TREND_RACE, CHART_TYPES.BAR,
-        //     CHART_TITLES.ETHNICITY, true, {
-        //         dataLabels: { enabled: false },
-        //         xaxis: { labels: { show: false } },
-        //         yaxis: { labels: { show: false } }
-        //     }
-        // );
 
         trendCharts[ELEMENT_IDS.TREND_CITIZEN] = renderSyncApexChart(
             ELEMENT_IDS.TREND_CITIZEN, {
@@ -300,7 +283,8 @@ function doPopulationTrend(_years, _yearData) {
                     diff <= 0 ? ERROR_MSG.YEAR_NEG :
                     ERROR_MSG.YEAR_2;
             } else {
-                let newRange = _years.slice(_years.indexOf(yearStartEle.value), _years.indexOf(yearEndEle.value) + 1)
+                let newRange = _years.slice(_years.indexOf(yearStartEle.value), _years.indexOf(yearEndEle.value) + 1);
+                lastPopIncrBarCount = 0;
                 updateTrendCharts(newRange);
             }
         });
@@ -364,7 +348,7 @@ function doPopulationTrend(_years, _yearData) {
                 seriesName: CHART_LABELS.OTHERS
             }];
         } else {
-            // update to population data
+            // default update to population data
             series = [{
                 name: CHART_LABELS.POPULATION,
                 data: getYearSeriesChartData(yearRange, _yearData, DOS_DATA_KEYS.TOTAL_PPLT),
@@ -374,6 +358,7 @@ function doPopulationTrend(_years, _yearData) {
                 labels: { show: false },
                 seriesName: CHART_LABELS.POPULATION
             }];
+            lastPopIncrBarCount = 1;
         }
 
         series.push({
@@ -395,14 +380,6 @@ function doPopulationTrend(_years, _yearData) {
             seriesName: CHART_LABELS.RATE_POPLT_INCR
         });
         enabledOnSeries = [series.length - 2, series.length - 1];
-        console.log({
-            dataLabels: {
-                enabledOnSeries
-            },
-            labels: yearRange,
-            series,
-            yaxis
-        });
 
         _tCharts[ELEMENT_IDS.TREND_POPINCR].updateOptions({
             dataLabels: {
@@ -440,7 +417,6 @@ function doPopulationTrend(_years, _yearData) {
             labels: yearRange
         }, true, true, false);
 
-        lastPopIncrBarCount = 1;
         _tCharts[ELEMENT_IDS.TREND_POPINCR].updateOptions({
             chart: {
                 toolbar: {
@@ -457,38 +433,10 @@ function doPopulationTrend(_years, _yearData) {
                         }]
                     }
                 }
-            },
-            dataLabels: {
-                enabled: true,
-                enabledOnSeries: [1, 2]
-            },
-            series: [{
-                    name: CHART_LABELS.POPULATION,
-                    data: getYearSeriesChartData(yearRange, _yearData, DOS_DATA_KEYS.TOTAL_PPLT),
-                    type: CHART_TYPES.COLUMN
-                },
-                {
-                    name: CHART_LABELS.RATE_NATURAL_INCR,
-                    data: getYearSeriesChartData(yearRange, _yearData, DOS_DATA_KEYS.RATE_NATURAL_INCR)
-                }, {
-                    name: CHART_LABELS.RATE_POPLT_INCR,
-                    data: getYearSeriesChartData(yearRange, _yearData, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH)
-                }
-            ],
-            labels: yearRange,
-            yaxis: [{
-                labels: { show: false },
-                seriesName: CHART_LABELS.POPULATION
-            }, {
-                labels: { show: false },
-                opposite: true,
-                seriesName: CHART_LABELS.RATE_NATURAL_INCR
-            }, {
-                labels: { show: false },
-                opposite: true,
-                seriesName: CHART_LABELS.RATE_POPLT_INCR
-            }]
+            }
         });
+        //console.log(document.querySelector('.growth-toggle'));
+        togglePopulationGrowth(yearRange);
 
         _tCharts[ELEMENT_IDS.TREND_AGE].updateOptions({
             series: [{

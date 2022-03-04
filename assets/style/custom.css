@@ -166,16 +166,21 @@ main.tree-nav-content .form-group select.input-error {
 
 /* --- start charts / graphs --- */
 
-main.tree-nav-content .chart-l {
+main.tree-nav-content .chart-lg {
     height: 700px;
 }
 
-main.tree-nav-content .chart-s {
+main.tree-nav-content .chart-sm {
     height: 400px;
 }
 
 main.tree-nav-content .chart-xs {
     height: 350px;
+}
+
+main.tree-nav-content .chart-xxs {
+    height: 200px;
+    margin-bottom: 1.5rem;
 }
 
 #population {
@@ -186,7 +191,7 @@ main.tree-nav-content .chart-xs {
     height: 500px;
 }
 
-#plan-area .chart-s {
+#plan-area .chart-sm {
     height: 300px;
 }
 

@@ -7,8 +7,6 @@
     <title>In the Red Dot</title>
     <link rel="icon" type="image/x-icon" href="assets/media/favicon.ico" />
     <!-- libs -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
     <link rel="stylesheet" href="assets/libs/leaflet/1.7.1-leaflet.min.css" />
     <link rel="stylesheet" href="assets/libs/cirrus-ui/0.6.2-cirrus.min.css" />
     <!-- custom -->
@@ -32,8 +30,8 @@
             </a>
             <div class="content">
                 <a class="row" href="index.html">
-                    <div class="col-xs-3 col-4"><img src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" /></div>
-                    <h1 class="col-xs-3 col-4">In the red dot</h1>
+                    <div class="col-lg-7 col-xs-3 col-4"><img src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" /></div>
+                    <h1 class="col-lg-2 col-xs-3 col-4">In the red dot</h1>
                 </a>
             </div>
             <div class="tree-nav-container">
@@ -100,10 +98,10 @@
                         <div class="col-4 chart-xs">
                             <div id="residency"></div>
                         </div>
-                        <div class="col-8 chart-l">
+                        <div class="col-8 chart-lg">
                             <div id="age-group"></div>
                         </div>
-                        <div class="col-4 chart-l">
+                        <div class="col-4 chart-lg">
                             <div clas="row">
                                 <div class="col-12 chart-xs">
                                     <div id="gender"></div>
@@ -114,6 +112,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </section>
 
             <!-- population trend charts -->
@@ -128,22 +127,26 @@
                 </div>
                 <div class="section-content">
                     <div class="row">
-                        <div class="col-4 chart-xs">
-                            <div id="trend-citizen"></div>
+                        <div class="col-3 chart-xs">
+                            <div clas="row">
+                                <div class="col-12 chart-xxs">
+                                    <div id="trend-citizen"></div>
+                                </div>
+                                <div class="col-12 chart-xxs">
+                                    <div id="trend-pr"></div>
+                                </div>
+                                <div class="col-12 chart-xxs">
+                                    <div id="trend-nonres"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-4 chart-xs">
-                            <div id="trend-pr"></div>
-                        </div>
-                        <div class="col-4 chart-xs">
-                            <div id="trend-nonres"></div>
-                        </div>
-                        <div class="col-12 chart-l">
+                        <div class="col-9 chart-lg">
                             <div id="trend-popincr"></div>
                         </div>
-                        <div class="col-12 chart">
+                        <div class="col-12 chart-sm">
                             <div id="trend-age"></div>
                         </div>
-                        <div class="col-12 chart">
+                        <div class="col-12 chart-sm">
                             <div id="trend-dependecy"></div>
                         </div>
                     </div>
@@ -155,30 +158,30 @@
                 <div class="tab-container disabled">
                     <ul class="row no-space">
                         <li class="col-xs-6 col-sm-3" data-target="tab-content-res">
-                            <div class="tab-item-content">
+                            <div class="tab-item-content" aria-label="Show Tab Content">
                                 <span class="icon">
-                                    <i class="fa-solid fa-street-view"></i>
+                                    <i class="fa-solid fa-street-view" aria-hidden="true"></i>
                                 </span> Residents
                             </div>
                         </li>
                         <li class="col-xs-6 col-sm-3" data-target="tab-content-housing">
-                            <div class="tab-item-content">
+                            <div class="tab-item-content" aria-label="Show Tab Content">
                                 <span class="icon">
-                                    <i class="fa-solid fa-house"></i>
+                                    <i class="fa-solid fa-house" aria-hidden="true"></i>
                                 </span> Housing
                             </div>
                         </li>
                         <li class="col-xs-6 col-sm-3" data-target="tab-content-edu">
-                            <div class="tab-item-content">
+                            <div class="tab-item-content" aria-label="Show Tab Content">
                                 <span class="icon">
-                                    <i class="fa-solid fa-book-open-reader"></i>
+                                    <i class="fa-solid fa-book-open-reader" aria-hidden="true"></i>
                                 </span> Education
                             </div>
                         </li>
                         <li class="col-xs-6 col-sm-3" data-target="tab-content-empl">
-                            <div class="tab-item-content">
+                            <div class="tab-item-content" aria-label="Show Tab Content">
                                 <span class="icon">
-                                    <i class="fa-solid fa-user-tie"></i>
+                                    <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
                                 </span> Employed
                             </div>
                         </li>
@@ -269,6 +272,7 @@
     </div>
 
     <!-- libs -->
+    <script src="https://kit.fontawesome.com/461db60789.js" crossorigin="anonymous"></script>
     <script src="assets/libs/axios/0.26.0-axios.min.js"></script>
     <script src="assets/libs/leaflet/1.7.1-leaflet.min.js"></script>
     <script src='assets/libs/leaflet/0.3.1-leaflet-omnivore.min.js'></script>

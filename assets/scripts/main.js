@@ -70,6 +70,7 @@ function main() {
                 curve: 'smooth'
             },
             subtitle: {
+                align: 'center',
                 style: {
                     fontFamily: 'Montserrat,sans-serif'
                 }
