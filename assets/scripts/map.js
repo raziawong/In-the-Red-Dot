@@ -93,7 +93,7 @@ function doURAZoneAndData(map, geoDistrData) {
         });
     }).addTo(map);
 
-    let info = L.control({ position: 'bottomright' });
+    let info = L.control({ position: 'topleft' });
     info.onAdd = function(map) {
         let containerEle = L.DomUtil.create('div', 'info');
         let areaContainerEle = L.DomUtil.create('div');

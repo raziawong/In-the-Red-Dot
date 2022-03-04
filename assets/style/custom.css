@@ -313,11 +313,9 @@ main.tree-nav-content .chart-xxs {
 
 #ura-zones-map .info {
     background-color: var(--sec-accent-o8);
-    padding: 0.5rem;
+    padding: 0.7rem;
     float: none;
     clear: none;
-    position: absolute;
-    bottom: 20px;
     text-align: center;
 }
 
@@ -449,13 +447,8 @@ main.tree-nav-content .chart-xxs {
     #ura-zones-map {
         height: 88vh;
     }
-    #ura-zones-map .leaflet-control-container .leaflet-right {
-        right: unset;
-    }
     #ura-zones-map .info {
         width: 100vw;
-        bottom: 4vh;
-        left: 0;
         margin: 0.5rem 0;
     }
     #ura-zones-map .info .subtitle {
@@ -474,8 +467,6 @@ main.tree-nav-content .chart-xxs {
     }
     #ura-zones-map .info .legend {
         font-size: var(--font-size-xs);
-        padding: 0;
-        margin: 0;
     }
     #ura-zones-map .leaflet-control-attribution {
         font-size: var(--space-size);
@@ -489,9 +480,6 @@ main.tree-nav-content .chart-xxs {
     .leaflet-touch .leaflet-control-zoom-out {
         font-size: var(--font-size-s);
     }
-    #ura-zones-map .leaflet-right .leaflet-control-zoom {
-        margin: 0 0 15% 91vw;
-    }
 }
 
 
@@ -499,9 +487,7 @@ main.tree-nav-content .chart-xxs {
 
 @media screen and (max-width: 300px) {
     #ura-zones-map .info {
-        bottom: 2.5vh;
-    }
-    #ura-zones-map .leaflet-right .leaflet-control-zoom {
-        margin: 0 0 29% 88vw;
+        bottom: 1.3vh;
+        padding: 0.2rem;
     }
 }
