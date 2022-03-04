@@ -122,22 +122,12 @@ main.tree-nav-content section:not(#plan-area) {
     overflow-y: scroll;
 }
 
-main section:not(#plan-area) .section-content {
+main.tree-nav-content section:not(#plan-area) .section-content {
     margin: 1rem 1rem;
 }
 
 main section:not(#plan-area) div.section-content .row>* {
     margin: 1rem 0;
-}
-
-main section.active .section-content:not(.mobile) {
-    transform: translate(0, 0);
-}
-
-main section.active .section-content.mobile {
-    transform: translate(150%, 0);
-    height: 0;
-    overflow: hidden;
 }
 
 
@@ -375,7 +365,7 @@ main.tree-nav-content .chart-xxs {
 }
 
 
-/* --- start large devices --- */
+/* --- start medium devices --- */
 
 @media screen and (max-width: 1024px) {
     /* --- start tree navigation menu --- */
@@ -407,22 +397,6 @@ main.tree-nav-content .chart-xxs {
     /* --- start tab menu and content --- */
     #plan-area .tab-container li .tab-item-content {
         font-size: var(--font-size-s);
-    }
-}
-
-
-/* --- start medium devices --- */
-
-@media screen and (max-width: 768px) {
-    main section.active .section-content:not(.mobile) {
-        transform: translate(150%, 0);
-        height: 0;
-        overflow: hidden;
-    }
-    main section.active .section-content.mobile {
-        transform: translate(0, 0);
-        height: auto;
-        overflow-y: scroll;
     }
 }
 

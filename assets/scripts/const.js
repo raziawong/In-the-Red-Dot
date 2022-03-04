@@ -189,7 +189,6 @@ const MAP_LAYER_PROPS = {
     PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
 };
 const ELEMENT_IDS = {
-    MOBILE_IND: '-mb',
     SIDEBAR_CLOSE: 'sidebar-close',
     SECT_OVERVIEW: 'overview',
     SECT_TREND: 'trend',
