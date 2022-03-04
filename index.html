@@ -7,10 +7,8 @@
     <title>In the Red Dot</title>
     <link rel="icon" type="image/x-icon" href="assets/media/favicon.ico" />
     <!-- libs -->
-    <script src="https://kit.fontawesome.com/461db60789.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/libs/leaflet/1.7.1-leaflet.min.css" />
     <link rel="stylesheet" href="assets/libs/cirrus-ui/0.6.2-cirrus.min.css" />
-    <link rel="stylesheet" href="assets/libs/swiffy-slider/1.4.1-swiffy-slider.min.css" />
     <!-- custom -->
     <link rel="stylesheet" href="assets/style/custom.css">
 </head>
@@ -87,11 +85,10 @@
                         <select class="select" id="overview-sel-year" placeholder="Year"></select>
                     </div>
                 </div>
-
                 <div class="section-content">
                     <div class="row">
                         <div class="col-4">
-                            <h4 class="mb-8 overview-popc">
+                            <h4 class="mb-8" id="population">
                                 Population: <br><span></span>
                             </h4>
                         </div>
@@ -113,45 +110,6 @@
                                     <div id="med-age"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-content mobile">
-                    <div class="row">
-                        <div class="col-12">
-                            <h6 class="mb-8 overview-popc">
-                                Population: <br><span></span>
-                            </h6>
-                        </div>
-                        <div class="col-12 chart-lg">
-                            <div id="age-group-mb"></div>
-                        </div>
-                    </div>
-                    <div class="swiffy-slider">
-                        <ul class="slider-container">
-                            <li class="chart-lg">
-                                <div id="residency-mb"></div>
-                            </li>
-                            <li class="chart-lg">
-                                <div id="race-mb"></div>
-                            </li>
-                            <li class="chart-lg">
-                                <div id="gender-mb"></div>
-                            </li>
-                            <li class="chart-lg">
-                                <div id="med-age-mb"></div>
-                            </li>
-                        </ul>
-
-                        <button type="button" class="slider-nav"></button>
-                        <button type="button" class="slider-nav slider-nav-next"></button>
-
-                        <div class="slider-indicators">
-                            <button class="active"></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
                         </div>
                     </div>
                 </div>
@@ -321,11 +279,10 @@
     </div>
 
     <!-- libs -->
+    <script src="https://kit.fontawesome.com/461db60789.js" crossorigin="anonymous"></script>
     <script src="assets/libs/axios/0.26.0-axios.min.js"></script>
     <script src="assets/libs/leaflet/1.7.1-leaflet.min.js"></script>
     <script src='assets/libs/leaflet/0.3.1-leaflet-omnivore.min.js'></script>
-    <script src="assets/libs/polyfill/0.4.4-smoothscroll.min.js"></script>
-    <script src="assets/libs/swiffy-slider/1.4.1-swiffy-slider.min.js"></script>
     <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
     <!-- custom  -->
     <script src="assets/scripts/const.js"></script>
