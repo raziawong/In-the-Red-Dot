@@ -44,6 +44,14 @@ function main() {
                     enabled: true
                 }
             },
+            dataLabels: {
+                dropShadow: {
+                    enabled: true,
+                    left: 1,
+                    top: 1,
+                    opacity: 0.6
+                }
+            },
             legend: {
                 horizontalAlign: 'center',
                 position: 'bottom',
