@@ -21,6 +21,30 @@ function renderApexChart(id, type, title, isStack, otherOptObj) {
     return chart;
 }
 
+function renderApexChartObj(optObj) {
+    let { id, type, isStack, title, others } = optObj;
+    let options = {
+        chart: {
+            id: id,
+            type: type,
+            stacked: isStack
+        },
+        title: {
+            text: title
+        },
+        series: []
+    }
+
+    if (others && Object.keys(others) !== 0) {
+        options = {...options, ...others };
+    }
+
+    let chart = new ApexCharts(document.getElementById(id), options);
+    chart.render();
+
+    return chart;
+}
+
 function renderSyncApexChart(id, chartOpt, title) {
     let options = {
         chart: chartOpt,
@@ -40,65 +64,92 @@ function doPopulationOverview(_years, _dataByYear) {
     function initOverviewCharts() {
         let overviewCharts = {};
 
-        overviewCharts[ELEMENT_IDS.RESIDENCY] = renderApexChart(
-            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
-            CHART_TITLES.RESIDENCY, false, {
-                labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES]
-            }
-        );
+        for (let chartEleId of _chartTargetList) {
+            let mbEle = document.getElementById(chartEleId + ELEMENT_IDS.MOBILE_IND);
+            let optObj = {};
 
-        overviewCharts[ELEMENT_IDS.RACE] = renderApexChart(
-            ELEMENT_IDS.RACE, CHART_TYPES.PIE,
-            CHART_TITLES.ETHNICITY, false, {
-                labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS]
-            }
-        );
-
-        overviewCharts[ELEMENT_IDS.GENDER] = renderApexChart(
-            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
-            CHART_TITLES.GENDER, false, {
-                labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
-            }
-        );
-
-        overviewCharts[ELEMENT_IDS.MED_AGE] = renderApexChart(
-            ELEMENT_IDS.MED_AGE, CHART_TYPES.RADIAL_BAR,
-            CHART_TITLES.MEDIAN_AGE, false, {
-                labels: [CHART_LABELS.CITIZEN, CHART_LABELS.RESIDENT],
-                plotOptions: {
-                    radialBar: {
-                        dataLabels: {
-                            value: {
-                                formatter: (val) => val
+            switch (chartEleId) {
+                case ELEMENT_IDS.RESIDENCY:
+                    optObj = {
+                        id: ELEMENT_IDS.RESIDENCY,
+                        type: CHART_TYPES.PIE,
+                        title: CHART_TITLES.RESIDENCY,
+                        isStack: false,
+                        others: { labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES] }
+                    };
+                    break;
+                case ELEMENT_IDS.RACE:
+                    optObj = {
+                        id: ELEMENT_IDS.RACE,
+                        type: CHART_TYPES.PIE,
+                        title: CHART_TITLES.ETHNICITY,
+                        isStack: false,
+                        others: { labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS] }
+                    };
+                    break;
+                case ELEMENT_IDS.GENDER:
+                    optObj = {
+                        id: ELEMENT_IDS.GENDER,
+                        type: CHART_TYPES.RADIAL_BAR,
+                        title: CHART_TITLES.GENDER,
+                        isStack: false,
+                        others: { labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE] }
+                    };
+                    break;
+                case ELEMENT_IDS.MED_AGE:
+                    optObj = {
+                        id: ELEMENT_IDS.MED_AGE,
+                        type: CHART_TYPES.RADIAL_BAR,
+                        title: CHART_TITLES.MEDIAN_AGE,
+                        isStack: false,
+                        others: {
+                            labels: [CHART_LABELS.CITIZEN, CHART_LABELS.RESIDENT],
+                            plotOptions: {
+                                radialBar: {
+                                    dataLabels: { value: { formatter: (val) => val } }
+                                }
                             }
                         }
                     }
-                },
-            }
-        );
+                    break;
+                case ELEMENT_IDS.AGE_GROUP:
+                    optObj = {
+                        id: ELEMENT_IDS.AGE_GROUP,
+                        type: CHART_TYPES.BAR,
+                        title: CHART_TITLES.AGE_GROUP,
+                        isStack: true,
+                        others: {
+                            plotOptions: {
+                                bar: { horizontal: true }
+                            },
+                            xaxis: { labels: { show: false } },
+                            yaxis: {
+                                axisBorder: { show: true },
+                                labels: { show: true }
+                            }
+                        }
+                    };
+                    break;
+                default:
+                    break;
+            };
 
-        overviewCharts[ELEMENT_IDS.AGE_GROUP] = renderApexChart(
-            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
-            CHART_TITLES.AGE_GROUP, true, {
-                plotOptions: {
-                    bar: {
-                        horizontal: true
-                    },
-                },
-                xaxis: { labels: { show: false } },
-                yaxis: {
-                    axisBorder: { show: true },
-                    labels: { show: true }
+            if (optObj.id) {
+                overviewCharts[optObj.id] = renderApexChartObj(optObj);
+
+                if (mbEle) {
+                    optObj.id = mbEle.id;
+                    overviewCharts[mbEle.id] = renderApexChartObj(optObj);
                 }
             }
-        );
+        }
 
         return overviewCharts;
     }
 
     function initYearSelect() {
         function updateOverviewElements(annualData) {
-            document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = annualData[DOS_DATA_KEYS.TOTAL_PPLT];
+            document.querySelector('.overview-popc').querySelector('span').innerText = annualData[DOS_DATA_KEYS.TOTAL_PPLT];
         }
 
         let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
@@ -124,52 +175,67 @@ function doPopulationOverview(_years, _dataByYear) {
     }
 
     function updateOverviewCharts(annualData) {
-        let totalCount = annualData[DOS_DATA_KEYS.TOTAL_PPLT];
-        let genderPrctArr = [annualData[DOS_DATA_KEYS.TOTAL_MALE], annualData[DOS_DATA_KEYS.TOTAL_FEMALE]].map(v => Math.round((v / totalCount) * 100));
+        function updateSeries(id, series) {
+            let mbChart = _oCharts[id + ELEMENT_IDS.MOBILE_IND];
 
-        let ageGroup = Object.keys(annualData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
-        let ageGroupOpt = {
-            dataLabels: {
-                formatter: (val, opts) => {
-                    return Math.round((Math.abs(val) / totalCount) * 100) + '%';
-                }
-            },
-            series: [{
-                name: CHART_LABELS.MALE,
-                data: ageGroup.map(k => annualData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
-            }, {
-                name: CHART_LABELS.FEMALE,
-                data: ageGroup.map(k => -annualData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
-            }],
-            tooltip: {
-                shared: false,
-                x: { formatter: v => v },
-                y: { formatter: v => Math.abs(v) }
-            },
-            xaxis: {
-                categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
+            _oCharts[id].updateSeries(series);
+            if (mbChart && Object.keys(mbChart).length !== 0) {
+                mbChart.updateSeries(series);
             }
-        };
+        }
 
-        _oCharts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
-        _oCharts[ELEMENT_IDS.MED_AGE].updateSeries([
-            annualData[DOS_DATA_KEYS.MED_AGE_CITIZEN],
-            annualData[DOS_DATA_KEYS.MED_AGE_RESIDENT]
-        ]);
-        _oCharts[ELEMENT_IDS.RESIDENCY].updateSeries([
-            annualData[DOS_DATA_KEYS.CITIZEN_PPLT],
-            annualData[DOS_DATA_KEYS.PR_PPLT],
-            annualData[DOS_DATA_KEYS.NON_RES_PPLT]
-        ]);
-        _oCharts[ELEMENT_IDS.RACE].updateSeries([
-            annualData[DOS_DATA_KEYS.TOTAL_CHINESE],
-            annualData[DOS_DATA_KEYS.TOTAL_MALAYS],
-            annualData[DOS_DATA_KEYS.TOTAL_INDIANS],
-            annualData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
-        ]);
-        _oCharts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
+        let populationCount = annualData[DOS_DATA_KEYS.TOTAL_PPLT];
+        for (let chartEleId of _chartTargetList) {
+            switch (chartEleId) {
+                case ELEMENT_IDS.RESIDENCY:
+                    updateSeries(chartEleId, [annualData[DOS_DATA_KEYS.CITIZEN_PPLT], annualData[DOS_DATA_KEYS.PR_PPLT], annualData[DOS_DATA_KEYS.NON_RES_PPLT]]);
+                    break;
+                case ELEMENT_IDS.RACE:
+                    updateSeries(chartEleId, [annualData[DOS_DATA_KEYS.TOTAL_CHINESE], annualData[DOS_DATA_KEYS.TOTAL_MALAYS], annualData[DOS_DATA_KEYS.TOTAL_INDIANS], annualData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]]);
+                    break;
+                case ELEMENT_IDS.GENDER:
+                    updateSeries(chartEleId, [annualData[DOS_DATA_KEYS.TOTAL_MALE], annualData[DOS_DATA_KEYS.TOTAL_FEMALE]].map(v => Math.round((v / populationCount) * 100)));
+                    break;
+                case ELEMENT_IDS.MED_AGE:
+                    updateSeries(chartEleId, [annualData[DOS_DATA_KEYS.MED_AGE_CITIZEN], annualData[DOS_DATA_KEYS.MED_AGE_RESIDENT]]);
+                    break;
+                case ELEMENT_IDS.AGE_GROUP:
+                    let mbChart = _oCharts[chartEleId + ELEMENT_IDS.MOBILE_IND];
+                    let labels = Object.keys(annualData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
+                    let dataOpt = {
+                        dataLabels: {
+                            formatter: (val, opts) => {
+                                return Math.round((Math.abs(val) / populationCount) * 100) + '%';
+                            }
+                        },
+                        series: [{
+                            name: CHART_LABELS.MALE,
+                            data: labels.map(k => annualData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
+                        }, {
+                            name: CHART_LABELS.FEMALE,
+                            data: labels.map(k => -annualData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
+                        }],
+                        tooltip: {
+                            shared: false,
+                            x: { formatter: v => v },
+                            y: { formatter: v => Math.abs(v) }
+                        },
+                        xaxis: {
+                            categories: labels.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
+                        }
+                    };
+                    _oCharts[ELEMENT_IDS.AGE_GROUP].updateOptions(dataOpt);
+                    if (mbChart && Object.keys(mbChart).length !== 0) {
+                        mbChart.updateOptions(dataOpt);
+                    }
+                    break;
+                default:
+                    break;
+            };
+        }
     }
 
+    let _chartTargetList = [ELEMENT_IDS.RESIDENCY, ELEMENT_IDS.RACE, ELEMENT_IDS.GENDER, ELEMENT_IDS.MED_AGE, ELEMENT_IDS.AGE_GROUP];
     let _oCharts = initOverviewCharts();
     let initYear = initYearSelect();
     updateOverviewCharts(_dataByYear[initYear]);
