@@ -166,6 +166,13 @@ main.tree-nav-content .form-group select.input-error {
 
 /* --- start charts / graphs --- */
 
+main.tree-nav-content .chart-flex-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
 main.tree-nav-content .chart-lg {
     height: 700px;
 }
