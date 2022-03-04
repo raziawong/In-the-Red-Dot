@@ -171,6 +171,7 @@ function main() {
                 setActiveEleById(sTargetId);
                 // close the rest
                 closeMobileTreeNav();
+                // close active tab if section has it
                 if (activeTab) {
                     activeTab.querySelector('.tab-close').click();
                 }
