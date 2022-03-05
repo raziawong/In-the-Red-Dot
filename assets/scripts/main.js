@@ -14,7 +14,8 @@ function main() {
             doPopulationOverview(years, yearData);
             doPopulationTrend(years, yearData);
 
-            doURAZoneAndData(map, await initGeoDistribution());
+            let geoDistrSeries = await initGeoDistribution();
+            doPlanAreaMapAndData(map, geoDistrSeries);
         });
     }
 

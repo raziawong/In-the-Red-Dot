@@ -98,7 +98,7 @@ function doPopulationOverview(_years, _dataByYear) {
 
     function initYearSelect() {
         function updateOverviewElements(annualData) {
-            document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = annualData[DOS_DATA_KEYS.TOTAL_PPLT];
+            document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = annualData[AP_DATA_KEYS.TOTAL_PPLT];
         }
 
         let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
@@ -124,10 +124,10 @@ function doPopulationOverview(_years, _dataByYear) {
     }
 
     function updateOverviewCharts(annualData) {
-        let totalCount = annualData[DOS_DATA_KEYS.TOTAL_PPLT];
-        let genderPrctArr = [annualData[DOS_DATA_KEYS.TOTAL_MALE], annualData[DOS_DATA_KEYS.TOTAL_FEMALE]].map(v => Math.round((v / totalCount) * 100));
+        let totalCount = annualData[AP_DATA_KEYS.TOTAL_PPLT];
+        let genderPrctArr = [annualData[AP_DATA_KEYS.TOTAL_MALE], annualData[AP_DATA_KEYS.TOTAL_FEMALE]].map(v => Math.round((v / totalCount) * 100));
 
-        let ageGroup = Object.keys(annualData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
+        let ageGroup = Object.keys(annualData[AP_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
         let ageGroupOpt = {
             dataLabels: {
                 formatter: (val, opts) => {
@@ -136,10 +136,10 @@ function doPopulationOverview(_years, _dataByYear) {
             },
             series: [{
                 name: CHART_LABELS.MALE,
-                data: ageGroup.map(k => annualData[DOS_DATA_KEYS.TOTAL_MALE_AGE][k])
+                data: ageGroup.map(k => annualData[AP_DATA_KEYS.TOTAL_MALE_AGE][k])
             }, {
                 name: CHART_LABELS.FEMALE,
-                data: ageGroup.map(k => -annualData[DOS_DATA_KEYS.TOTAL_FEMALE_AGE][k])
+                data: ageGroup.map(k => -annualData[AP_DATA_KEYS.TOTAL_FEMALE_AGE][k])
             }],
             tooltip: {
                 shared: false,
@@ -153,19 +153,19 @@ function doPopulationOverview(_years, _dataByYear) {
 
         _oCharts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
         _oCharts[ELEMENT_IDS.MED_AGE].updateSeries([
-            annualData[DOS_DATA_KEYS.MED_AGE_CITIZEN],
-            annualData[DOS_DATA_KEYS.MED_AGE_RESIDENT]
+            annualData[AP_DATA_KEYS.MED_AGE_CITIZEN],
+            annualData[AP_DATA_KEYS.MED_AGE_RESIDENT]
         ]);
         _oCharts[ELEMENT_IDS.RESIDENCY].updateSeries([
-            annualData[DOS_DATA_KEYS.CITIZEN_PPLT],
-            annualData[DOS_DATA_KEYS.PR_PPLT],
-            annualData[DOS_DATA_KEYS.NON_RES_PPLT]
+            annualData[AP_DATA_KEYS.CITIZEN_PPLT],
+            annualData[AP_DATA_KEYS.PR_PPLT],
+            annualData[AP_DATA_KEYS.NON_RES_PPLT]
         ]);
         _oCharts[ELEMENT_IDS.RACE].updateSeries([
-            annualData[DOS_DATA_KEYS.TOTAL_CHINESE],
-            annualData[DOS_DATA_KEYS.TOTAL_MALAYS],
-            annualData[DOS_DATA_KEYS.TOTAL_INDIANS],
-            annualData[DOS_DATA_KEYS.TOTAL_OTHER_ETHN]
+            annualData[AP_DATA_KEYS.TOTAL_CHINESE],
+            annualData[AP_DATA_KEYS.TOTAL_MALAYS],
+            annualData[AP_DATA_KEYS.TOTAL_INDIANS],
+            annualData[AP_DATA_KEYS.TOTAL_OTHER_ETHN]
         ]);
         _oCharts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
     }
@@ -316,11 +316,11 @@ function doPopulationTrend(_years, _yearData) {
                 // if previously was population data, update to gender data
                 series = [{
                     name: CHART_LABELS.MALE,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_MALE),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_MALE),
                     type: CHART_TYPES.COLUMN
                 }, {
                     name: CHART_LABELS.FEMALE,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_FEMALE),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_FEMALE),
                     type: CHART_TYPES.COLUMN
                 }];
                 yaxis = [{
@@ -334,19 +334,19 @@ function doPopulationTrend(_years, _yearData) {
                 // if previously was gender data, update to ethnicity data
                 series = [{
                     name: CHART_LABELS.CHINESE,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_CHINESE),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_CHINESE),
                     type: CHART_TYPES.COLUMN
                 }, {
                     name: CHART_LABELS.MALAYS,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_MALAYS),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_MALAYS),
                     type: CHART_TYPES.COLUMN
                 }, {
                     name: CHART_LABELS.INDIANS,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_INDIANS),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_INDIANS),
                     type: CHART_TYPES.COLUMN
                 }, {
                     name: CHART_LABELS.OTHERS,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_OTHER_ETHN),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_OTHER_ETHN),
                     type: CHART_TYPES.COLUMN
                 }];
                 yaxis = [{
@@ -366,7 +366,7 @@ function doPopulationTrend(_years, _yearData) {
                 // default update to population data
                 series = [{
                     name: CHART_LABELS.POPULATION,
-                    data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_PPLT),
+                    data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_PPLT),
                     type: CHART_TYPES.COLUMN
                 }];
                 yaxis = [{
@@ -378,11 +378,11 @@ function doPopulationTrend(_years, _yearData) {
 
             series.push({
                 name: CHART_LABELS.RATE_NATURAL_INCR,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.RATE_NATURAL_INCR),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.RATE_NATURAL_INCR),
                 type: CHART_TYPES.LINE
             }, {
                 name: CHART_LABELS.RATE_POPLT_INCR,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.TOTAL_PPLT_GROWTH),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.TOTAL_PPLT_GROWTH),
                 type: CHART_TYPES.LINE
             });
             yaxis.push({
@@ -412,7 +412,7 @@ function doPopulationTrend(_years, _yearData) {
             colors: [CHART_CONF.COLOR_RANGE[0]],
             series: [{
                 name: CHART_LABELS.CITIZEN,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.CITIZEN_PPLT)
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.CITIZEN_PPLT)
             }]
         }, true, true, false);
 
@@ -421,7 +421,7 @@ function doPopulationTrend(_years, _yearData) {
             colors: [CHART_CONF.COLOR_RANGE[1]],
             series: [{
                 name: CHART_LABELS.PR,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.PR_PPLT)
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.PR_PPLT)
             }]
         }, true, true, false);
 
@@ -430,7 +430,7 @@ function doPopulationTrend(_years, _yearData) {
             colors: [CHART_CONF.COLOR_RANGE[2]],
             series: [{
                 name: CHART_LABELS.NON_RES,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.NON_RES_PPLT)
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.NON_RES_PPLT)
             }]
         }, true, true, false);
 
@@ -460,7 +460,7 @@ function doPopulationTrend(_years, _yearData) {
             colors: [CHART_CONF.COLOR_RANGE[3]],
             series: [{
                 name: CHART_LABELS.RESIDENT,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.MED_AGE_RESIDENT)
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.MED_AGE_RESIDENT)
             }]
         }, true, true, false);
 
@@ -469,7 +469,7 @@ function doPopulationTrend(_years, _yearData) {
             colors: [CHART_CONF.COLOR_RANGE[4]],
             series: [{
                 name: CHART_LABELS.CITIZEN,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.MED_AGE_CITIZEN)
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.MED_AGE_CITIZEN)
             }]
         }, true, true, false);
 
@@ -481,27 +481,27 @@ function doPopulationTrend(_years, _yearData) {
             labels: yearRange,
             series: [{
                 name: CHART_LABELS.AGE_DEP_15_64,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.AGE_DEP_15_64),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.AGE_DEP_15_64),
                 type: CHART_TYPES.COLUMN
             }, {
                 name: CHART_LABELS.AGE_DEP_20_64,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.AGE_DEP_20_64),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.AGE_DEP_20_64),
                 type: CHART_TYPES.COLUMN
             }, {
                 name: CHART_LABELS.CHILD_DEP_15_64,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.CHILD_DEP_15_64),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.CHILD_DEP_15_64),
                 type: CHART_TYPES.LINE,
             }, {
                 name: CHART_LABELS.CHILD_DEP_20_64,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.CHILD_DEP_20_64),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.CHILD_DEP_20_64),
                 type: CHART_TYPES.LINE
             }, {
                 name: CHART_LABELS.OLD_DEP_15_64,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.OLD_DEP_15_64),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.OLD_DEP_15_64),
                 type: CHART_TYPES.LINE
             }, {
                 name: CHART_LABELS.OLD_DEP_20_64,
-                data: getYearSeriesChartData(yearRange, DOS_DATA_KEYS.OLD_DEP_20_64),
+                data: getYearSeriesChartData(yearRange, AP_DATA_KEYS.OLD_DEP_20_64),
                 type: CHART_TYPES.LINE
             }],
             yaxis: [{
@@ -650,9 +650,9 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let travelTimeData = mLayerProp.travelTime;
 
     let {
-        [MAP_LAYER_PROPS.TOTAL]: agTotal, [MAP_LAYER_PROPS.FEMALES]: agFemale, [MAP_LAYER_PROPS.MALES]: agMale
+        [GD_DATA_KEYS.TOTAL]: agTotal, [GD_DATA_KEYS.FEMALES]: agFemale, [GD_DATA_KEYS.MALES]: agMale
     } = ageGroupData;
-    let ageGroupLabels = Object.keys(agTotal).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL)).sort(UTIL.compareAlphaNumDesc);
+    let ageGroupLabels = Object.keys(agTotal).filter(k => !k.includes(GD_DATA_KEYS.TOTAL)).sort(UTIL.compareAlphaNumDesc);
     let ageGroupOpt = {
         chart: {
             events: {
@@ -709,11 +709,11 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     let dwellOpt = {
         dataLabels: {
             formatter: (text, op) => {
-                let label = text == MAP_LAYER_PROPS.HDB_DWELL ? CHART_LABELS.HDB :
-                    text == MAP_LAYER_PROPS.CONDO_OTH ? CHART_LABELS.CONDO :
-                    text == MAP_LAYER_PROPS.LANDED_PROP ? CHART_LABELS.LANDED :
+                let label = text == GD_DATA_KEYS.HDB_DWELL ? CHART_LABELS.HDB :
+                    text == GD_DATA_KEYS.CONDO_OTH ? CHART_LABELS.CONDO :
+                    text == GD_DATA_KEYS.LANDED_PROP ? CHART_LABELS.LANDED :
                     CHART_LABELS.OTHERS;
-                let percentage = Math.round((op.value / dwellData[MAP_LAYER_PROPS.TOTAL]) * 100) + '%';
+                let percentage = Math.round((op.value / dwellData[GD_DATA_KEYS.TOTAL]) * 100) + '%';
                 return [label, percentage];
             }
         }
@@ -728,13 +728,21 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     };
     dwellOpt = {...dwellOpt, ...dwellSeries };
 
-    let tenantLabels = Object.keys(tenantData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let tenantLabels = Object.keys(tenantData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
     let tenantOpt = {
         series: tenantLabels.map(k => tenantData[k]),
         labels: tenantLabels
     };
+    let tenantSeries = tenantData ? {
+        series: [{
+            data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes('Total') && d.y))
+        }]
+    } : {
+        series: [],
+        noData: CHART_CONF.NO_DATA_OPT
+    };
 
-    let eduTypeLabels = Object.keys(eduData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let eduTypeLabels = Object.keys(eduData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
     let educationOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
@@ -744,40 +752,40 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             categories: eduTypeLabels,
             labels: {
                 formatter: (text) => {
-                    return text == MAP_LAYER_PROPS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
-                        text == MAP_LAYER_PROPS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
-                        text == MAP_LAYER_PROPS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
-                        text == MAP_LAYER_PROPS.POST_SEC ? CHART_LABELS.POST_SEC :
-                        text == MAP_LAYER_PROPS.SECONDARY ? CHART_LABELS.SECONDARY :
-                        text == MAP_LAYER_PROPS.LOW_SEC ? CHART_LABELS.LOW_SECONDARY :
-                        text == MAP_LAYER_PROPS.PRIMARY ? CHART_LABELS.PRIMARY :
+                    return text == GD_DATA_KEYS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
+                        text == GD_DATA_KEYS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
+                        text == GD_DATA_KEYS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
+                        text == GD_DATA_KEYS.POST_SEC ? CHART_LABELS.POST_SEC :
+                        text == GD_DATA_KEYS.SECONDARY ? CHART_LABELS.SECONDARY :
+                        text == GD_DATA_KEYS.LOW_SEC ? CHART_LABELS.LOW_SECONDARY :
+                        text == GD_DATA_KEYS.PRIMARY ? CHART_LABELS.PRIMARY :
                         CHART_LABELS.NONE;
                 }
             }
         }
     };
 
-    let litLabels = Object.keys(litData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL) && !k.startsWith(MAP_LAYER_PROPS.LIT));
+    let litLabels = Object.keys(litData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL) && !k.startsWith(GD_DATA_KEYS.LIT));
     let litSeries = litLabels.map(k => {
         let val = litData[k];
         val = Array.isArray(val) ?
             val.map(o => UTIL.convertToNumber(o.value)).reduce((p, a) => a += p) :
             val;
-        val = Math.round((val / litData[MAP_LAYER_PROPS.TOTAL]) * 100);
+        val = Math.round((val / litData[GD_DATA_KEYS.TOTAL]) * 100);
         return val;
     });
     let litOpt = {
         labels: litLabels.map(k => {
-            return k == MAP_LAYER_PROPS.ONE_LANG ? CHART_LABELS.LIT_ONE :
-                k == MAP_LAYER_PROPS.TWO_LANG ? CHART_LABELS.LIT_TWO :
-                k == MAP_LAYER_PROPS.THREE_LANG ? CHART_LABELS.LIT_THREE :
+            return k == GD_DATA_KEYS.ONE_LANG ? CHART_LABELS.LIT_ONE :
+                k == GD_DATA_KEYS.TWO_LANG ? CHART_LABELS.LIT_TWO :
+                k == GD_DATA_KEYS.THREE_LANG ? CHART_LABELS.LIT_THREE :
                 k;
         }),
         plotOptions: {
             radialBar: {
                 dataLabels: {
                     total: {
-                        formatter: (w) => litData[MAP_LAYER_PROPS.TOTAL]
+                        formatter: (w) => litData[GD_DATA_KEYS.TOTAL]
                     }
                 }
             }
@@ -785,7 +793,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         series: litSeries
     };
 
-    let occupationLabels = Object.keys(occupationData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let occupationLabels = Object.keys(occupationData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
     let occupationOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
@@ -796,7 +804,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         }
     };
 
-    let incomeLabels = Object.keys(incomeData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let incomeLabels = Object.keys(incomeData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
     let incomeOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
@@ -807,7 +815,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         }
     };
 
-    let transportLabels = Object.keys(transportData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let transportLabels = Object.keys(transportData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
     let transportOpt = {
         series: [{
             name: CHART_LABELS.POPULATION,
@@ -815,7 +823,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         }],
         dataLabels: {
             enable: true,
-            formatter: (val, op) => Math.round(val / transportData[MAP_LAYER_PROPS.TOTAL] * 100) + '%'
+            formatter: (val, op) => Math.round(val / transportData[GD_DATA_KEYS.TOTAL] * 100) + '%'
         },
         xaxis: {
             categories: transportLabels.map(k => k.replace('1/', '')),
@@ -823,22 +831,22 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         yaxis: {
             labels: {
                 formatter: (text) => {
-                    return text == MAP_LAYER_PROPS.CAR ? CHART_LABELS.CAR :
-                        text == MAP_LAYER_PROPS.LORRY_PICKUP ? CHART_LABELS.LORRY :
-                        text == MAP_LAYER_PROPS.MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS :
-                        text == MAP_LAYER_PROPS.MRT_LRT ? CHART_LABELS.TRAIN :
-                        text == MAP_LAYER_PROPS.MOTORCYCLE_SCOOTER ? CHART_LABELS.MOTORCYCLE :
-                        text == MAP_LAYER_PROPS.OTHER_MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS_OTHERS :
-                        text == MAP_LAYER_PROPS.PRIVATE_BUS_VAN ? CHART_LABELS.PRIVATE_BUS :
-                        text == MAP_LAYER_PROPS.PUBLIC_BUS ? CHART_LABELS.PUBLIC_BUS :
-                        text == MAP_LAYER_PROPS.PRIVATE_HIRE_CAR ? CHART_LABELS.PRIVATE_HIRE_CAR :
+                    return text == GD_DATA_KEYS.CAR ? CHART_LABELS.CAR :
+                        text == GD_DATA_KEYS.LORRY_PICKUP ? CHART_LABELS.LORRY :
+                        text == GD_DATA_KEYS.MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS :
+                        text == GD_DATA_KEYS.MRT_LRT ? CHART_LABELS.TRAIN :
+                        text == GD_DATA_KEYS.MOTORCYCLE_SCOOTER ? CHART_LABELS.MOTORCYCLE :
+                        text == GD_DATA_KEYS.OTHER_MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS_OTHERS :
+                        text == GD_DATA_KEYS.PRIVATE_BUS_VAN ? CHART_LABELS.PRIVATE_BUS :
+                        text == GD_DATA_KEYS.PUBLIC_BUS ? CHART_LABELS.PUBLIC_BUS :
+                        text == GD_DATA_KEYS.PRIVATE_HIRE_CAR ? CHART_LABELS.PRIVATE_HIRE_CAR :
                         text;
                 }
             }
         }
     };
 
-    let travelLabels = Object.keys(travelTimeData).filter(k => !k.includes(MAP_LAYER_PROPS.TOTAL));
+    let travelLabels = Object.keys(travelTimeData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
     let travelOpt = {
         labels: travelLabels,
         series: travelLabels.map(k => travelTimeData[k]),
@@ -846,10 +854,10 @@ function updateGeoDistrCharts(charts, mLayerProp) {
 
     charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
     charts[ELEMENT_IDS.GEO_RACE].updateSeries([
-        raceData[MAP_LAYER_PROPS.CHINESE],
-        raceData[MAP_LAYER_PROPS.MALAYS],
-        raceData[MAP_LAYER_PROPS.INDIANS],
-        raceData[MAP_LAYER_PROPS.OTHERS]
+        raceData[GD_DATA_KEYS.CHINESE],
+        raceData[GD_DATA_KEYS.MALAYS],
+        raceData[GD_DATA_KEYS.INDIANS],
+        raceData[GD_DATA_KEYS.OTHERS]
     ]);
     charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
     charts[ELEMENT_IDS.GEO_TENANCY].updateOptions(tenantOpt);

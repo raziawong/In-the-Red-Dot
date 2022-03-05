@@ -31,7 +31,7 @@ const DOS_TABLE_API = {
         transportMode: '17594'
     }
 };
-const DOS_DATA_KEYS = {
+const AP_DATA_KEYS = {
     CITIZEN_PPLT: 'singapore_citizen_population',
     PR_PPLT: 'permanent_resident_population',
     NON_RES_PPLT: 'non-resident_population',
@@ -55,6 +55,48 @@ const DOS_DATA_KEYS = {
     TOTAL_MALAYS: 'total_malays',
     TOTAL_INDIANS: 'total_indians',
     TOTAL_OTHER_ETHN: 'other_ethnic_groups_(total)'
+};
+const GD_DATA_KEYS = {
+    POPULATION: 'population',
+    AGE_GROUP: 'ageGroup',
+    ETHNIC_GROUP: 'ethnicGroup',
+    GENDER_POP: 'genderPopulation',
+    DISPLAY_NAME: 'display_name',
+    TOTAL: 'Total',
+    FEMALES: 'Females',
+    MALES: 'Males',
+    CONDO_OTH: 'Condominiums and Other Apartments',
+    HDB_DWELL: 'HDB Dwellings',
+    LANDED_PROP: 'Landed Properties',
+    OTHERS: 'Others',
+    CHINESE: 'Chinese',
+    MALAYS: 'Malays',
+    INDIANS: 'Indians',
+    OTHERS: 'Others',
+    OWNER_OCCUPIED: 'Owner-Occupied',
+    NO_QUALIFICATION: 'No Qualification',
+    PRIMARY: 'Primary',
+    LOW_SECONDARY: 'Lower Secondary',
+    SECONDARY: 'Secondary',
+    POLYTECHNIC: 'Polytechnic Diploma',
+    POST_SEC: 'Post-Secondary (Non-Tertiary)',
+    PROFESSIONAL: 'Professional Qualification and Other Diploma',
+    UNIVERSITY: 'University',
+    NOT_LIT: 'Not Literate',
+    LIT: 'Literate',
+    ONE_LANG: 'One Language Only',
+    TWO_LANG: 'Two Languages Only',
+    THREE_LANG: 'Three or More Languages',
+    CAR: 'Car Only',
+    LORRY_PICKUP: 'Lorry/Pickup Only',
+    MRT_LRT_BUS: 'MRT/LRT & Public Bus Only',
+    MRT_LRT: 'MRT/LRT Only',
+    MOTORCYCLE_SCOOTER: 'Motorcycle/\nScooter Only',
+    NO_TRANSPORT_REQ: 'No Transport Required',
+    OTHER_MRT_LRT_BUS: 'Other combinations of MRT/LRT or Public Bus',
+    PRIVATE_BUS_VAN: 'Private Chartered Bus/Van Only',
+    PUBLIC_BUS: 'Public Bus Only',
+    PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
 };
 const CHART_CONF = {
     COLOR_RANGE: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535']
@@ -144,49 +186,8 @@ const MAP_CONF = {
     DEFAULT_BORDER_COLOR: 'grey',
     HOVER_BORDER_COLOR: '#F6AE2D',
     CLICK_BORDER_COLOR: '#E73340',
-    COLOR_RANGE: ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026']
-};
-const MAP_LAYER_PROPS = {
-    POPULATION: 'population',
-    AGE_GROUP: 'ageGroup',
-    ETHNIC_GROUP: 'ethnicGroup',
-    GENDER_POP: 'genderPopulation',
-    DISPLAY_NAME: 'display_name',
-    TOTAL: 'Total',
-    FEMALES: 'Females',
-    MALES: 'Males',
-    CONDO_OTH: 'Condominiums and Other Apartments',
-    HDB_DWELL: 'HDB Dwellings',
-    LANDED_PROP: 'Landed Properties',
-    OTHERS: 'Others',
-    CHINESE: 'Chinese',
-    MALAYS: 'Malays',
-    INDIANS: 'Indians',
-    OTHERS: 'Others',
-    OWNER_OCCUPIED: 'Owner-Occupied',
-    NO_QUALIFICATION: 'No Qualification',
-    PRIMARY: 'Primary',
-    LOW_SECONDARY: 'Lower Secondary',
-    SECONDARY: 'Secondary',
-    POLYTECHNIC: 'Polytechnic Diploma',
-    POST_SEC: 'Post-Secondary (Non-Tertiary)',
-    PROFESSIONAL: 'Professional Qualification and Other Diploma',
-    UNIVERSITY: 'University',
-    NOT_LIT: 'Not Literate',
-    LIT: 'Literate',
-    ONE_LANG: 'One Language Only',
-    TWO_LANG: 'Two Languages Only',
-    THREE_LANG: 'Three or More Languages',
-    CAR: 'Car Only',
-    LORRY_PICKUP: 'Lorry/Pickup Only',
-    MRT_LRT_BUS: 'MRT/LRT & Public Bus Only',
-    MRT_LRT: 'MRT/LRT Only',
-    MOTORCYCLE_SCOOTER: 'Motorcycle/\nScooter Only',
-    NO_TRANSPORT_REQ: 'No Transport Required',
-    OTHER_MRT_LRT_BUS: 'Other combinations of MRT/LRT or Public Bus',
-    PRIVATE_BUS_VAN: 'Private Chartered Bus/Van Only',
-    PUBLIC_BUS: 'Public Bus Only',
-    PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
+    COLOR_RANGE: ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026'],
+    COLOR_NULL: '#f6f0ed'
 };
 const ELEMENT_IDS = {
     SIDEBAR_CLOSE: 'sidebar-close',

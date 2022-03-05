@@ -16,7 +16,7 @@ function getHeatMapColor(highestNum, num) {
     return MAP_CONF.COLOR_NULL;
 }
 
-function doURAZoneAndData(map, geoDistrData) {
+function doPlanAreaMapAndData(map, geoDistrData) {
     function hoverLayer(evt) {
         let layer = evt.target;
         layer.setStyle({
@@ -42,11 +42,11 @@ function doURAZoneAndData(map, geoDistrData) {
     function clickLayer(evt, map, geoCharts) {
         let layer = evt.target;
         let properties = layer.feature.properties;
-        let subtext = properties[MAP_LAYER_PROPS.POPULATION] || 'No Data';
+        let subtext = properties[GD_DATA_KEYS.POPULATION] || 'No Data';
         let container = document.getElementById(ELEMENT_IDS.MAP_AREA_INFO);
         let tabNavItemEle = document.querySelectorAll('#plan-area .tab-container li');
 
-        container.innerHTML = `<h5>${properties[MAP_LAYER_PROPS.DISPLAY_NAME]}</h5>
+        container.innerHTML = `<h5>${properties[GD_DATA_KEYS.DISPLAY_NAME]}</h5>
         <p>Population: <span>${subtext}</span></p>`;
 
         map.fitBounds(layer.getBounds());
@@ -71,19 +71,20 @@ function doURAZoneAndData(map, geoDistrData) {
             let properties = layer.feature.properties;
             let areaName = layer.feature.properties.PLN_AREA_N;
 
-            for (let [type, data] of Object.entries(geoDistrData)) {
+            for (let [category, data] of Object.entries(geoDistrData)) {
                 for (let area in data) {
                     if (area.toLowerCase() == areaName.toLowerCase()) {
-                        properties[type] = data[area];
+                        properties[category] = data[area];
                     }
                 }
             }
 
-            properties[MAP_LAYER_PROPS.POPULATION] = properties[MAP_LAYER_PROPS.GENDER_POP][MAP_LAYER_PROPS.TOTAL] || 0;
-            properties[MAP_LAYER_PROPS.DISPLAY_NAME] = areaName;
+            properties[GD_DATA_KEYS.POPULATION] = properties[GD_DATA_KEYS.GENDER_POP][GD_DATA_KEYS.TOTAL] || 0;
+            properties[GD_DATA_KEYS.DISPLAY_NAME] = areaName;
+
 
             layer.setStyle({
-                fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties[MAP_LAYER_PROPS.POPULATION]),
+                fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties[GD_DATA_KEYS.POPULATION]),
                 weight: 2,
                 opacity: 1,
                 color: MAP_CONF.DEFAULT_BORDER_COLOR,
@@ -91,7 +92,7 @@ function doURAZoneAndData(map, geoDistrData) {
                 fillOpacity: 0.7
             });
 
-            layer.bindTooltip(`<p>${properties[MAP_LAYER_PROPS.DISPLAY_NAME]}</p>`, {
+            layer.bindTooltip(`<p>${properties[GD_DATA_KEYS.DISPLAY_NAME]}</p>`, {
                 className: 'map-country-tooltip',
                 permanent: false,
                 direction: 'center'
