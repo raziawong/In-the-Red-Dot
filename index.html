@@ -15,6 +15,7 @@
     <!-- libs -->
     <link rel="stylesheet" href="assets/libs/leaflet/1.7.1-leaflet.min.css" />
     <link rel="stylesheet" href="assets/libs/cirrus-ui/0.6.2-cirrus.min.css" />
+    <link rel="stylesheet" href="assets/libs/multiselect/style.css">
     <!-- custom -->
     <link rel="stylesheet" href="assets/style/custom.css">
 </head>
@@ -74,6 +75,9 @@
                                 <li class="menu-item">
                                     <a data-target="plan-area">By Plan Area</a>
                                 </li>
+                                <!-- <li class="menu-item">
+                                    <a data-target="compare-area">Compare Plan Areas</a>
+                                </li> -->
                             </ul>
                         </nav>
                     </div>
@@ -133,7 +137,7 @@
                         <select class="select" id="trend-sel-from" placeholder="From"></select>
                         <select class="select" id="trend-sel-to" placeholder="To"></select>
                     </div>
-                    <span class="required font-bold info">Please select years in range of 10 or less.</span>
+                    <span class="required font-bold info"></span>
                 </div>
                 <!-- content: data visualization for min 2 years and max of 10 years -->
                 <div class="section-content">
@@ -284,6 +288,55 @@
                     </div>
                 </div>
             </section>
+
+            <!-- compare plan area -->
+            <section id="compare-area">
+                <div id="compare-form">
+                    <div class="row no-space">
+                        <div class="col-md-12">
+                            <h4>Select Plan Areas and Category for comparison</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Plan Areas *<br>(max 5)</p>
+                        </div>
+                        <div class="col-md-9 input-control">
+                            <select multiple="multiple" id="plan-areas-sel"></select>
+                        </div>
+                        <div class="validation col-md-12">
+                            <span class="required font-bold info"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Category *</p>
+                        </div>
+                        <div class="col-md-9 input-control">
+                            <div class="form-ext-control form-ext-radio">
+                                <input id="cp-residents" name="category" class="form-ext-input" type="radio">
+                                <label class="form-ext-label" for="cp-residents">Residents</label>
+                            </div>
+                            <div class="form-ext-control form-ext-radio">
+                                <input id="cp-housing" name="category" class="form-ext-input" type="radio">
+                                <label class="form-ext-label" for="cp-housing">Housing</label>
+                            </div>
+                            <div class="form-ext-control form-ext-radio">
+                                <input id="cp-education" name="category" class="form-ext-input" type="radio">
+                                <label class="form-ext-label" for="cp-education">Education</label>
+                            </div>
+                            <div class="form-ext-control form-ext-radio">
+                                <input id="cp-employed" name="category" class="form-ext-input" type="radio">
+                                <label class="form-ext-label" for="cp-employed">Empoloyed</label>
+                            </div>
+                        </div>
+                        <div class="validation col-md-12">
+                            <span class="required font-bold info"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="submit" class="btn-primary pull-right" value="Compare">
+                        </div>
+                    </div>
+                </div>
+                <div class="section-content">
+                </div>
+            </section>
         </main>
     </div>
 
@@ -293,6 +346,7 @@
     <script src="assets/libs/leaflet/1.7.1-leaflet.min.js"></script>
     <script src='assets/libs/leaflet/0.3.1-leaflet-omnivore.min.js'></script>
     <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/libs/multiselect/index.js"></script>
     <!-- custom  -->
     <script src="assets/scripts/const.js"></script>
     <script src="assets/scripts/data.js"></script>
