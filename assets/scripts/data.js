@@ -1,33 +1,25 @@
 async function getGeoDistributionData() {
-    let promiseArr = [];
+    // let promiseArr = [];
     let storedPromiseArr = [];
     let data = {};
 
+    // use stored copies instead due to referer policy of API
     for (let prop in DOS_TABLE_API.GEO_DISTRI_IDS) {
-        promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.GEO_DISTRI_IDS[prop]));
+        // promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.GEO_DISTRI_IDS[prop]));
         storedPromiseArr.push(axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.GEO_DISTRI_IDS[prop] + '.json'))
     }
 
-    await Promise.all(promiseArr).then(resp => {
+    await Promise.all(storedPromiseArr).then(resp => {
         for (let r of resp) {
             if (Object.values(DOS_TABLE_API.GEO_DISTRI_IDS).includes(r.data.Data.id)) {
                 data[UTIL.getKeyByValue(DOS_TABLE_API.GEO_DISTRI_IDS, r.data.Data.id)] = r.data.Data.row;
             }
         }
-    }).catch(async error => {
-        console.log('Unable to get data of DOS geographical distribution data via singstag.gov.sg, attempting to use stored copies');
-        await Promise.all(storedPromiseArr).then(resp => {
-            for (let r of resp) {
-                if (Object.values(DOS_TABLE_API.GEO_DISTRI_IDS).includes(r.data.Data.id)) {
-                    data[UTIL.getKeyByValue(DOS_TABLE_API.GEO_DISTRI_IDS, r.data.Data.id)] = r.data.Data.row;
-                }
-            }
-        }).catch(error => {
-            console.log('Unable to get data of DOS geographical distribution data stored copies');
-        });
+    }).catch(error => {
+        console.log('Unable to get data of DOS geographical distribution data stored copies');
     });
 
-    // console.log("Geographical Distribution Response:\n", data);
+    console.log("Geographical Distribution Response:\n", data);
     return data;
 }
 
@@ -91,7 +83,7 @@ function transformGeoDistributionData(rawData) {
         }
     }
 
-    // console.log("Geographical Distribution:\n", dataByArea);
+    console.log("Geographical Distribution:\n", dataByArea);
     return dataByArea;
 }
 
@@ -100,9 +92,11 @@ async function getAnnualPopulationData() {
     let storedPromiseArr = [];
     let data = {};
 
-    // use stored copies instead due to limitation of returned results in API
+    // use stored copies instead due to referer policy of API
     for (let prop in DOS_TABLE_API.ANNUAL_POP_IDS) {
-        //promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop]));
+        // promiseArr.push(axios.get(DOS_TABLE_API.BASE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop]), {
+        //     headers: { 'crossDomain': true }
+        // });
         storedPromiseArr.push(axios.get(DOS_TABLE_API.STORE_URL + DOS_TABLE_API.ANNUAL_POP_IDS[prop] + '.json'))
     }
 
@@ -116,7 +110,7 @@ async function getAnnualPopulationData() {
         console.log('Unable to get data of DOS annual population data stored copies');
     });
 
-    // console.log("Annual Population Data Response:\n", data);
+    console.log("Annual Population Data Response:\n", data);
     return data;
 }
 
