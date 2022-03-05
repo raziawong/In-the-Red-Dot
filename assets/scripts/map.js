@@ -1,14 +1,19 @@
 function getHeatMapColor(highestNum, num) {
     let percentage = (highestNum - num) / highestNum * 100;
-    return percentage > 90 ? MAP_CONF.COLOR_RANGE[0] :
-        percentage > 80 ? MAP_CONF.COLOR_RANGE[1] :
-        percentage > 70 ? MAP_CONF.COLOR_RANGE[2] :
-        percentage > 50 ? MAP_CONF.COLOR_RANGE[3] :
-        percentage > 40 ? MAP_CONF.COLOR_RANGE[4] :
-        percentage > 30 ? MAP_CONF.COLOR_RANGE[5] :
-        percentage > 20 ? MAP_CONF.COLOR_RANGE[6] :
-        percentage > 10 ? MAP_CONF.COLOR_RANGE[7] :
-        MAP_CONF.COLOR_RANGE[8];
+
+    if (num) {
+        return percentage > 90 ? MAP_CONF.COLOR_RANGE[0] :
+            percentage > 80 ? MAP_CONF.COLOR_RANGE[1] :
+            percentage > 70 ? MAP_CONF.COLOR_RANGE[2] :
+            percentage > 50 ? MAP_CONF.COLOR_RANGE[3] :
+            percentage > 40 ? MAP_CONF.COLOR_RANGE[4] :
+            percentage > 30 ? MAP_CONF.COLOR_RANGE[5] :
+            percentage > 20 ? MAP_CONF.COLOR_RANGE[6] :
+            percentage > 10 ? MAP_CONF.COLOR_RANGE[7] :
+            MAP_CONF.COLOR_RANGE[8];
+    }
+
+    return MAP_CONF.COLOR_NULL;
 }
 
 function doURAZoneAndData(map, geoDistrData) {
