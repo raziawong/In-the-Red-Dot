@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In the Red Dot</title>
     <link rel="icon" type="image/x-icon" href="assets/media/favicon.ico" />
+    <!-- fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <!-- libs -->
     <link rel="stylesheet" href="assets/libs/leaflet/1.7.1-leaflet.min.css" />
     <link rel="stylesheet" href="assets/libs/cirrus-ui/0.6.2-cirrus.min.css" />
@@ -77,14 +80,17 @@
 
         <!-- main content -->
         <main class="tree-nav-content">
-            <!-- population overview charts -->
+
+            <!-- population overview section -->
             <section id="overview">
+                <!-- single year dropdown -->
                 <div id="overview-sel">
                     <div class="form-group">
                         <label class="form-group-label" for="overview-sel-year">Year</label>
                         <select class="select" id="overview-sel-year" placeholder="Year"></select>
                     </div>
                 </div>
+                <!-- content: data visualization for single year -->
                 <div class="section-content">
                     <div class="row">
                         <div class="col-4">
@@ -115,8 +121,9 @@
                 </div>
             </section>
 
-            <!-- population trend charts -->
+            <!-- population past years comparison section -->
             <section id="trend">
+                <!-- year range dropdown -->
                 <div id="trend-sel">
                     <div class="form-group">
                         <label class="form-group-label">Range</label>
@@ -125,6 +132,7 @@
                     </div>
                     <span class="required font-bold info">Please select years in range of 10 or less.</span>
                 </div>
+                <!-- content: data visualization for min 2 years and max of 10 years -->
                 <div class="section-content">
                     <div class="row">
                         <div class="col-12 col-lg-4 col-xl-3">
@@ -160,8 +168,9 @@
                 </div>
             </section>
 
-            <!-- geographic distribution charts -->
+            <!-- URA plan areas section -->
             <section id="plan-area">
+                <!-- tab menu -->
                 <div class="tab-container">
                     <ul class="row no-space">
                         <li class="col-xs-6 col-sm-3 disabled" data-target="tab-content-res">
@@ -194,8 +203,12 @@
                         </li>
                     </ul>
                 </div>
+                <!-- content: heatmap on singapore boundary and respective areas data visualization -->
                 <div class="section-content">
+                    <!-- leaflet map container -->
                     <div id="ura-zones-map"></div>
+
+                    <!-- residents tab content -->
                     <div class="tab-content-container" id="tab-content-res">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
@@ -212,6 +225,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- housing tab content -->
                     <div class="tab-content-container" id="tab-content-housing">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
@@ -227,6 +241,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- education tab content -->
                     <div class="tab-content-container" id="tab-content-edu">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
@@ -242,6 +257,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- employed tab content -->
                     <div class="tab-content-container" id="tab-content-empl">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
@@ -261,16 +277,6 @@
                             <div class="col-6 chart">
                                 <div id="geo-travel"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="tab-content-container" id="tab-content-none">
-                        <div class="tab-close u-pull-right" aria-label="Close Tab Content">
-                            <span class="icon">
-                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        <div>
-                            <h4>No Data To Show</h4>
                         </div>
                     </div>
                 </div>
