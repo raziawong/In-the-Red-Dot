@@ -194,6 +194,7 @@ const ELEMENT_IDS = {
     SECT_OVERVIEW: 'overview',
     SECT_TREND: 'trend',
     SECT_PLAN_AREA: 'plan-area',
+    SECT_COMPARE_AREA: 'compare-area',
     OVERVIEW_SEL_YEAR: 'overview-sel-year',
     POPULATION: 'population',
     RESIDENCY: 'residency',
@@ -224,7 +225,9 @@ const ELEMENT_IDS = {
     GEO_TENANCY: 'geo-tenancy',
     GEO_INCOME: 'geo-income',
     GEO_TRANSPORT: 'geo-transport',
-    GEO_TRAVEL: 'geo-travel'
+    GEO_TRAVEL: 'geo-travel',
+    COMPARE_FORM: 'compare-form',
+    PLAN_AREAS_SEL: 'plan-areas-sel'
 };
 const ELEMENT_STATES = {
     ACTIVE: 'active',
@@ -234,5 +237,8 @@ const ELEMENT_STATES = {
 const ERROR_MSG = {
     YEAR_2: 'Please select years in range of 2 or more.',
     YEAR_10: 'Please select years in range of 10 or less.',
-    YEAR_NEG: 'Please select a valid range between 2 and 10 years.'
+    YEAR_NEG: 'Please select a valid range between 2 and 10 years.',
+    PLAN_AREAS_2: 'Please select at least 2 plan areas.',
+    PLAN_AREAS_5: 'Please select only 5 plan areas.',
+    CAT_REQUIRED: 'Please select one category.'
 }

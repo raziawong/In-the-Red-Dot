@@ -16,6 +16,7 @@ function main() {
 
             let geoDistrSeries = await initGeoDistribution();
             doPlanAreaMapAndData(map, geoDistrSeries);
+            doPlanAreaCompareForm(geoDistrSeries);
         });
     }
 
@@ -221,6 +222,62 @@ function main() {
                 }
             });
         }
+    }
+
+    function doPlanAreaCompareForm(geoDistrData) {
+        let planAreaOpts = [];
+        let planAreas = [];
+        let dataSOF = geoDistrData[GD_DATA_KEYS.GENDER_POP];
+        let compareForm = document.getElementById(ELEMENT_IDS.COMPARE_FORM);
+        let planAreasSel = document.getElementById(ELEMENT_IDS.PLAN_AREAS_SEL);
+
+        for (let [area, data] of Object.entries(dataSOF)) {
+            if (area !== GD_DATA_KEYS.TOTAL && data.hasOwnProperty(GD_DATA_KEYS.TOTAL) && data[GD_DATA_KEYS.TOTAL]) {
+                planAreaOpts.push({ html: area, value: UTIL.convertDOSKeys(area) });
+                planAreas.push(area);
+            }
+        }
+
+        for (let opt of planAreaOpts) {
+            let optEle = document.createElement('option');
+            optEle.value = opt.value;
+            optEle.innerText = opt.html;
+            planAreasSel.appendChild(optEle);
+        }
+
+        let planAreaDrop = new drop({
+            options: planAreaOpts,
+            selector: '#' + ELEMENT_IDS.PLAN_AREAS_SEL
+        });
+        planAreaDrop.toggle();
+
+        compareForm.querySelector('input[type="submit"]').addEventListener('click', evt => {
+            let planAreaInput = planAreaDrop.options.filter(opt => opt.selected);
+            let planAreaErrEle = compareForm.querySelectorAll('.validation span')[0];
+            let catInput = compareForm.querySelector('input[name="category"]:checked');
+            let catErrEle = compareForm.querySelectorAll('.validation span')[1];
+            let hasErr = false;
+
+            planAreaErrEle.style.display = 'none';
+            catErrEle.style.display = 'none';
+
+            if (planAreaInput.length < 2) {
+                planAreaErrEle.innerText = ERROR_MSG.PLAN_AREAS_2;
+                planAreaErrEle.style.display = 'initial';
+            } else if (planAreaInput.length > 5) {
+                planAreaErrEle.innerText = ERROR_MSG.PLAN_AREAS_5;
+                planAreaErrEle.style.display = 'initial';
+            }
+            if (!catInput) {
+                catErrEle.innerText = ERROR_MSG.CAT_REQUIRED;
+                catErrEle.style.display = 'initial';
+            }
+
+            if (!hasErr) {
+
+            }
+        });
+
     }
 
     init();

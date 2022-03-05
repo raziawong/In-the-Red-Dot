@@ -114,7 +114,7 @@ main.tree-nav-content section {
 
 main.tree-nav-content section.active {
     transform: translate(0, 0);
-    transition: 0.4s ease-in transform;
+    transition: width 4s, height 0.5s, ease-in, transform;
 }
 
 main.tree-nav-content section:not(#plan-area) {
@@ -362,6 +362,99 @@ main.tree-nav-content .chart-xxs {
     height: 1rem;
     margin-right: 0px;
     opacity: 0.8;
+}
+
+
+/* --- start compare form --- */
+
+#compare-form {
+    height: 80vh;
+    width: 50vw;
+    margin: auto;
+    position: absolute;
+    top: 20%;
+    left: 16%;
+}
+
+#compare-form p {
+    margin: 1rem 1rem 1rem 0;
+}
+
+#compare-form>div {
+    margin: 1rem;
+}
+
+#compare-form .input-control {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+}
+
+#compare-form .input-control .form-ext-radio:not(:first-child) {
+    margin: 0 0.5rem;
+}
+
+#compare-form input[type='submit'] {
+    margin: 5rem 0.5rem;
+}
+
+#compare-form .validation {
+    text-align: center;
+    margin: 0.5rem;
+}
+
+#compare-form .validation span {
+    display: none;
+}
+
+
+/* --- start multi-select --- */
+
+#compare-form .drop {
+    width: 100%;
+}
+
+#compare-form .drop .drop-display {
+    position: relative;
+    padding: .85rem 1.1rem;
+    border: 1px solid #ddd;
+    background: transparent;
+    height: 100%;
+}
+
+#compare-form .drop .drop-display:after {
+    /* font-family: 'Font Awesome 6 Free';
+    content: "\f078"; */
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") right .85rem center/.5rem .6rem no-repeat no-repeat;
+    content: "";
+    position: absolute;
+    display: inline-block;
+    top: 0.8rem;
+    height: 30px;
+    width: 30px;
+    font-size: initial;
+    ---webkit-appearance: none;
+}
+
+#compare-form .drop .drop-display .item {
+    border: 1px solid var(--ter-color);
+    color: var(--gen-text);
+}
+
+#compare-form .drop .drop-options {
+    background-color: var(--sec-accent-o8);
+    box-shadow: 0px 1px 1rem rgb(0 0 0 / 25%);
+}
+
+#compare-form .drop .drop-options a {
+    padding: 0px 20px;
+    color: var(--gen-text);
+}
+
+#compare-form .drop .drop-options a:hover {
+    background: var(--ter-color);
+    color: var(--cirrus-light-gray);
+    cursor: pointer;
 }
 
 
