@@ -227,7 +227,17 @@ const ELEMENT_IDS = {
     GEO_TRANSPORT: 'geo-transport',
     GEO_TRAVEL: 'geo-travel',
     COMPARE_FORM: 'compare-form',
-    PLAN_AREAS_SEL: 'plan-areas-sel'
+    PLAN_AREAS_SEL: 'plan-areas-sel',
+    COMPARE_GENDER: 'compare-dwelling',
+    COMPARE_RACE: 'compare-tenancy',
+    COMPARE_DWELLING: 'compare-education',
+    COMPARE_TENANCY: 'compare-',
+    COMPARE_EDUCATION: 'compare-literacy',
+    COMPARE_LITERACY: 'compare-occupation',
+    COMPARE_OCCUPATION: 'compare-income',
+    COMPARE_INCOME: 'compare-',
+    COMPARE_TRANSPORT: 'compare-transport',
+    COMPARE_TRAVEL: 'compare-travel'
 };
 const ELEMENT_STATES = {
     ACTIVE: 'active',

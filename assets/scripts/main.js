@@ -154,15 +154,15 @@ function main() {
 
         let treeNavEle = document.querySelector('.tree-nav-container');
         let treeItemEles = treeNavEle.querySelectorAll('li.menu-item a');
-        let tabNavEle = document.querySelector('#plan-area .tab-container');
-        let tabItemEles = tabNavEle.querySelectorAll('li');
-        let tabCloseEles = document.querySelectorAll('#plan-area .tab-content-container .tab-close');
+        let paTabNavEle = document.querySelector('#plan-area .tab-container');
+        let tabItemEles = paTabNavEle.querySelectorAll('li');
+        let tabCloseEles = document.querySelectorAll('section .trans-content .tab-close');
 
         for (let mi of treeItemEles) {
             mi.addEventListener('click', (evt) => {
                 let sTargetId = mi.dataset.target;
                 let activeSect = document.querySelector('section.active');
-                let activeTab = document.querySelector('#plan-area .tab-content-container.active');
+                let activeTab = document.querySelector('#plan-area .trans-content.active');
                 if (activeSect) {
                     // hide currently active section
                     treeNavEle.querySelector('li.menu-item a.selected').classList.remove(ELEMENT_STATES.SELECTED);
@@ -186,22 +186,23 @@ function main() {
             ti.addEventListener('click', (evt) => {
                 let activeSect = document.querySelector('section.active');
 
-                // check if active section is plan area
-                // and tab menu is not disabled
-                if (activeSect &&
-                    activeSect.id == ELEMENT_IDS.SECT_PLAN_AREA &&
-                    !ti.classList.contains(ELEMENT_STATES.DISABLED)) {
-                    let cTargetId = ti.dataset.target;
-                    let selectedTab = tabNavEle.querySelector('li.selected');
-                    // hide currently active tab
-                    if (selectedTab) {
-                        document.getElementById(selectedTab.dataset.target).classList.remove(ELEMENT_STATES.ACTIVE);
-                        selectedTab.classList.remove(ELEMENT_STATES.SELECTED);
+                if (activeSect) {
+                    // check if active section is plan area
+                    // and tab menu is not disabled
+                    if (activeSect.id == ELEMENT_IDS.SECT_PLAN_AREA &&
+                        !ti.classList.contains(ELEMENT_STATES.DISABLED)) {
+                        let cTargetId = ti.dataset.target;
+                        let selectedTab = paTabNavEle.querySelector('li.selected');
+                        // hide currently active tab
+                        if (selectedTab) {
+                            document.getElementById(selectedTab.dataset.target).classList.remove(ELEMENT_STATES.ACTIVE);
+                            selectedTab.classList.remove(ELEMENT_STATES.SELECTED);
+                        }
+                        // set the tab item to be selected
+                        ti.classList.add(ELEMENT_STATES.SELECTED);
+                        // set the tab content to be displayed
+                        setActiveEleById(cTargetId);
                     }
-                    // set the tab item to be selected
-                    ti.classList.add(ELEMENT_STATES.SELECTED);
-                    // set the tab content to be displayed
-                    setActiveEleById(cTargetId);
                 }
             });
         }
@@ -211,11 +212,13 @@ function main() {
                 let container = tc.parentNode;
                 if (container) {
                     let activeTab = document.querySelector(`[data-target="${container.id}"]`);
+
                     // hide selected tab item menu
-                    if (activeTab.classList.contains(ELEMENT_STATES.SELECTED)) {
+                    if (activeTab && activeTab.classList.contains(ELEMENT_STATES.SELECTED)) {
                         activeTab.classList.remove(ELEMENT_STATES.SELECTED);
                     }
-                    // hide tab content
+
+                    // hide transformed content
                     if (container.classList.contains(ELEMENT_STATES.ACTIVE)) {
                         container.classList.remove(ELEMENT_STATES.ACTIVE);
                     }
@@ -264,13 +267,16 @@ function main() {
             if (planAreaInput.length < 2) {
                 planAreaErrEle.innerText = ERROR_MSG.PLAN_AREAS_2;
                 planAreaErrEle.style.display = 'initial';
+                hasErr = true;
             } else if (planAreaInput.length > 5) {
                 planAreaErrEle.innerText = ERROR_MSG.PLAN_AREAS_5;
                 planAreaErrEle.style.display = 'initial';
+                hasErr = true;
             }
             if (!catInput) {
                 catErrEle.innerText = ERROR_MSG.CAT_REQUIRED;
                 catErrEle.style.display = 'initial';
+                hasErr = true;
             }
 
             if (!hasErr) {

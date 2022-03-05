@@ -3,6 +3,7 @@
     --pri-accent: #F3EED9;
     --pri-accent-o8: rgb(243, 237, 216, 0.8);
     --sec-color: #F6AE2D;
+    --sec-color-o3: rgb(246, 174, 45, 0.3);
     --sec-accent: rgb(246, 240, 237);
     --sec-accent-o8: rgb(246, 240, 237, 0.8);
     --ter-color: rgb(40, 89, 67, 0.5);
@@ -139,7 +140,7 @@ main.tree-nav-content .form-group {
 }
 
 main.tree-nav-content .form-group .form-group-label {
-    background-color: var(--pri-accent);
+    background-color: var(--sec-color-o3);
     border: 0;
     color: var(--pri-color);
     padding: 0.8rem 8vw;
@@ -222,9 +223,9 @@ main.tree-nav-content .chart-xxs {
 }
 
 
-/* --- start tab menu and content --- */
+/* --- start tab menu --- */
 
-#plan-area .tab-container ul.row {
+section .tab-container ul.row {
     min-height: 5vh;
     padding: 0 0;
     margin: 0 0;
@@ -233,32 +234,35 @@ main.tree-nav-content .chart-xxs {
     font-weight: bold;
 }
 
-#plan-area .tab-container li.disabled .tab-item-content,
-#plan-area .tab-container li.disabled:hover .tab-item-content {
+section .tab-container li.disabled .tab-item-content,
+section .tab-container li.disabled:hover .tab-item-content {
     border-bottom: 0;
     background-color: var(--cirrus-light-gray);
     color: var(--cirrus-dark-gray);
     cursor: not-allowed;
 }
 
-#plan-area .tab-container li .tab-item-content {
+section .tab-container li .tab-item-content {
     box-sizing: border-box;
-    background-color: var(--pri-accent);
+    background-color: var(--sec-color-o3);
     color: var(--gen-text);
     height: 100%;
     padding: 0.3rem 0.5rem 0rem;
 }
 
-#plan-area .tab-container li:hover .tab-item-content {
+section .tab-container li:hover .tab-item-content {
     border-bottom-color: var(--pri-color);
 }
 
-#plan-area .tab-container li.selected .tab-item-content {
+section .tab-container li.selected .tab-item-content {
     border-bottom-color: var(--pri-color);
     color: var(--pri-color);
 }
 
-#plan-area .tab-content-container {
+
+/* --- start translated sub content --- */
+
+section .trans-content {
     padding: 0.5rem;
     position: absolute;
     right: 0;
@@ -270,17 +274,17 @@ main.tree-nav-content .chart-xxs {
     background-color: var(--bg-color);
 }
 
-#plan-area .tab-content-container.active {
+section .trans-content.active {
     z-index: 400000;
     transform: translate(0, 0);
     transition: .5s ease-in-out transform;
 }
 
-#plan-area .tab-content {
+section .trans-body {
     padding: 1.3rem;
 }
 
-#plan-area .tab-content.row>* {
+section .trans-body.row>* {
     margin: 0.5rem 0;
 }
 
@@ -368,12 +372,15 @@ main.tree-nav-content .chart-xxs {
 /* --- start compare form --- */
 
 #compare-form {
-    height: 80vh;
-    width: 50vw;
-    margin: auto;
-    position: absolute;
-    top: 20%;
-    left: 16%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#compare-form .placeholder {
+    background-color: var(--sec-color-o3);
+    width: 100%;
 }
 
 #compare-form p {
@@ -384,10 +391,17 @@ main.tree-nav-content .chart-xxs {
     margin: 1rem;
 }
 
+#compare-form .input-label {
+    color: var(--pri-color);
+    font-weight: bold;
+    font-size: var(--font-size-m);
+}
+
 #compare-form .input-control {
     align-items: center;
     display: flex;
     flex: 0 0 auto;
+    justify-content: space-around;
 }
 
 #compare-form .input-control .form-ext-radio:not(:first-child) {
@@ -395,7 +409,7 @@ main.tree-nav-content .chart-xxs {
 }
 
 #compare-form input[type='submit'] {
-    margin: 5rem 0.5rem;
+    margin: 4rem 0.5rem 1rem;
 }
 
 #compare-form .validation {
@@ -411,25 +425,22 @@ main.tree-nav-content .chart-xxs {
 /* --- start multi-select --- */
 
 #compare-form .drop {
-    width: 100%;
+    width: 90%;
 }
 
 #compare-form .drop .drop-display {
     position: relative;
     padding: .85rem 1.1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--ter-color);
     background: transparent;
     height: 100%;
 }
 
 #compare-form .drop .drop-display:after {
-    /* font-family: 'Font Awesome 6 Free';
-    content: "\f078"; */
     background: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") right .85rem center/.5rem .6rem no-repeat no-repeat;
     content: "";
     position: absolute;
     display: inline-block;
-    top: 0.8rem;
     height: 30px;
     width: 30px;
     font-size: initial;
@@ -455,6 +466,14 @@ main.tree-nav-content .chart-xxs {
     background: var(--ter-color);
     color: var(--cirrus-light-gray);
     cursor: pointer;
+}
+
+
+/* --- start compare modals --- */
+
+#compare-area .modal {
+    height: 100vh;
+    width: 100%;
 }
 
 
@@ -502,9 +521,13 @@ main.tree-nav-content .chart-xxs {
         flex-direction: row;
         flex-wrap: wrap;
     }
-    /* --- start tab menu and content --- */
-    #plan-area .tab-container li .tab-item-content {
+    /* --- start tab menu --- */
+    section .tab-container li .tab-item-content {
         font-size: var(--font-size-s);
+    }
+    /* --- start compare form --- */
+    #compare-form .drop {
+        width: 100%
     }
 }
 
@@ -542,20 +565,21 @@ main.tree-nav-content .chart-xxs {
     main.tree-nav-content .form-group span.info {
         text-align: center;
     }
-    /* --- start tab menu and content --- */
-    #plan-area .tab-container ul.row {
+    /* --- start tab menu --- */
+    section .tab-container ul.row {
         height: 12vh;
     }
-    #plan-area .tab-content-container {
-        top: 12vh;
-    }
-    #plan-area .tab-container li .tab-item-content {
+    section .tab-container li .tab-item-content {
         padding: 0.2rem 0.4rem;
         border-bottom: 0;
         border-right: 0;
     }
-    #plan-area .tab-container li.selected .tab-item-content {
+    section .tab-container li.selected .tab-item-content {
         border-bottom: 2px solid var(--pri-color);
+    }
+    /* --- start translated sub content --- */
+    section .trans-content {
+        top: 12vh;
     }
     /* --- start map and controls --- */
     #ura-zones-map {
@@ -593,6 +617,31 @@ main.tree-nav-content .chart-xxs {
     .leaflet-touch .leaflet-control-zoom-in,
     .leaflet-touch .leaflet-control-zoom-out {
         font-size: var(--font-size-s);
+    }
+    /* --- start compare form --- */
+    #compare-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #compare-form .placeholder {
+        min-width: 90%;
+        padding: 1rem;
+    }
+    #compare-form .row {
+        align-items: center;
+        width: 100%;
+    }
+    #compare-form .row [class*=' col-'],
+    #compare-form .row [class^=col-] {
+        margin: 0.2rem 0;
+    }
+    #compare-form .input-control {
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+    #compare-form .input-control .form-ext-radio:not(:first-child) {
+        margin: 0;
     }
 }
 

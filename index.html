@@ -216,13 +216,13 @@
                     <div id="ura-zones-map"></div>
 
                     <!-- residents tab content -->
-                    <div class="tab-content-container" id="tab-content-res">
+                    <div class="trans-content" id="tab-content-res">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="row no-space tab-content">
+                        <div class="row no-space trans-body">
                             <div class="col-12 chart">
                                 <div id="geo-age-group"></div>
                                 <div id="geo-age-gender"></div>
@@ -233,13 +233,13 @@
                         </div>
                     </div>
                     <!-- housing tab content -->
-                    <div class="tab-content-container" id="tab-content-housing">
+                    <div class="trans-content" id="tab-content-housing">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="row tab-content">
+                        <div class="row trans-body">
                             <div class="col-12 chart">
                                 <div id="geo-dwelling"></div>
                             </div>
@@ -249,13 +249,13 @@
                         </div>
                     </div>
                     <!-- education tab content -->
-                    <div class="tab-content-container" id="tab-content-edu">
+                    <div class="trans-content" id="tab-content-edu">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="row no-space tab-content">
+                        <div class="row no-space trans-body">
                             <div class="col-12 chart">
                                 <div id="geo-education"></div>
                             </div>
@@ -265,13 +265,13 @@
                         </div>
                     </div>
                     <!-- employed tab content -->
-                    <div class="tab-content-container" id="tab-content-empl">
+                    <div class="trans-content" id="tab-content-empl">
                         <div class="tab-close u-pull-right" aria-label="Close Tab Content">
                             <span class="icon">
                                 <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="row no-space tab-content">
+                        <div class="row no-space trans-body">
                             <div class="col-6 chart">
                                 <div id="geo-occupation"></div>
                             </div>
@@ -291,50 +291,129 @@
 
             <!-- compare plan area -->
             <section id="compare-area">
-                <div id="compare-form">
-                    <div class="row no-space">
-                        <div class="col-md-12">
-                            <h4>Select Plan Areas and Category for comparison</h3>
-                        </div>
-                        <div class="col-md-3">
-                            <p>Plan Areas *<br>(max 5)</p>
-                        </div>
-                        <div class="col-md-9 input-control">
-                            <select multiple="multiple" id="plan-areas-sel"></select>
-                        </div>
-                        <div class="validation col-md-12">
-                            <span class="required font-bold info"></span>
-                        </div>
-                        <div class="col-md-3">
-                            <p>Category *</p>
-                        </div>
-                        <div class="col-md-9 input-control">
-                            <div class="form-ext-control form-ext-radio">
-                                <input id="cp-residents" name="category" class="form-ext-input" type="radio">
-                                <label class="form-ext-label" for="cp-residents">Residents</label>
+                <div class="section-content">
+                    <!-- compare form -->
+                    <div id="compare-form">
+                        <div class="placeholder">
+                            <div class="placeholder-icon">
+                                <span class="icon">
+                                    <i class="fa-solid fa-object-group"></i>
+                                </span>
                             </div>
-                            <div class="form-ext-control form-ext-radio">
-                                <input id="cp-housing" name="category" class="form-ext-input" type="radio">
-                                <label class="form-ext-label" for="cp-housing">Housing</label>
+                            <h6 class="placeholder-title">Select Plan Areas and Category for comparison.</h6>
+                            <div class="placeholder-commands u-center">
+                                <div class="row no-space">
+                                    <div class="col-md-3 input-label">
+                                        <p>Plan Areas *</p>
+                                    </div>
+                                    <div class="col-md-9 input-control">
+                                        <select multiple="multiple" id="plan-areas-sel"></select>
+                                    </div>
+                                    <div class="validation col-md-12">
+                                        <span class="required font-bold info"></span>
+                                    </div>
+                                    <div class="col-md-3 input-label">
+                                        <p>Category *</p>
+                                    </div>
+                                    <div class="col-md-9 input-control">
+                                        <div class="form-ext-control form-ext-radio">
+                                            <input id="cp-residents" data-target="modal-cp-res" name="category" class="form-ext-input" type="radio" checked>
+                                            <label class="form-ext-label" for="cp-residents">Residents</label>
+                                        </div>
+                                        <div class="form-ext-control form-ext-radio">
+                                            <input id="cp-housing" data-target="modal-cp-housing" name="category" class="form-ext-input" type="radio">
+                                            <label class="form-ext-label" for="cp-housing">Housing</label>
+                                        </div>
+                                        <div class="form-ext-control form-ext-radio">
+                                            <input id="cp-education" data-target="modal-cp-education" name="category" class="form-ext-input" type="radio">
+                                            <label class="form-ext-label" for="cp-education">Education</label>
+                                        </div>
+                                        <div class="form-ext-control form-ext-radio">
+                                            <input id="cp-employed" data-target="modal-cp-employed" name="category" class="form-ext-input" type="radio">
+                                            <label class="form-ext-label" for="cp-employed">Employed</label>
+                                        </div>
+                                    </div>
+                                    <div class="validation col-md-12">
+                                        <span class="required font-bold info"></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="submit" class="btn-primary pull-right" value="Compare">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-ext-control form-ext-radio">
-                                <input id="cp-education" name="category" class="form-ext-input" type="radio">
-                                <label class="form-ext-label" for="cp-education">Education</label>
-                            </div>
-                            <div class="form-ext-control form-ext-radio">
-                                <input id="cp-employed" name="category" class="form-ext-input" type="radio">
-                                <label class="form-ext-label" for="cp-employed">Empoloyed</label>
-                            </div>
-                        </div>
-                        <div class="validation col-md-12">
-                            <span class="required font-bold info"></span>
-                        </div>
-                        <div class="col-md-12">
-                            <input type="submit" class="btn-primary pull-right" value="Compare">
                         </div>
                     </div>
-                </div>
-                <div class="section-content">
+
+                    <!-- residents compare content -->
+                    <div class="trans-content" id="modal-cp-res">
+                        <div class="tab-close u-pull-right" aria-label="Close Modal">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="row no-space trans-body">
+                            <div class="col-12 chart">
+                                <div id="compare-gender"></div>
+                            </div>
+                            <div class="col-12 chart">
+                                <div id="compare-race"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- housing compare content -->
+                    <div class="trans-content" id="modal-cp-housing">
+                        <div class="tab-close u-pull-right" aria-label="Close Modal">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="row trans-body">
+                            <div class="col-12 chart">
+                                <div id="compare-dwelling"></div>
+                            </div>
+                            <div class="col-12 chart">
+                                <div id="compare-tenancy"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- education compare content -->
+                    <div class="trans-content" id="modal-cp-education">
+                        <div class="tab-close u-pull-right" aria-label="Close Modal">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="row no-space trans-body">
+                            <div class="col-12 chart">
+                                <div id="compare-education"></div>
+                            </div>
+                            <div class="col-12 chart">
+                                <div id="compare-literacy"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- employed compare content -->
+                    <div class="trans-content" id="modal-cp-employed">
+                        <div class="tab-close u-pull-right" aria-label="Close Modal">
+                            <span class="icon">
+                                <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="row no-space trans-body">
+                            <div class="col-6 chart">
+                                <div id="compare-occupation"></div>
+                            </div>
+                            <div class="col-6 chart">
+                                <div id="compare-income"></div>
+                            </div>
+                            <div class="col-6 chart">
+                                <div id="compare-transport"></div>
+                            </div>
+                            <div class="col-6 chart">
+                                <div id="compare-travel"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
