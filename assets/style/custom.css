@@ -507,11 +507,14 @@ section .trans-body.row>* {
         max-width: 15vw;
     }
     #sidebar-close {
-        display: block;
+        display: initial;
+        background-color: transparent;
+        height: fit-content;
+        padding: 0.2rem 0.5rem;
     }
     /* --- start tree navigation toggle (mobile hamburger) --- */
     #sidebar-toggle {
-        display: block;
+        display: initial;
     }
     /* --- start filter form groups --- */
     main.tree-nav-content .form-group .form-group-label {
