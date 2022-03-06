@@ -1,6 +1,6 @@
 const minify = require('@node-minify/core');
 const uglifyes = require('@node-minify/uglify-es');
-const crass = require('@node-minify/crass');
+const cleanCSS = require('@node-minify/clean-css');
 
 minify({
     compressor: uglifyes,
@@ -12,7 +12,7 @@ minify({
 });
 
 minify({
-    compressor: crass,
+    compressor: cleanCSS,
     input: 'assets/src/styles/custom.css',
     output: 'assets/dist/all.min.css',
     callback: function(err, min) {
