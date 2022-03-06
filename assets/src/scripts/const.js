@@ -6,11 +6,11 @@ const MEDIA_SIZE = {
     XXS_MIN: 300
 };
 const DATA_GOV_API = {
-    STORE_URL: 'assets/data/map'
+    STORE_URL: 'assets/data/ura-zones/'
 };
 const DOS_TABLE_API = {
     BASE_URL: 'https://tablebuilder.singstat.gov.sg/api/table/tabledata/',
-    STORE_URL: 'assets/data/temp/',
+    STORE_URL: 'assets/data/dos-tables/',
     ANNUAL_POP_IDS: {
         indicators: 'M810001',
         categories: 'M810011'

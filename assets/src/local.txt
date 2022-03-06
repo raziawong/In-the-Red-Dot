@@ -1,0 +1,16 @@
+    <link rel="stylesheet" href="assets/libs/leaflet/1.7.1-leaflet.min.css" />
+    <link rel="stylesheet" href="assets/libs/cirrus-ui/0.6.2-cirrus.min.css" />
+    <link rel="stylesheet" href="assets/libs/multiselect/style.css">
+    <link rel="stylesheet" href="assets/src/styles/custom.css">
+    
+    <script src="assets/libs/axios/0.26.0-axios.min.js"></script>
+    <script src="assets/libs/leaflet/1.7.1-leaflet.min.js"></script>
+    <script src='assets/libs/leaflet/0.3.1-leaflet-omnivore.min.js'></script>
+    <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/libs/multiselect/index.js"></script>
+    <script src="assets/src/scripts/const.js"></script>
+    <script src="assets/src/scripts/util.js"></script>
+    <script src="assets/src/scripts/data.js"></script>
+    <script src="assets/src/scripts/chart.js"></script>
+    <script src="assets/src/scripts/map.js"></script>
+    <script src="assets/src/scripts/main.js"></script>
