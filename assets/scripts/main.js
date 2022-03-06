@@ -146,7 +146,7 @@ function main() {
         let treeItemEles = treeNavEle.querySelectorAll('li.menu-item a');
         let paTabNavEle = document.querySelector('#plan-area .tab-container');
         let tabItemEles = paTabNavEle.querySelectorAll('li');
-        let transNegEles = document.querySelectorAll('section .trans-content .trans-neg');
+        let transNegEles = document.querySelectorAll('section .trans-content .trans-head');
 
         for (let mi of treeItemEles) {
             mi.addEventListener('click', (evt) => {
@@ -164,13 +164,13 @@ function main() {
                 // set the section to be displayed
                 setActiveEleById(sTargetId);
                 // close the tree nav
-                if (UTIL.viewPortSize.width <= MEDIA_SIZE.LG_MIN) { closeMobileTreeNav(); }
+                closeMobileTreeNav();
 
                 // close active tab if section has it
                 if (activeTab) {
-                    activeTab.querySelector('.trans-neg').click();
+                    activeTab.querySelector('.trans-head').click();
                 } else if (activeModal) {
-                    activeModal.querySelector('.trans-neg').click();
+                    activeModal.querySelector('.trans-head').click();
                 }
             });
         }

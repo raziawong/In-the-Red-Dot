@@ -19,6 +19,16 @@ body {
     color: var(--gen-text);
 }
 
+body .iclose,
+#sidebar-close {
+    height: fit-content;
+    background-color: transparent;
+    padding: 0.2rem 0.5rem;
+    width: 100%;
+    margin: 0;
+    text-align: right;
+}
+
 
 /* --- start tree navigation menu --- */
 
@@ -67,12 +77,6 @@ header.tree-nav .menu-item a.selected {
 
 #sidebar-close {
     display: none;
-}
-
-#sidebar-close .icon {
-    width: 100%;
-    text-align: right;
-    padding-right: 0.2rem;
 }
 
 
@@ -132,7 +136,8 @@ main.tree-nav-content section:not(#plan-area) .section-content {
     margin: 1rem 1rem;
 }
 
-main section div.section-content .row>* {
+main section div.section-content .row>[class*=' col-'],
+main section div.section-content .row>[class^=col-] {
     margin: 1rem 0 4rem;
 }
 
@@ -201,7 +206,7 @@ main.tree-nav-content .chart-xs {
 
 main.tree-nav-content .chart-xxs {
     height: 180px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 #population {
@@ -292,7 +297,8 @@ section .trans-body {
     padding: 1.3rem;
 }
 
-section .trans-body.row>* {
+section .trans-body.row>[class*=' col-'],
+section .trans-body.row>[class^=col-] {
     margin: 0.5rem 0;
 }
 
@@ -517,9 +523,6 @@ section .trans-body.row>* {
     }
     #sidebar-close {
         display: initial;
-        background-color: transparent;
-        height: fit-content;
-        padding: 0.2rem 0.5rem;
     }
     /* --- start tree navigation toggle (mobile hamburger) --- */
     #sidebar-toggle {
@@ -580,8 +583,12 @@ section .trans-body.row>* {
         text-align: center;
     }
     /* --- start tab menu --- */
-    section .tab-container ul.row {
+    main section .tab-container ul.row {
         height: 12vh;
+    }
+    main section div.section-content .row>[class*=' col-'],
+    main section div.section-content .row>[class^=col-] {
+        margin: 1rem 0 2rem;
     }
     section .tab-container li .tab-item-content {
         padding: 0.2rem 0.4rem;
@@ -592,8 +599,11 @@ section .trans-body.row>* {
         border-bottom: 2px solid var(--pri-color);
     }
     /* --- start translated sub content --- */
-    section .trans-content {
+    section#plan-area .trans-content {
         top: 12vh;
+    }
+    section .trans-body {
+        padding: 0.5rem;
     }
     /* --- start map and its elements --- */
     #ura-zones-map {
@@ -655,7 +665,7 @@ section .trans-body.row>* {
     }
     #compare-form .input-control {
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: space-around;
     }
     #compare-form .input-control .form-ext-radio:not(:first-child) {
         margin: 0;
