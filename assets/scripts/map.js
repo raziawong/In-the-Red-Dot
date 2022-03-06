@@ -46,23 +46,23 @@ function doPlanAreaMapAndData(map, geoDistrData) {
         let container = document.getElementById(ELEMENT_IDS.MAP_AREA_INFO);
         let tabNavItemEle = document.querySelectorAll('#plan-area .tab-container li');
 
+        map.fitBounds(layer.getBounds());
+
         container.innerHTML = `<h5>${properties[GD_DATA_KEYS.DISPLAY_NAME]}</h5>
         <p>Population: <span>${subtext}</span></p>`;
 
-        map.fitBounds(layer.getBounds());
-
+        updateGeoDistrCharts(geoCharts, properties);
         for (let ti of tabNavItemEle) {
             if (subtext == 'No Data') {
                 ti.classList.add(ELEMENT_STATES.DISABLED);
             } else {
                 ti.classList.remove(ELEMENT_STATES.DISABLED);
-                updateGeoDistrCharts(geoCharts, properties);
             }
         }
     }
 
     let planAreaGroup = omnivore.kml(DATA_GOV_API.STORE_URL + '/2019_planarea.kml');
-    let geoCharts = getGeoDistrCharts();
+    let geoCharts = initGeoDistrCharts();
 
     planAreaGroup.on('ready', function() {
         map.fitBounds(planAreaGroup.getBounds());
@@ -81,7 +81,6 @@ function doPlanAreaMapAndData(map, geoDistrData) {
 
             properties[GD_DATA_KEYS.POPULATION] = properties[GD_DATA_KEYS.GENDER_POP][GD_DATA_KEYS.TOTAL] || 0;
             properties[GD_DATA_KEYS.DISPLAY_NAME] = areaName;
-
 
             layer.setStyle({
                 fillColor: getHeatMapColor(geoDistrData.highestPopulationCount, properties[GD_DATA_KEYS.POPULATION]),

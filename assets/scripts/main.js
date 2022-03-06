@@ -156,13 +156,15 @@ function main() {
         let treeItemEles = treeNavEle.querySelectorAll('li.menu-item a');
         let paTabNavEle = document.querySelector('#plan-area .tab-container');
         let tabItemEles = paTabNavEle.querySelectorAll('li');
-        let tabCloseEles = document.querySelectorAll('section .trans-content .tab-close');
+        let transNegEles = document.querySelectorAll('section .trans-content .trans-neg');
 
         for (let mi of treeItemEles) {
             mi.addEventListener('click', (evt) => {
                 let sTargetId = mi.dataset.target;
                 let activeSect = document.querySelector('section.active');
                 let activeTab = document.querySelector('#plan-area .trans-content.active');
+                let activeModal = document.querySelector('#compare-area .trans-content.active');
+
                 if (activeSect) {
                     // hide currently active section
                     treeNavEle.querySelector('li.menu-item a.selected').classList.remove(ELEMENT_STATES.SELECTED);
@@ -176,7 +178,9 @@ function main() {
 
                 // close active tab if section has it
                 if (activeTab) {
-                    activeTab.querySelector('.tab-close').click();
+                    activeTab.querySelector('.trans-neg').click();
+                } else if (activeModal) {
+                    activeModal.querySelector('.trans-neg').click();
                 }
             });
         }
@@ -187,34 +191,32 @@ function main() {
             ti.addEventListener('click', (evt) => {
                 let activeSect = document.querySelector('section.active');
 
-                if (activeSect) {
-                    // check if active section is plan area
-                    // and tab menu is not disabled
-                    if (activeSect.id == ELEMENT_IDS.SECT_PLAN_AREA &&
-                        !ti.classList.contains(ELEMENT_STATES.DISABLED)) {
-                        let cTargetId = ti.dataset.target;
-                        let selectedTab = paTabNavEle.querySelector('li.selected');
-                        // hide currently active tab
-                        if (selectedTab) {
-                            document.getElementById(selectedTab.dataset.target).classList.remove(ELEMENT_STATES.ACTIVE);
-                            selectedTab.classList.remove(ELEMENT_STATES.SELECTED);
-                        }
-                        // set the tab item to be selected
-                        ti.classList.add(ELEMENT_STATES.SELECTED);
-                        // set the tab content to be displayed
-                        setActiveEleById(cTargetId);
+                // check if active section is plan area
+                // and tab menu is not disabled
+                if (activeSect && activeSect.id == ELEMENT_IDS.SECT_PLAN_AREA &&
+                    !ti.classList.contains(ELEMENT_STATES.DISABLED)) {
+                    let cTargetId = ti.dataset.target;
+                    let selectedTab = paTabNavEle.querySelector('li.selected');
+                    // hide currently active tab
+                    if (selectedTab) {
+                        document.getElementById(selectedTab.dataset.target).classList.remove(ELEMENT_STATES.ACTIVE);
+                        selectedTab.classList.remove(ELEMENT_STATES.SELECTED);
                     }
+                    // set the tab item to be selected
+                    ti.classList.add(ELEMENT_STATES.SELECTED);
+                    // set the tab content to be displayed
+                    setActiveEleById(cTargetId);
                 }
             });
         }
 
-        for (let tc of tabCloseEles) {
-            tc.addEventListener('click', (evt) => {
-                let container = tc.parentNode;
+        for (let tn of transNegEles) {
+            tn.addEventListener('click', (evt) => {
+                let container = tn.parentNode;
                 if (container) {
                     let activeTab = document.querySelector(`[data-target="${container.id}"]`);
 
-                    // hide selected tab item menu
+                    // if triggered by tab menu, remove selection on tab menu item
                     if (activeTab && activeTab.classList.contains(ELEMENT_STATES.SELECTED)) {
                         activeTab.classList.remove(ELEMENT_STATES.SELECTED);
                     }
