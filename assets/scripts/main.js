@@ -171,8 +171,9 @@ function main() {
                 mi.classList.add(ELEMENT_STATES.SELECTED);
                 // set the section to be displayed
                 setActiveEleById(sTargetId);
-                // close the rest
-                closeMobileTreeNav();
+                // close the tree nav
+                if (UTIL.viewPortSize.width <= MEDIA_SIZE.LG_MIN) { closeMobileTreeNav(); }
+
                 // close active tab if section has it
                 if (activeTab) {
                     activeTab.querySelector('.tab-close').click();

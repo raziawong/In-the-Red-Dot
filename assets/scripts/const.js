@@ -6,7 +6,15 @@ const UTIL = {
     convertDOSKeys: str => str.trim().toLowerCase().replaceAll(/\s+/g, ' ').replaceAll(' ', '_'),
     convertToTitleCase: str => str.trim().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
     convertToNumber: (value) => isNaN(value) ? null : Number(value),
-    getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value)
+    getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value),
+    viewPortSize: () => window.innerWidth ? { width: window.innerWidth, height: window.innerHeight } : { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight }
+};
+const MEDIA_SIZE = {
+    XL_MIN: 1280,
+    LG_MIN: 1024,
+    MD_MIN: 769,
+    XS_MIN: 641,
+    XXS_MIN: 300
 };
 const DATA_GOV_API = {
     STORE_URL: 'assets/data/map'

@@ -65,6 +65,10 @@ header.tree-nav .menu-item a.selected {
     color: var(--pri-color);
 }
 
+#sidebar-close {
+    display: none;
+}
+
 #sidebar-close .icon {
     width: 100%;
     text-align: right;
@@ -80,6 +84,7 @@ header.tree-nav .menu-item a.selected {
     top: 0;
     z-index: 400001;
     padding: 0;
+    display: none;
 }
 
 #sidebar-toggle .icon {
@@ -511,6 +516,13 @@ section .trans-body.row>* {
     header.tree-nav .row img {
         max-width: 15vw;
     }
+    #sidebar-close {
+        display: block;
+    }
+    /* --- start tree navigation toggle (mobile hamburger) --- */
+    #sidebar-toggle {
+        display: block;
+    }
     /* --- start filter form groups --- */
     main.tree-nav-content .form-group .form-group-label {
         font-size: var(--font-size-s);
@@ -581,7 +593,7 @@ section .trans-body.row>* {
     section .trans-content {
         top: 12vh;
     }
-    /* --- start map and controls --- */
+    /* --- start map and its elements --- */
     #ura-zones-map {
         height: 88vh;
     }
