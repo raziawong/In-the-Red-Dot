@@ -83,22 +83,8 @@ function main() {
             stroke: {
                 curve: 'smooth'
             },
-            subtitle: {
-                align: 'center',
-                style: {
-                    fontFamily: 'Montserrat,sans-serif'
-                }
-            },
             theme: {
                 palette: 'palette8'
-            },
-            title: {
-                align: 'center',
-                offsetY: 12,
-                style: {
-                    fontFamily: 'Montserrat,sans-serif',
-                    fontSize: '1.1rem'
-                }
             }
         };
     }

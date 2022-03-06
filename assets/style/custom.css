@@ -132,8 +132,12 @@ main.tree-nav-content section:not(#plan-area) .section-content {
     margin: 1rem 1rem;
 }
 
-main section:not(#plan-area):not(#compare-areas) div.section-content .row>* {
-    margin: 1rem 0;
+main section div.section-content .row>* {
+    margin: 1rem 0 4rem;
+}
+
+main section div.section-content #compare-form .row>* {
+    margin: 0;
 }
 
 
@@ -263,12 +267,17 @@ section .trans-content {
     padding: 0.5rem;
     position: absolute;
     right: 0;
-    top: 5vh;
-    height: 95vh;
+    top: 0;
+    height: 100vh;
     width: 100%;
     transform: translateX(-200%);
     transition: .5s ease-in-out transform;
     background-color: var(--bg-color);
+}
+
+section#plan-area .trans-content {
+    top: 5vh;
+    height: 95vh;
 }
 
 section .trans-content.active {

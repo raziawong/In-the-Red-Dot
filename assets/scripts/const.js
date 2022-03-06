@@ -249,24 +249,6 @@ const CHART_TYPES = {
     RADIAL_BAR: 'radialBar',
     TREE_MAP: 'treemap'
 };
-const CHART_TITLES = {
-    RESIDENCY: 'Residency',
-    GENDER: 'Gender',
-    ETHNICITY: 'Ethnicity',
-    AGE_GROUP: 'Age Group',
-    MEDIAN_AGE: 'Median Age',
-    AGE_DEPENDENCY_RATIO: 'Age Dependency Ratio Insights',
-    POP_GROWTH: 'Population Growth Insights',
-    POP_GROWTH_SUB: 'Click on Toggle Column Type to see other population breakdown',
-    DWELLING_TYPE: 'Dwelling Type',
-    TENANCY_TYPE: 'Tenancy Type',
-    QUALIFICATION: 'Qualification',
-    LITERACY: 'Literacy',
-    OCCUPATION: 'Occupation',
-    INCOME: 'Income',
-    TRANSPORT: 'Transport Mode',
-    TRAVEL_TIME: 'Travel Time'
-}
 const CHART_LABELS = {
     TOTAL: 'Total',
     POPULATION: 'Population',

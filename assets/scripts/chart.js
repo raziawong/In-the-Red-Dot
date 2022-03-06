@@ -1,12 +1,9 @@
-function renderApexChart(id, type, title, isStack, otherOptObj) {
+function renderApexChart(id, type, isStack, otherOptObj) {
     let options = {
         chart: {
             id: id,
             type: type,
             stacked: isStack
-        },
-        title: {
-            text: title
         },
         series: []
     }
@@ -21,12 +18,9 @@ function renderApexChart(id, type, title, isStack, otherOptObj) {
     return chart;
 }
 
-function renderSyncApexChart(id, chartOpt, title) {
+function renderSyncApexChart(id, chartOpt) {
     let options = {
         chart: chartOpt,
-        title: {
-            text: title
-        },
         series: []
     };
 
@@ -41,8 +35,7 @@ function doPopulationOverview(_years, _dataByYear) {
         let overviewCharts = {};
 
         overviewCharts[ELEMENT_IDS.GENDER] = renderApexChart(
-            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
-            CHART_TITLES.GENDER, false, {
+            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR, false, {
                 labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE],
                 plotOptions: {
                     radialBar: {
@@ -58,22 +51,19 @@ function doPopulationOverview(_years, _dataByYear) {
         );
 
         overviewCharts[ELEMENT_IDS.RACE] = renderApexChart(
-            ELEMENT_IDS.RACE, CHART_TYPES.PIE,
-            CHART_TITLES.ETHNICITY, false, {
+            ELEMENT_IDS.RACE, CHART_TYPES.PIE, false, {
                 labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS]
             }
         );
 
         overviewCharts[ELEMENT_IDS.RESIDENCY] = renderApexChart(
-            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
-            CHART_TITLES.RESIDENCY, false, {
+            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE, false, {
                 labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES]
             }
         );
 
         overviewCharts[ELEMENT_IDS.AGE_GROUP] = renderApexChart(
-            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
-            CHART_TITLES.AGE_GROUP, true, {
+            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR, true, {
                 plotOptions: { bar: { horizontal: true } },
                 xaxis: { labels: { show: false } },
                 yaxis: {
@@ -84,8 +74,7 @@ function doPopulationOverview(_years, _dataByYear) {
         );
 
         overviewCharts[ELEMENT_IDS.MED_AGE] = renderApexChart(
-            ELEMENT_IDS.MED_AGE, CHART_TYPES.RADIAL_BAR,
-            CHART_TITLES.MEDIAN_AGE, false, {
+            ELEMENT_IDS.MED_AGE, CHART_TYPES.RADIAL_BAR, false, {
                 labels: [CHART_LABELS.CITIZEN, CHART_LABELS.RESIDENT],
                 plotOptions: {
                     radialBar: {
@@ -192,8 +181,7 @@ function doPopulationTrend(_years, _yearData) {
                 group: CHART_CONF.GROUP_RESIDENCY,
                 sparkline: { enabled: true },
                 type: CHART_TYPES.AREA
-            },
-            CHART_LABELS.CITIZEN
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_PR] = renderSyncApexChart(
@@ -202,8 +190,7 @@ function doPopulationTrend(_years, _yearData) {
                 group: CHART_CONF.GROUP_RESIDENCY,
                 sparkline: { enabled: true },
                 type: CHART_TYPES.AREA
-            },
-            CHART_LABELS.PR
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_NONRES] = renderSyncApexChart(
@@ -212,14 +199,11 @@ function doPopulationTrend(_years, _yearData) {
                 group: CHART_CONF.GROUP_RESIDENCY,
                 sparkline: { enabled: true },
                 type: CHART_TYPES.AREA
-            },
-            CHART_LABELS.NON_RES
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_POPINCR] = renderApexChart(
-            ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA,
-            CHART_TITLES.POP_GROWTH, false, {
-                subtitle: { text: CHART_TITLES.POP_GROWTH_SUB },
+            ELEMENT_IDS.TREND_POPINCR, CHART_TYPES.AREA, false, {
                 xaxis: { labels: { show: false } },
                 yaxis: { labels: { show: false } }
             }
@@ -231,8 +215,7 @@ function doPopulationTrend(_years, _yearData) {
                 group: CHART_CONF.GROUP_MEDAGE,
                 sparkline: { enabled: true },
                 type: CHART_TYPES.AREA
-            },
-            `${CHART_LABELS.MEDIAN_AGE} (${CHART_LABELS.CITIZEN})`
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_MEDAGE_CITIZEN] = renderSyncApexChart(
@@ -241,13 +224,11 @@ function doPopulationTrend(_years, _yearData) {
                 group: CHART_CONF.GROUP_MEDAGE,
                 sparkline: { enabled: true },
                 type: CHART_TYPES.AREA
-            },
-            `${CHART_LABELS.MEDIAN_AGE} (${CHART_LABELS.RESIDENT})`
+            }
         );
 
         trendCharts[ELEMENT_IDS.TREND_DEPENDENCY] = renderApexChart(
-            ELEMENT_IDS.TREND_DEPENDENCY, CHART_TYPES.LINE,
-            CHART_TITLES.AGE_DEPENDENCY_RATIO, false, {
+            ELEMENT_IDS.TREND_DEPENDENCY, CHART_TYPES.LINE, false, {
                 xaxis: { labels: { show: false } },
                 yaxis: { labels: { show: false } }
             }
@@ -546,8 +527,7 @@ function initGeoDistrCharts() {
     let geoCharts = {};
 
     geoCharts[ELEMENT_IDS.GEO_AGE_GROUP] = renderApexChart(
-        ELEMENT_IDS.GEO_AGE_GROUP, CHART_TYPES.BAR,
-        CHART_TITLES.AGE_GROUP, false, {
+        ELEMENT_IDS.GEO_AGE_GROUP, CHART_TYPES.BAR, false, {
             dataLabels: { enabled: false },
             plotOptions: { bar: { horizontal: true } },
             xaxis: { labels: { show: false } }
@@ -555,31 +535,36 @@ function initGeoDistrCharts() {
     );
 
     geoCharts[ELEMENT_IDS.GEO_AGE_GENDER] = renderApexChart(
-        ELEMENT_IDS.GEO_AGE_GENDER, CHART_TYPES.RADIAL_BAR,
-        CHART_TITLES.AGE_GROUP + ' ' + CHART_TITLES.GENDER, false, {
-            labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
+        ELEMENT_IDS.GEO_AGE_GENDER, CHART_TYPES.RADIAL_BAR, false, {
+            labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE],
+            plotOptions: {
+                radialBar: {
+                    dataLabels: {
+                        total: {
+                            show: true,
+                            label: CHART_LABELS.TOTAL
+                        }
+                    }
+                }
+            }
         });
 
     geoCharts[ELEMENT_IDS.GEO_RACE] = renderApexChart(
-        ELEMENT_IDS.GEO_RACE, CHART_TYPES.PIE,
-        CHART_TITLES.ETHNICITY, false, {
+        ELEMENT_IDS.GEO_RACE, CHART_TYPES.PIE, false, {
             labels: [CHART_LABELS.CHINESE, CHART_LABELS.MALAYS, CHART_LABELS.INDIANS, CHART_LABELS.OTHERS]
         }
     );
 
     geoCharts[ELEMENT_IDS.GEO_DWELLING] = renderApexChart(
-        ELEMENT_IDS.GEO_DWELLING, CHART_TYPES.TREE_MAP,
-        CHART_TITLES.DWELLING_TYPE, false, { legend: { show: false } }
+        ELEMENT_IDS.GEO_DWELLING, CHART_TYPES.TREE_MAP, false, { legend: { show: false } }
     );
 
     geoCharts[ELEMENT_IDS.GEO_TENANCY] = renderApexChart(
-        ELEMENT_IDS.GEO_TENANCY, CHART_TYPES.PIE,
-        CHART_TITLES.TENANCY_TYPE, false, { dataLabels: { enabled: true } }
+        ELEMENT_IDS.GEO_TENANCY, CHART_TYPES.PIE, false, { dataLabels: { enabled: true } }
     );
 
     geoCharts[ELEMENT_IDS.GEO_EDUCATION] = renderApexChart(
-        ELEMENT_IDS.GEO_EDUCATION, CHART_TYPES.RADAR,
-        CHART_TITLES.QUALIFICATION, false, {
+        ELEMENT_IDS.GEO_EDUCATION, CHART_TYPES.RADAR, false, {
             dataLabels: { enabled: true },
             xaxis: {
                 labels: {
@@ -594,8 +579,7 @@ function initGeoDistrCharts() {
     );
 
     geoCharts[ELEMENT_IDS.GEO_LITERACY] = renderApexChart(
-        ELEMENT_IDS.GEO_LITERACY, CHART_TYPES.RADIAL_BAR,
-        CHART_TITLES.LITERACY, false, {
+        ELEMENT_IDS.GEO_LITERACY, CHART_TYPES.RADIAL_BAR, false, {
             plotOptions: {
                 radialBar: {
                     dataLabels: {
@@ -610,8 +594,7 @@ function initGeoDistrCharts() {
     );
 
     geoCharts[ELEMENT_IDS.GEO_OCCUPATION] = renderApexChart(
-        ELEMENT_IDS.GEO_OCCUPATION, CHART_TYPES.BAR,
-        CHART_TITLES.OCCUPATION, false, {
+        ELEMENT_IDS.GEO_OCCUPATION, CHART_TYPES.BAR, false, {
             dataLabels: { enabled: true },
             xaxis: { labels: { show: false } },
             yaxis: { labels: { show: false } }
@@ -619,8 +602,7 @@ function initGeoDistrCharts() {
     );
 
     geoCharts[ELEMENT_IDS.GEO_INCOME] = renderApexChart(
-        ELEMENT_IDS.GEO_INCOME, CHART_TYPES.LINE,
-        CHART_TITLES.INCOME, false, {
+        ELEMENT_IDS.GEO_INCOME, CHART_TYPES.LINE, false, {
             dataLabels: { enabled: false },
             xaxis: { labels: { show: false } },
             yaxis: { labels: { show: false } }
@@ -628,21 +610,15 @@ function initGeoDistrCharts() {
     );
 
     geoCharts[ELEMENT_IDS.GEO_TRANSPORT] = renderApexChart(
-        ELEMENT_IDS.GEO_TRANSPORT, CHART_TYPES.BAR,
-        CHART_TITLES.TRANSPORT, false, {
-            plotOptions: {
-                bar: {
-                    horizontal: true
-                }
-            },
+        ELEMENT_IDS.GEO_TRANSPORT, CHART_TYPES.BAR, false, {
+            plotOptions: { bar: { horizontal: true } },
             xaxis: { labels: { show: false } },
             yaxis: { show: false, labels: { show: true } }
         }
     );
 
     geoCharts[ELEMENT_IDS.GEO_TRAVEL] = renderApexChart(
-        ELEMENT_IDS.GEO_TRAVEL, CHART_TYPES.POLAR_AREA,
-        CHART_TITLES.TRAVEL_TIME, false, { dataLabels: { enabled: true } }
+        ELEMENT_IDS.GEO_TRAVEL, CHART_TYPES.POLAR_AREA, false, { dataLabels: { enabled: true } }
     );
 
     return geoCharts;
@@ -676,17 +652,18 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                         let key = ageGroupLabels[selDataPoints[0]];
                         let genderPrctArr = [agMale[key], agFemale[key]].map(v => UTIL.getPercent(v, agTotal[key]));
                         charts[ELEMENT_IDS.GEO_AGE_GENDER].updateOptions({
-                            chart: {
-                                width: '30%'
+                            chart: { width: '30%' },
+                            plotOptions: {
+                                radialBar: {
+                                    dataLabels: { total: { formatter: w => agTotal[key] } }
+                                }
                             },
                             series: genderPrctArr
                         });
 
                         if (!genderEle.classList.contains(ELEMENT_STATES.ACTIVE)) {
                             mChart.updateOptions({
-                                chart: {
-                                    width: '70%'
-                                }
+                                chart: { width: '70%' }
                             });
                             agEle.classList.add('gender-activated');
                             genderEle.classList.add(ELEMENT_STATES.ACTIVE);
@@ -695,20 +672,17 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                         agEle.classList.remove('gender-activated')
                         genderEle.classList.remove(ELEMENT_STATES.ACTIVE);
                         mChart.updateOptions({
-                            chart: {
-                                width: '100%'
-                            }
+                            chart: { width: '100%' }
                         });
                     }
                 }
             }
         },
+        series: [{ name: CHART_LABELS.POPULATION, data: ageGroupLabels.map(k => agTotal[k]) }],
         xaxis: {
             categories: ageGroupLabels
         }
     };
-    let ageGroupSeries = ageGroupData ? { series: [{ data: ageGroupLabels.map(k => agTotal[k]) }] } : { series: [], noData: CHART_CONF.NO_DATA_OPT };
-    ageGroupOpt = {...ageGroupOpt, ...ageGroupSeries };
     charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
     charts[ELEMENT_IDS.GEO_RACE].updateSeries([
         raceData[GD_DATA_KEYS.CHINESE],
@@ -717,14 +691,18 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         raceData[GD_DATA_KEYS.OTHERS]
     ]);
 
+    console.log(dwellData);
     let dwellOpt = {
         chart: { toolbar: { show: false } },
         dataLabels: {
-            formatter: val => [(UTIL.dwellToggleLabel(val) || val), UTIL.getPercent(val, dwellData[GD_DATA_KEYS.TOTAL]) + '%']
-        }
+            formatter: (val, opt) => [(UTIL.dwellToggleLabel(val) || val), UTIL.getPercent(opt.value, dwellData[GD_DATA_KEYS.TOTAL]) + '%']
+        },
+        series: [{
+            data: Object.entries(dwellData).map(d => {
+                return { x: d[0], y: d[1] }
+            }).filter(d => (!d.x.includes(GD_DATA_KEYS.TOTAL) && d.y))
+        }]
     };
-    let dwellSeries = dwellData ? { series: [{ data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes(GD_DATA_KEYS.TOTAL) && d.y)) }] } : { series: [], noData: CHART_CONF.NO_DATA_OPT };
-    dwellOpt = {...dwellOpt, ...dwellSeries };
     charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
 
     let tenantLabels = Object.keys(tenantData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
@@ -830,8 +808,7 @@ function initComparisonCharts() {
     };
 
     compCharts.residents[ELEMENT_IDS.COMPARE_GENDER] = renderApexChart(
-        ELEMENT_IDS.COMPARE_GENDER, CHART_TYPES.LINE,
-        CHART_TITLES.GENDER, false, {
+        ELEMENT_IDS.COMPARE_GENDER, CHART_TYPES.LINE, false, {
             dataLabels: {
                 enabled: true,
                 enabledOnSeries: [2]
@@ -840,13 +817,14 @@ function initComparisonCharts() {
     );
 
     compCharts.residents[ELEMENT_IDS.COMPARE_RACE] = renderApexChart(
-        ELEMENT_IDS.COMPARE_RACE, CHART_TYPES.BAR,
-        CHART_TITLES.RACE, true, null
+        ELEMENT_IDS.COMPARE_RACE, CHART_TYPES.BAR, true, {
+            dataLabels: { enabled: false },
+            yaxis: { labels: { show: false } }
+        }
     );
 
     compCharts.housing[ELEMENT_IDS.COMPARE_DWELLING] = renderApexChart(
-        ELEMENT_IDS.COMPARE_DWELLING, CHART_TYPES.TREE_MAP,
-        CHART_TITLES.DWELLING_TYPE, false, {
+        ELEMENT_IDS.COMPARE_DWELLING, CHART_TYPES.TREE_MAP, false, {
             plotOptions: { treemap: { distributed: false, enableShades: true } },
             legend: { show: true }
         }
@@ -858,8 +836,7 @@ function initComparisonCharts() {
             group: CHART_CONF.GROUP_CP_TENANCY,
             sparkline: { enabled: true },
             type: CHART_TYPES.AREA
-        },
-        CHART_LABELS.OWNER
+        }
     );
 
     compCharts.housing[ELEMENT_IDS.COMPARE_TEN_RENT] = renderSyncApexChart(
@@ -868,8 +845,7 @@ function initComparisonCharts() {
             group: CHART_CONF.GROUP_CP_TENANCY,
             sparkline: { enabled: true },
             type: CHART_TYPES.AREA
-        },
-        CHART_LABELS.RENTED
+        }
     );
 
     compCharts.housing[ELEMENT_IDS.COMPARE_TEN_OTHERS] = renderSyncApexChart(
@@ -878,21 +854,18 @@ function initComparisonCharts() {
             group: CHART_CONF.GROUP_CP_TENANCY,
             sparkline: { enabled: true },
             type: CHART_TYPES.AREA
-        },
-        CHART_LABELS.OTHERS
+        }
     );
 
     compCharts.education[ELEMENT_IDS.COMPARE_EDUCATION] = renderApexChart(
-        ELEMENT_IDS.COMPARE_EDUCATION, CHART_TYPES.HEAT_MAP,
-        CHART_TITLES.QUALIFICATION, false, {
+        ELEMENT_IDS.COMPARE_EDUCATION, CHART_TYPES.HEAT_MAP, false, {
             dataLabels: { enabled: false },
             yaxis: { labels: { show: false } }
         }
     );
 
     compCharts.education[ELEMENT_IDS.COMPARE_LITERACY] = renderApexChart(
-        ELEMENT_IDS.COMPARE_LITERACY, CHART_TYPES.HEAT_MAP,
-        CHART_TITLES.LITERACY, false, {
+        ELEMENT_IDS.COMPARE_LITERACY, CHART_TYPES.HEAT_MAP, false, {
             dataLabels: { enabled: false },
             yaxis: { labels: { show: false } }
         }
@@ -900,8 +873,7 @@ function initComparisonCharts() {
 
 
     compCharts.employed[ELEMENT_IDS.COMPARE_OCCUPATION] = renderApexChart(
-        ELEMENT_IDS.COMPARE_OCCUPATION, CHART_TYPES.BAR,
-        CHART_TITLES.OCCUPATION, true, {
+        ELEMENT_IDS.COMPARE_OCCUPATION, CHART_TYPES.BAR, true, {
             dataLabels: { enabled: false },
             plotOptions: { bar: { horizontal: true, }, },
             xaxis: { labels: { show: false } }
@@ -909,26 +881,23 @@ function initComparisonCharts() {
     );
 
     compCharts.employed[ELEMENT_IDS.COMPARE_INCOME] = renderApexChart(
-        ELEMENT_IDS.COMPARE_INCOME, CHART_TYPES.BUBBLE,
-        CHART_TITLES.INCOME, true, {
+        ELEMENT_IDS.COMPARE_INCOME, CHART_TYPES.BUBBLE, true, {
             dataLabels: { enabled: false },
             fill: { opacity: 0.9 },
-            yaxis: { labels: { show: false } },
-            xaxis: { labels: { show: false }, tickAmount: 'dataPoints', type: 'numeric' }
+            xaxis: { labels: { show: true }, tickAmount: 'dataPoints', type: 'numeric' },
+            yaxis: { labels: { show: false } }
         }
     );
 
     compCharts.employed[ELEMENT_IDS.COMPARE_TRANSPORT] = renderApexChart(
-        ELEMENT_IDS.COMPARE_TRANSPORT, CHART_TYPES.LINE,
-        CHART_TITLES.TRANSPORT, false, {
-            xaxis: { labels: { show: false } },
+        ELEMENT_IDS.COMPARE_TRANSPORT, CHART_TYPES.LINE, false, {
+            xaxis: { labels: { show: true } },
             yaxis: { labels: { show: false } }
         }
     );
 
     compCharts.employed[ELEMENT_IDS.COMPARE_TRAVEL] = renderApexChart(
-        ELEMENT_IDS.COMPARE_TRAVEL, CHART_TYPES.BAR,
-        CHART_TITLES.TRAVEL_TIME, true, {
+        ELEMENT_IDS.COMPARE_TRAVEL, CHART_TYPES.BAR, true, {
             dataLabels: { enabled: false },
             plotOptions: { bar: { horizontal: true, }, },
             xaxis: { labels: { show: false } }
@@ -964,7 +933,8 @@ function updateComparisonCharts(_type, _areasList, _geoDistrData, _catCharts) {
     for (let [cat, data] of Object.entries(_geoDistrData)) {
         for (let area in data) {
             if (_areasList.includes(area)) {
-                filteredSeriesObj[cat] = {...filteredSeriesObj[cat],
+                filteredSeriesObj[cat] = {
+                    ...filteredSeriesObj[cat],
                     ... {
                         [area]: data[area]
                     }
