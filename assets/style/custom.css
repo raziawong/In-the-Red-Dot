@@ -123,7 +123,7 @@ main.tree-nav-content section.active {
     transition: width 4s, height 0.5s, ease-in, transform;
 }
 
-main.tree-nav-content section:not(#plan-area) {
+main.tree-nav-content section:not(#plan-area):not(#compare-areas) {
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -132,7 +132,7 @@ main.tree-nav-content section:not(#plan-area) .section-content {
     margin: 1rem 1rem;
 }
 
-main section:not(#plan-area) div.section-content .row>* {
+main section:not(#plan-area):not(#compare-areas) div.section-content .row>* {
     margin: 1rem 0;
 }
 
@@ -280,6 +280,8 @@ section .trans-content {
 }
 
 section .trans-content.active {
+    height: 100%;
+    overflow-y: scroll;
     z-index: 400000;
     transform: translate(0, 0);
     transition: .5s ease-in-out transform;
@@ -294,7 +296,7 @@ section .trans-body.row>* {
 }
 
 
-/* --- start map and controls --- */
+/* --- start map and its elements --- */
 
 #ura-zones-map {
     height: 95vh;
