@@ -16,7 +16,7 @@ function main() {
 
             let geoDistrSeries = await initGeoDistribution();
             doPlanAreaMapAndData(map, geoDistrSeries);
-            doPlanAreaCompareForm(geoDistrSeries);
+            initPlanAreaCompareForm(geoDistrSeries, initComparisonCharts());
         });
     }
 
@@ -63,6 +63,10 @@ function main() {
                 style: 'hollow'
             },
             plotOptions: {
+                bubble: {
+                    minBubbleRadius: 7,
+                    maxBubbleRadius: 50
+                },
                 radar: {
                     polygons: {
                         fill: ['#285943'],
@@ -163,7 +167,7 @@ function main() {
                 let sTargetId = mi.dataset.target;
                 let activeSect = document.querySelector('section.active');
                 let activeTab = document.querySelector('#plan-area .trans-content.active');
-                let activeModal = document.querySelector('#compare-area .trans-content.active');
+                let activeModal = document.querySelector('#compare-areas .trans-content.active');
 
                 if (activeSect) {
                     // hide currently active section
@@ -230,7 +234,7 @@ function main() {
         }
     }
 
-    function doPlanAreaCompareForm(geoDistrData) {
+    function initPlanAreaCompareForm(geoDistrData, charts) {
         let planAreaOpts = [];
         let planAreas = [];
         let dataSOF = geoDistrData[GD_DATA_KEYS.GENDER_POP];
@@ -255,7 +259,6 @@ function main() {
             options: planAreaOpts,
             selector: '#' + ELEMENT_IDS.PLAN_AREAS_SEL
         });
-        planAreaDrop.toggle();
 
         compareForm.querySelector('input[type="submit"]').addEventListener('click', evt => {
             let planAreaInput = planAreaDrop.options.filter(opt => opt.selected);
@@ -283,7 +286,14 @@ function main() {
             }
 
             if (!hasErr) {
+                let category = catInput.value;
+                let planAreasList = planAreaInput.map(opt => opt.html);
+                updateComparisonCharts(category, planAreasList, geoDistrData, charts[category]);
 
+                let transEle = document.getElementById(catInput.dataset.target);
+                if (transEle) {
+                    transEle.classList.add(ELEMENT_STATES.ACTIVE);
+                }
             }
         });
 

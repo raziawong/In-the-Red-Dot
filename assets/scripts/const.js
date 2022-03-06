@@ -4,10 +4,99 @@ const UTIL = {
     compareAlphaNumAsc: (a, b) => a.localeCompare(b, undefined, { numeric: true }),
     compareAlphaNumDesc: (a, b) => b.localeCompare(a, undefined, { numeric: true }),
     convertDOSKeys: str => str.trim().toLowerCase().replaceAll(/\s+/g, ' ').replaceAll(' ', '_'),
-    convertToTitleCase: str => str.trim().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
-    convertToNumber: (value) => isNaN(value) ? null : Number(value),
+    getNum: v => isNaN(v) ? null : Number(v),
+    getPercent: (v, t) => Math.round((v / t) * 100),
+    getTitleCase: str => str.trim().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' '),
     getKeyByValue: (object, value) => Object.keys(object).find(key => object[key] === value),
-    viewPortSize: () => window.innerWidth ? { width: window.innerWidth, height: window.innerHeight } : { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight }
+    viewPortSize: () => window.innerWidth ? {
+        width: window.innerWidth,
+        height: window.innerHeight
+    } : {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight
+    },
+    dwellToggleLabel: n => {
+        return n == GD_DATA_KEYS.HDB_DWELL ? CHART_LABELS.HDB :
+            n == GD_DATA_KEYS.CONDO_OTH ? CHART_LABELS.CONDO :
+            n == GD_DATA_KEYS.LANDED_PROP ? CHART_LABELS.LANDED :
+            n == GD_DATA_KEYS.OTHERS ? CHART_LABELS.OTHERS :
+            false;
+    },
+    eduToggleLabel: n => {
+        return n == GD_DATA_KEYS.UNIVERSITY ? CHART_LABELS.UNIVERSITY :
+            n == GD_DATA_KEYS.PROFESSIONAL ? CHART_LABELS.PROFESSIONAL :
+            n == GD_DATA_KEYS.POLYTECHNIC ? CHART_LABELS.POLYTECHNIC :
+            n == GD_DATA_KEYS.POST_SEC ? CHART_LABELS.POST_SEC :
+            n == GD_DATA_KEYS.SECONDARY ? CHART_LABELS.SECONDARY :
+            n == GD_DATA_KEYS.LOW_SEC ? CHART_LABELS.LOW_SEC :
+            n == GD_DATA_KEYS.PRIMARY ? CHART_LABELS.PRIMARY :
+            n == GD_DATA_KEYS.NO_QUALIFICATION ? CHART_LABELS.NONE :
+            false;
+    },
+    litToggleLabel: n => {
+        return n == GD_DATA_KEYS.NOT_LIT ? CHART_LABELS.NOT_LIT :
+            n == GD_DATA_KEYS.ONE_LANG ? CHART_LABELS.LIT_ONE :
+            n == GD_DATA_KEYS.TWO_LANG ? CHART_LABELS.LIT_TWO :
+            n == GD_DATA_KEYS.THREE_LANG ? CHART_LABELS.LIT_THREE :
+            false;
+    },
+    incomeToggleLabel: (n, isString = false) => {
+        let ret = "";
+        if (isString) {
+            ret = n == GD_DATA_KEYS.BELOW_1K ? 999 :
+                n == GD_DATA_KEYS.BELOW_2K ? 1999 :
+                n == GD_DATA_KEYS.BELOW_3K ? 2999 :
+                n == GD_DATA_KEYS.BELOW_4K ? 3999 :
+                n == GD_DATA_KEYS.BELOW_5K ? 4999 :
+                n == GD_DATA_KEYS.BELOW_6K ? 5999 :
+                n == GD_DATA_KEYS.BELOW_7K ? 6999 :
+                n == GD_DATA_KEYS.BELOW_8K ? 7999 :
+                n == GD_DATA_KEYS.BELOW_9K ? 8999 :
+                n == GD_DATA_KEYS.BELOW_10K ? 9999 :
+                n == GD_DATA_KEYS.BELOW_11K ? 10999 :
+                n == GD_DATA_KEYS.BELOW_12K ? 11999 :
+                n == GD_DATA_KEYS.BELOW_15K ? 14999 :
+                n == GD_DATA_KEYS.OVER_15K ? 15000 :
+                false;
+        } else {
+            ret = n == 999 ? GD_DATA_KEYS.BELOW_1K :
+                n == 1999 ? GD_DATA_KEYS.BELOW_2K :
+                n == 2999 ? GD_DATA_KEYS.BELOW_3K :
+                n == 3999 ? GD_DATA_KEYS.BELOW_4K :
+                n == 4999 ? GD_DATA_KEYS.BELOW_5K :
+                n == 5999 ? GD_DATA_KEYS.BELOW_6K :
+                n == 6999 ? GD_DATA_KEYS.BELOW_7K :
+                n == 7999 ? GD_DATA_KEYS.BELOW_8K :
+                n == 8999 ? GD_DATA_KEYS.BELOW_9K :
+                n == 9999 ? GD_DATA_KEYS.BELOW_10K :
+                n == 10999 ? GD_DATA_KEYS.BELOW_11K :
+                n == 11999 ? GD_DATA_KEYS.BELOW_12K :
+                n == 14999 ? GD_DATA_KEYS.BELOW_15K :
+                n == 15000 ? GD_DATA_KEYS.OVER_15K :
+                false;
+        }
+        return ret;
+    },
+    transportToggleLabel: n => {
+        return n == GD_DATA_KEYS.CAR ? CHART_LABELS.CAR :
+            n == GD_DATA_KEYS.LORRY_PICKUP ? CHART_LABELS.LORRY :
+            n == GD_DATA_KEYS.MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS :
+            n == GD_DATA_KEYS.MRT_LRT ? CHART_LABELS.TRAIN :
+            n == GD_DATA_KEYS.MOTORCYCLE_SCOOTER ? CHART_LABELS.MOTORCYCLE :
+            n == GD_DATA_KEYS.OTHER_MRT_LRT_BUS ? CHART_LABELS.TRAIN_BUS_OTHERS :
+            n == GD_DATA_KEYS.PRIVATE_BUS_VAN ? CHART_LABELS.PRIVATE_BUS :
+            n == GD_DATA_KEYS.PUBLIC_BUS ? CHART_LABELS.PUBLIC_BUS :
+            n == GD_DATA_KEYS.PRIVATE_HIRE_CAR ? CHART_LABELS.PRIVATE_HIRE_CAR :
+            false
+    },
+    travelToggleLabel: (n) => {
+        return n == GD_DATA_KEYS.MINS_15 ? CHART_LABELS.MINS_15 :
+            n == GD_DATA_KEYS.MINS_30 ? CHART_LABELS.MINS_30 :
+            n == GD_DATA_KEYS.MINS_45 ? CHART_LABELS.MINS_45 :
+            n == GD_DATA_KEYS.MINS_60 ? CHART_LABELS.MINS_60 :
+            n == GD_DATA_KEYS.MINS_OVER_60 ? CHART_LABELS.MINS_OVER_60 :
+            false;
+    }
 };
 const MEDIA_SIZE = {
     XL_MIN: 1280,
@@ -82,12 +171,13 @@ const GD_DATA_KEYS = {
     INDIANS: 'Indians',
     OTHERS: 'Others',
     OWNER_OCCUPIED: 'Owner-Occupied',
+    RENTED: 'Rented',
     NO_QUALIFICATION: 'No Qualification',
     PRIMARY: 'Primary',
-    LOW_SECONDARY: 'Lower Secondary',
+    LOW_SEC: 'Lower Secondary',
     SECONDARY: 'Secondary',
-    POLYTECHNIC: 'Polytechnic Diploma',
     POST_SEC: 'Post-Secondary (Non-Tertiary)',
+    POLYTECHNIC: 'Polytechnic Diploma',
     PROFESSIONAL: 'Professional Qualification and Other Diploma',
     UNIVERSITY: 'University',
     NOT_LIT: 'Not Literate',
@@ -95,6 +185,29 @@ const GD_DATA_KEYS = {
     ONE_LANG: 'One Language Only',
     TWO_LANG: 'Two Languages Only',
     THREE_LANG: 'Three or More Languages',
+    ASC_PROF_TECH: 'Associate Professionals & Technicians',
+    LABOUR_WORKERS: 'Cleaners, Labourers & Related Workers',
+    CLERICAL_WORLKERS: 'Clerical Support Workers',
+    TRADE_WORKERS: 'Craftsmen & Related Trades Workers',
+    LEGISLATORS_MANAGERS: 'Legislators, Senior Officials & Managers',
+    OTHERS_1: 'Others1/',
+    MACHINE_OPERATORS: 'Plant & Machine Operators & Assemblers',
+    PROF: 'Professionals',
+    SERVICE_WORKERS: 'Service & Sales Workers',
+    BELOW_1K: 'Below $1,000',
+    BELOW_2K: '$1,000 - $1,999',
+    BELOW_3K: '$2,000 - $2,999',
+    BELOW_4K: '$3,000 - $3,999',
+    BELOW_5K: '$4,000 - $4,999',
+    BELOW_6K: '$5,000 - $5,999',
+    BELOW_7K: '$6,000 - $6,999',
+    BELOW_8K: '$7,000 - $7,999',
+    BELOW_9K: '$8,000 - $8,999',
+    BELOW_10K: '$9,000 - $9,999',
+    BELOW_11K: '$10,000 - 10,999',
+    BELOW_12K: '$11,000 - 11,999',
+    BELOW_15K: '$12,000 - $14,999',
+    OVER_15K: '$15,000 & Over',
     CAR: 'Car Only',
     LORRY_PICKUP: 'Lorry/Pickup Only',
     MRT_LRT_BUS: 'MRT/LRT & Public Bus Only',
@@ -104,16 +217,31 @@ const GD_DATA_KEYS = {
     OTHER_MRT_LRT_BUS: 'Other combinations of MRT/LRT or Public Bus',
     PRIVATE_BUS_VAN: 'Private Chartered Bus/Van Only',
     PUBLIC_BUS: 'Public Bus Only',
-    PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only'
+    PRIVATE_HIRE_CAR: 'Taxi/Private Hire Car Only',
+    MINS_15: 'Up to 15 mins',
+    MINS_30: '16 - 30 mins',
+    MINS_45: '31 - 45 mins',
+    MINS_60: '46 - 60 mins',
+    MINS_OVER_60: 'More than 60 mins'
 };
 const CHART_CONF = {
-    COLOR_RANGE: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535']
+    COLOR_RANGE: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535'],
+    CAT_RESIDENTS: 'residents',
+    CAT_HOUSING: 'housing',
+    CAT_EDUCATION: 'education',
+    CAT_EMPLOYED: 'employed',
+    GROUP_RESIDENCY: 'residency',
+    GROUP_MEDAGE: 'medage',
+    GROUP_CP_TENANCY: 'compare-tenancy'
 }
 const CHART_TYPES = {
     AREA: 'area',
     BAR: 'bar',
+    BOX_PLOT: 'boxPlot',
+    BUBBLE: 'bubble',
     COLUMN: 'column',
     DONUT: 'donut',
+    HEAT_MAP: 'heatmap',
     LINE: 'line',
     PIE: 'pie',
     POLAR_AREA: 'polarArea',
@@ -167,6 +295,7 @@ const CHART_LABELS = {
     LANDED: 'Landed',
     NONE: 'None',
     OWNER: 'Owner',
+    RENTED: 'Rented',
     PRIMARY: 'Primary',
     LOW_SEC: 'Lower Sec.',
     SECONDARY: 'Secondary',
@@ -187,7 +316,12 @@ const CHART_LABELS = {
     TRAIN_BUS_OTHERS: 'Train or Public Bus with Others',
     PRIVATE_BUS: 'Private Bus',
     PUBLIC_BUS: 'Public Bus',
-    PRIVATE_HIRE_CAR: 'Private Hire Car'
+    PRIVATE_HIRE_CAR: 'Private Hire Car',
+    MINS_15: '<= 15m',
+    MINS_30: '<= 30m',
+    MINS_45: '<= 45m',
+    MINS_60: '<= 60m',
+    MINS_OVER_60: '> 60m'
 };
 const MAP_CONF = {
     ZOOM_INITIAL: 12.4,
@@ -202,7 +336,7 @@ const ELEMENT_IDS = {
     SECT_OVERVIEW: 'overview',
     SECT_TREND: 'trend',
     SECT_PLAN_AREA: 'plan-area',
-    SECT_COMPARE_AREA: 'compare-area',
+    SECT_COMPARE_AREAS: 'compare-areas',
     OVERVIEW_SEL_YEAR: 'overview-sel-year',
     POPULATION: 'population',
     RESIDENCY: 'residency',
@@ -236,14 +370,16 @@ const ELEMENT_IDS = {
     GEO_TRAVEL: 'geo-travel',
     COMPARE_FORM: 'compare-form',
     PLAN_AREAS_SEL: 'plan-areas-sel',
-    COMPARE_GENDER: 'compare-dwelling',
-    COMPARE_RACE: 'compare-tenancy',
-    COMPARE_DWELLING: 'compare-education',
-    COMPARE_TENANCY: 'compare-',
-    COMPARE_EDUCATION: 'compare-literacy',
-    COMPARE_LITERACY: 'compare-occupation',
-    COMPARE_OCCUPATION: 'compare-income',
-    COMPARE_INCOME: 'compare-',
+    COMPARE_GENDER: 'compare-gender',
+    COMPARE_RACE: 'compare-race',
+    COMPARE_DWELLING: 'compare-dwelling',
+    COMPARE_TEN_OWNER: 'compare-ten-owner',
+    COMPARE_TEN_RENT: 'compare-ten-rent',
+    COMPARE_TEN_OTHERS: 'compare-ten-others',
+    COMPARE_EDUCATION: 'compare-education',
+    COMPARE_LITERACY: 'compare-literacy',
+    COMPARE_OCCUPATION: 'compare-occupation',
+    COMPARE_INCOME: 'compare-income',
     COMPARE_TRANSPORT: 'compare-transport',
     COMPARE_TRAVEL: 'compare-travel'
 };

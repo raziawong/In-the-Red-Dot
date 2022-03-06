@@ -26,7 +26,7 @@ async function getGeoDistributionData() {
 function getObjModelForGeoDistribution(rawDataByCat, isAgeGroup) {
     let dataByCat = {};
     for (let rowObj of rawDataByCat) {
-        let areaName = UTIL.convertToTitleCase(rowObj['rowText'].toLowerCase().replace('- total', '').trim());
+        let areaName = UTIL.getTitleCase(rowObj['rowText'].toLowerCase().replace('- total', '').trim());
 
         for (let colData of rowObj.columns) {
             let dataKey = colData['key'];
@@ -35,14 +35,14 @@ function getObjModelForGeoDistribution(rawDataByCat, isAgeGroup) {
             if (isAgeGroup) {
                 for (let data of colData.columns) {
                     let { key, value } = data;
-                    dataToAdd[dataKey] = {...dataToAdd[dataKey], [key]: UTIL.convertToNumber(value) };
+                    dataToAdd[dataKey] = {...dataToAdd[dataKey], [key]: UTIL.getNum(value) };
                 }
             } else {
                 if (colData.hasOwnProperty('value')) {
-                    value = UTIL.convertToNumber(colData['value']);
+                    value = UTIL.getNum(colData['value']);
                 } else if (colData.hasOwnProperty('columns')) {
                     let obj = colData['columns'].find(i => i['key'].toLowerCase() == 'total');
-                    value = obj ? UTIL.convertToNumber(obj['value']) : colData['columns'];
+                    value = obj ? UTIL.getNum(obj['value']) : colData['columns'];
                 }
 
                 dataToAdd = {
@@ -122,7 +122,7 @@ function transformAnnualPopulationData(rawData) {
 
         for (let colObj of rowObj.columns) {
             let year = colObj['key'];
-            dataByYear[year] = {...dataByYear[year], [dataKey]: UTIL.convertToNumber(colObj['value']) };
+            dataByYear[year] = {...dataByYear[year], [dataKey]: UTIL.getNum(colObj['value']) };
         }
     }
 
@@ -137,9 +137,9 @@ function transformAnnualPopulationData(rawData) {
 
             if (seriesNo.startsWith(prevSeriesNo + '.')) {
                 let breakDownKey = prevDataKey + '_age_breakdown';
-                dataByYear[year][breakDownKey] = {...dataByYear[year][breakDownKey], [dataKey]: UTIL.convertToNumber(colObj['Value']) };
+                dataByYear[year][breakDownKey] = {...dataByYear[year][breakDownKey], [dataKey]: UTIL.getNum(colObj['Value']) };
             } else {
-                dataByYear[year] = {...dataByYear[year], [dataKey]: UTIL.convertToNumber(colObj['Value']) };
+                dataByYear[year] = {...dataByYear[year], [dataKey]: UTIL.getNum(colObj['Value']) };
             }
         }
 

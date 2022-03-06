@@ -180,7 +180,11 @@ main.tree-nav-content .chart-flex {
 }
 
 main.tree-nav-content .chart-lg {
-    height: 700px;
+    height: 650px;
+}
+
+main.tree-nav-content .chart-md {
+    height: 500px;
 }
 
 main.tree-nav-content .chart-sm {
@@ -188,28 +192,16 @@ main.tree-nav-content .chart-sm {
 }
 
 main.tree-nav-content .chart-xs {
-    height: 350px;
+    height: 320px;
 }
 
 main.tree-nav-content .chart-xxs {
-    height: 200px;
+    height: 180px;
     margin-bottom: 1.5rem;
 }
 
 #population {
     text-align: center;
-}
-
-#plan-area .chart {
-    height: 500px;
-}
-
-#plan-area .chart-sm {
-    height: 300px;
-}
-
-#plan-area .chart-xs {
-    height: 280px;
 }
 
 #geo-age-group.gender-activated {
@@ -392,6 +384,7 @@ section .trans-body.row>* {
 
 #compare-form p {
     margin: 1rem 1rem 1rem 0;
+    text-align: left;
 }
 
 #compare-form>div {
@@ -478,11 +471,6 @@ section .trans-body.row>* {
 
 /* --- start compare modals --- */
 
-#compare-area .modal {
-    height: 100vh;
-    width: 100%;
-}
-
 
 /* --- start medium devices --- */
 
@@ -548,7 +536,7 @@ section .trans-body.row>* {
 
 /* --- start smaller devices --- */
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 641px) {
     /* --- start tree navigation menu --- */
     .tree-nav-body header.tree-nav {
         padding: 0.5rem;
@@ -650,12 +638,18 @@ section .trans-body.row>* {
     #compare-form .row [class^=col-] {
         margin: 0.2rem 0;
     }
+    #compare-form p {
+        text-align: center;
+    }
     #compare-form .input-control {
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: flex-start;
     }
     #compare-form .input-control .form-ext-radio:not(:first-child) {
         margin: 0;
+    }
+    #compare-form .input-control .form-ext-radio:nth-child(even) {
+        margin-left: 1rem;
     }
 }
 
