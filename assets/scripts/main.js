@@ -73,7 +73,7 @@ function main() {
                         strokeColors: '#7B9E89',
                         strokeWidth: 1.5
                     },
-                    size: 140
+                    size: 150
                 },
                 treemap: {
                     distributed: true,

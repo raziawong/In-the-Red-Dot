@@ -40,10 +40,20 @@ function doPopulationOverview(_years, _dataByYear) {
     function initOverviewCharts() {
         let overviewCharts = {};
 
-        overviewCharts[ELEMENT_IDS.RESIDENCY] = renderApexChart(
-            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
-            CHART_TITLES.RESIDENCY, false, {
-                labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES]
+        overviewCharts[ELEMENT_IDS.GENDER] = renderApexChart(
+            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
+            CHART_TITLES.GENDER, false, {
+                labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE],
+                plotOptions: {
+                    radialBar: {
+                        dataLabels: {
+                            total: {
+                                show: true,
+                                label: CHART_LABELS.TOTAL
+                            }
+                        }
+                    }
+                }
             }
         );
 
@@ -54,10 +64,22 @@ function doPopulationOverview(_years, _dataByYear) {
             }
         );
 
-        overviewCharts[ELEMENT_IDS.GENDER] = renderApexChart(
-            ELEMENT_IDS.GENDER, CHART_TYPES.RADIAL_BAR,
-            CHART_TITLES.GENDER, false, {
-                labels: [CHART_LABELS.MALE, CHART_LABELS.FEMALE]
+        overviewCharts[ELEMENT_IDS.RESIDENCY] = renderApexChart(
+            ELEMENT_IDS.RESIDENCY, CHART_TYPES.PIE,
+            CHART_TITLES.RESIDENCY, false, {
+                labels: [CHART_LABELS.CITIZEN, CHART_LABELS.PR, CHART_LABELS.NON_RES]
+            }
+        );
+
+        overviewCharts[ELEMENT_IDS.AGE_GROUP] = renderApexChart(
+            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
+            CHART_TITLES.AGE_GROUP, true, {
+                plotOptions: { bar: { horizontal: true } },
+                xaxis: { labels: { show: false } },
+                yaxis: {
+                    axisBorder: { show: true },
+                    labels: { show: true }
+                }
             }
         );
 
@@ -68,27 +90,9 @@ function doPopulationOverview(_years, _dataByYear) {
                 plotOptions: {
                     radialBar: {
                         dataLabels: {
-                            value: {
-                                formatter: (val) => val
-                            }
+                            value: { formatter: val => val }
                         }
                     }
-                },
-            }
-        );
-
-        overviewCharts[ELEMENT_IDS.AGE_GROUP] = renderApexChart(
-            ELEMENT_IDS.AGE_GROUP, CHART_TYPES.BAR,
-            CHART_TITLES.AGE_GROUP, true, {
-                plotOptions: {
-                    bar: {
-                        horizontal: true
-                    },
-                },
-                xaxis: { labels: { show: false } },
-                yaxis: {
-                    axisBorder: { show: true },
-                    labels: { show: true }
                 }
             }
         );
@@ -97,10 +101,6 @@ function doPopulationOverview(_years, _dataByYear) {
     }
 
     function initYearSelect() {
-        function updateOverviewElements(annualData) {
-            document.getElementById(ELEMENT_IDS.POPULATION).querySelector('span').innerText = annualData[AP_DATA_KEYS.TOTAL_PPLT];
-        }
-
         let yearSelectEle = document.getElementById(ELEMENT_IDS.OVERVIEW_SEL_YEAR);
         let descYear = [..._years].sort(UTIL.compareAlphaNumDesc);
         for (let year of descYear) {
@@ -110,13 +110,10 @@ function doPopulationOverview(_years, _dataByYear) {
             yearSelectEle.appendChild(optEle);
         }
 
-        updateOverviewElements(_dataByYear[yearSelectEle.value]);
-
         yearSelectEle.addEventListener('change', evt => {
             let selectedYear = evt.target.value || 0;
             if (selectedYear) {
                 updateOverviewCharts(_dataByYear[selectedYear]);
-                updateOverviewElements(_dataByYear[selectedYear]);
             }
         });
 
@@ -125,7 +122,29 @@ function doPopulationOverview(_years, _dataByYear) {
 
     function updateOverviewCharts(annualData) {
         let totalCount = annualData[AP_DATA_KEYS.TOTAL_PPLT];
+
         let genderPrctArr = [annualData[AP_DATA_KEYS.TOTAL_MALE], annualData[AP_DATA_KEYS.TOTAL_FEMALE]].map(v => UTIL.getPercent(v, totalCount));
+        _oCharts[ELEMENT_IDS.GENDER].updateOptions({
+            series: genderPrctArr,
+            plotOptions: {
+                radialBar: {
+                    dataLabels: { total: { formatter: w => totalCount } }
+                }
+            }
+        });
+
+        _oCharts[ELEMENT_IDS.RACE].updateSeries([
+            annualData[AP_DATA_KEYS.TOTAL_CHINESE],
+            annualData[AP_DATA_KEYS.TOTAL_MALAYS],
+            annualData[AP_DATA_KEYS.TOTAL_INDIANS],
+            annualData[AP_DATA_KEYS.TOTAL_OTHER_ETHN]
+        ]);
+
+        _oCharts[ELEMENT_IDS.RESIDENCY].updateSeries([
+            annualData[AP_DATA_KEYS.CITIZEN_PPLT],
+            annualData[AP_DATA_KEYS.PR_PPLT],
+            annualData[AP_DATA_KEYS.NON_RES_PPLT]
+        ]);
 
         let ageGroup = Object.keys(annualData[AP_DATA_KEYS.TOTAL_FEMALE_AGE]).filter(k => !k.includes('over'));
         let ageGroupOpt = {
@@ -150,24 +169,12 @@ function doPopulationOverview(_years, _dataByYear) {
                 categories: ageGroup.map(label => label.replaceAll('_', ' ').replaceAll('years', '')).sort(UTIL.compareAlphaNumDesc),
             }
         };
+        _oCharts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
 
-        _oCharts[ELEMENT_IDS.GENDER].updateSeries(genderPrctArr);
         _oCharts[ELEMENT_IDS.MED_AGE].updateSeries([
             annualData[AP_DATA_KEYS.MED_AGE_CITIZEN],
             annualData[AP_DATA_KEYS.MED_AGE_RESIDENT]
         ]);
-        _oCharts[ELEMENT_IDS.RESIDENCY].updateSeries([
-            annualData[AP_DATA_KEYS.CITIZEN_PPLT],
-            annualData[AP_DATA_KEYS.PR_PPLT],
-            annualData[AP_DATA_KEYS.NON_RES_PPLT]
-        ]);
-        _oCharts[ELEMENT_IDS.RACE].updateSeries([
-            annualData[AP_DATA_KEYS.TOTAL_CHINESE],
-            annualData[AP_DATA_KEYS.TOTAL_MALAYS],
-            annualData[AP_DATA_KEYS.TOTAL_INDIANS],
-            annualData[AP_DATA_KEYS.TOTAL_OTHER_ETHN]
-        ]);
-        _oCharts[ELEMENT_IDS.AGE_GROUP].updateOptions(ageGroupOpt);
     }
 
     let _oCharts = initOverviewCharts();
@@ -542,19 +549,8 @@ function initGeoDistrCharts() {
         ELEMENT_IDS.GEO_AGE_GROUP, CHART_TYPES.BAR,
         CHART_TITLES.AGE_GROUP, false, {
             dataLabels: { enabled: false },
-            plotOptions: {
-                bar: {
-                    horizontal: true
-                }
-            },
-            subtitle: {
-                text: 'Click bar to see gender breakdown'
-            },
-            xaxis: {
-                labels: {
-                    show: false
-                }
-            }
+            plotOptions: { bar: { horizontal: true } },
+            xaxis: { labels: { show: false } }
         }
     );
 
@@ -583,7 +579,18 @@ function initGeoDistrCharts() {
 
     geoCharts[ELEMENT_IDS.GEO_EDUCATION] = renderApexChart(
         ELEMENT_IDS.GEO_EDUCATION, CHART_TYPES.RADAR,
-        CHART_TITLES.QUALIFICATION, false, { dataLabels: { enabled: true } }
+        CHART_TITLES.QUALIFICATION, false, {
+            dataLabels: { enabled: true },
+            xaxis: {
+                labels: {
+                    style: {
+                        colors: CHART_CONF.COLOR_RANGE,
+                        fontSize: "13px",
+                        fontFamily: 'Nunito Sans,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif'
+                    }
+                }
+            }
+        }
     );
 
     geoCharts[ELEMENT_IDS.GEO_LITERACY] = renderApexChart(
@@ -629,7 +636,7 @@ function initGeoDistrCharts() {
                 }
             },
             xaxis: { labels: { show: false } },
-            yaxis: { labels: { show: false } }
+            yaxis: { show: false, labels: { show: true } }
         }
     );
 
@@ -702,6 +709,13 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     };
     let ageGroupSeries = ageGroupData ? { series: [{ data: ageGroupLabels.map(k => agTotal[k]) }] } : { series: [], noData: CHART_CONF.NO_DATA_OPT };
     ageGroupOpt = {...ageGroupOpt, ...ageGroupSeries };
+    charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
+    charts[ELEMENT_IDS.GEO_RACE].updateSeries([
+        raceData[GD_DATA_KEYS.CHINESE],
+        raceData[GD_DATA_KEYS.MALAYS],
+        raceData[GD_DATA_KEYS.INDIANS],
+        raceData[GD_DATA_KEYS.OTHERS]
+    ]);
 
     let dwellOpt = {
         chart: { toolbar: { show: false } },
@@ -711,23 +725,24 @@ function updateGeoDistrCharts(charts, mLayerProp) {
     };
     let dwellSeries = dwellData ? { series: [{ data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes(GD_DATA_KEYS.TOTAL) && d.y)) }] } : { series: [], noData: CHART_CONF.NO_DATA_OPT };
     dwellOpt = {...dwellOpt, ...dwellSeries };
+    charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
 
     let tenantLabels = Object.keys(tenantData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
-    let tenantOpt = {
+    // let tenantSeries = tenantData ? {
+    //     series: [{
+    //         data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes(GD_DATA_KEYS.TOTAL) && d.y))
+    //     }]
+    // } : {
+    //     series: [],
+    //     noData: CHART_CONF.NO_DATA_OPT
+    // };
+    charts[ELEMENT_IDS.GEO_TENANCY].updateOptions({
         series: tenantLabels.map(k => tenantData[k]),
         labels: tenantLabels
-    };
-    let tenantSeries = tenantData ? {
-        series: [{
-            data: Object.entries(dwellData).map(d => { return { x: d[0], y: d[1] } }).filter(d => (!d.x.includes(GD_DATA_KEYS.TOTAL) && d.y))
-        }]
-    } : {
-        series: [],
-        noData: CHART_CONF.NO_DATA_OPT
-    };
+    });
 
     let eduTypeLabels = Object.keys(eduData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
-    let educationOpt = {
+    charts[ELEMENT_IDS.GEO_EDUCATION].updateOptions({
         series: [{
             name: CHART_LABELS.POPULATION,
             data: eduTypeLabels.map(k => eduData[k])
@@ -736,27 +751,26 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             categories: eduTypeLabels,
             labels: { formatter: val => (UTIL.eduToggleLabel(val) || val) }
         }
-    };
+    });
 
     let litLabels = Object.keys(litData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL) && !k.startsWith(GD_DATA_KEYS.LIT));
-    let litSeries = litLabels.map(k => {
-        let val = litData[k];
-        val = Array.isArray(val) ? val.map(o => UTIL.getNum(o.value)).reduce((p, a) => a += p) :
-            val;
-        return UTIL.getPercent(val, litData[GD_DATA_KEYS.TOTAL]);
-    });
-    let litOpt = {
+    charts[ELEMENT_IDS.GEO_LITERACY].updateOptions({
         labels: litLabels.map(k => (UTIL.litToggleLabel(k) || k)),
         plotOptions: {
             radialBar: {
                 dataLabels: { total: { formatter: w => litData[GD_DATA_KEYS.TOTAL] } }
             }
         },
-        series: litSeries
-    };
+        series: litLabels.map(k => {
+            let val = litData[k];
+            val = Array.isArray(val) ? val.map(o => UTIL.getNum(o.value)).reduce((p, a) => a += p) :
+                val;
+            return UTIL.getPercent(val, litData[GD_DATA_KEYS.TOTAL]);
+        })
+    });
 
     let occupationLabels = Object.keys(occupationData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
-    let occupationOpt = {
+    charts[ELEMENT_IDS.GEO_OCCUPATION].updateOptions({
         dataLabels: {
             enabled: true,
             formatter: val => UTIL.getPercent(val, occupationData[GD_DATA_KEYS.TOTAL]) + '%'
@@ -766,10 +780,10 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             data: occupationLabels.map(k => occupationData[k])
         }],
         xaxis: { categories: occupationLabels.map(k => k.replace('1/', '')) }
-    };
+    });
 
     let incomeLabels = Object.keys(incomeData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
-    let incomeOpt = {
+    charts[ELEMENT_IDS.GEO_INCOME].updateOptions({
         series: [{
             name: CHART_LABELS.POPULATION,
             data: incomeLabels.map(k => incomeData[k])
@@ -780,10 +794,10 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                 return prepend + UTIL.incomeToggleLabel(k, true);
             })
         }
-    };
+    });
 
     let transportLabels = Object.keys(transportData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
-    let transportOpt = {
+    charts[ELEMENT_IDS.GEO_TRANSPORT].updateOptions({
         series: [{
             name: CHART_LABELS.POPULATION,
             data: transportLabels.map(k => transportData[k])
@@ -793,30 +807,18 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             formatter: val => UTIL.getPercent(val, transportData[GD_DATA_KEYS.TOTAL]) + '%'
         },
         xaxis: { categories: transportLabels.map(k => k.replace('1/', '')) },
-        yaxis: { labels: { formatter: val => (UTIL.transportToggleLabel(val) || val) } }
-    };
+        yaxis: {
+            show: false,
+            labels: { show: false, formatter: val => (UTIL.transportToggleLabel(val) || val) }
+        }
+    });
 
     let travelLabels = Object.keys(travelTimeData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
-    let travelOpt = {
+    charts[ELEMENT_IDS.GEO_TRAVEL].updateOptions({
         labels: travelLabels.map(k => (UTIL.travelToggleLabel(k) || k)),
         series: travelLabels.map(k => travelTimeData[k]),
-    };
+    });
 
-    charts[ELEMENT_IDS.GEO_AGE_GROUP].updateOptions(ageGroupOpt);
-    charts[ELEMENT_IDS.GEO_RACE].updateSeries([
-        raceData[GD_DATA_KEYS.CHINESE],
-        raceData[GD_DATA_KEYS.MALAYS],
-        raceData[GD_DATA_KEYS.INDIANS],
-        raceData[GD_DATA_KEYS.OTHERS]
-    ]);
-    charts[ELEMENT_IDS.GEO_DWELLING].updateOptions(dwellOpt);
-    charts[ELEMENT_IDS.GEO_TENANCY].updateOptions(tenantOpt);
-    charts[ELEMENT_IDS.GEO_EDUCATION].updateOptions(educationOpt);
-    charts[ELEMENT_IDS.GEO_LITERACY].updateOptions(litOpt);
-    charts[ELEMENT_IDS.GEO_OCCUPATION].updateOptions(occupationOpt);
-    charts[ELEMENT_IDS.GEO_INCOME].updateOptions(incomeOpt);
-    charts[ELEMENT_IDS.GEO_TRANSPORT].updateOptions(transportOpt);
-    charts[ELEMENT_IDS.GEO_TRAVEL].updateOptions(travelOpt);
 }
 
 function initComparisonCharts() {
