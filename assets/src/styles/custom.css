@@ -557,8 +557,16 @@ main.tree-nav-content .form-group select.input-error {
     background-color: var(--sec-accent-o8);
 }
 
-#find-out-more .card .btn-link.outline {
+#find-out-more .card [class^=btn-]:not(.btn-container):not(.btn-close).outline {
     border-color: var(--ter-color);
+    color: var(--gen-text)
+}
+
+#find-out-more .card [class^=btn-]:not(.btn-container):not(.btn-close).outline:hover {
+    background-color: transparent;
+    border-color: var(--pri-color);
+    color: var(--pri-color);
+    text-decoration: none;
 }
 
 #find-out-more .attribution {
