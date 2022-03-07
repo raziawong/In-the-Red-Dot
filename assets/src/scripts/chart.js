@@ -771,7 +771,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             name: CHART_LABELS.POPULATION,
             data: occupationLabels.map(k => occupationData[k])
         }],
-        xaxis: { categories: occupationLabels.map(k => k.replace('1/', '')) }
+        xaxis: { categories: occupationLabels.map(k => (UTIL.jobsToggleLabel(k) || k)) }
     });
 
     let incomeLabels = Object.keys(incomeData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));

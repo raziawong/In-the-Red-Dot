@@ -25,7 +25,7 @@ function main() {
     }
 
     function toggleLoader(isToHide) {
-        let loadEle = document.getElementById('loader');
+        let loadEle = document.getElementById(ELEMENT_IDS.LOADER);
         if (isToHide) {
             loadEle.classList.add(ELEMENT_STATES.DISABLED);
         } else {

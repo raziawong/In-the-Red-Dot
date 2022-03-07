@@ -222,6 +222,7 @@ const MAP_CONF = {
     COLOR_NULL: '#f6f0ed'
 };
 const ELEMENT_IDS = {
+    LOADER: 'loader',
     SIDEBAR_CLOSE: 'sidebar-close',
     SECT_OVERVIEW: 'overview',
     SECT_TREND: 'trend',
