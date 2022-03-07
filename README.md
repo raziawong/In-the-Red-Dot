@@ -86,7 +86,7 @@ The site should at least contain data visualization of the population structure 
 
 ### Surface
 
-In order to complement various design intended for the site, Cirrus UI has been chosen to ne used in place of Bootstrap.
+In order to complement various design intended for the site, Cirrus UI has been chosen to be used in place of Bootstrap.
 
 #### Color Scheme
 
@@ -111,13 +111,13 @@ Font awesome icons are also used to denote certain elements and to convey intent
 ## Testing
 Test Cases can be found (here)[/readme/test_cases.xlsx]
 
---
+---
 
 ## Possible Enhancements
 
 - Slider: while working on the project, there was intention to change from prototype to put graphs and charts into carousels for mobile views due to concerns abour scrolling. This is still work in progress, as issues were found during implementation stage.
 
---
+---
 
 ## Challenges and Constraints
 
@@ -135,7 +135,7 @@ Test Cases can be found (here)[/readme/test_cases.xlsx]
    - Lighter than Bootstrap
    - Works similar to Bootstrap, so not much re-learning needs to be done
    - Have the components and utilities that are needed for the project
-   - 2 Typefaces offered that can be paired
+   - 2 font families offered are what I had in mind
 2. [Font Awesome](https://fontawesome.com/) for icons used
 3. [Google Font](https://fonts.google.com/) for the fonts used (i.e. Montserrat, Nunito Sans)
 4. [AXIOS](https://axios-http.com/docs/intro) for AJAX requests
