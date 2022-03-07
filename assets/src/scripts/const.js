@@ -125,7 +125,7 @@ const GD_DATA_KEYS = {
     MINS_OVER_60: 'More than 60 mins'
 };
 const CHART_CONF = {
-    COLOR_RANGE: ['#c6b04f', '#8a45be', '#78c75c', '#c15a8e', '#95bdb1', '#c55940', '#6a6aa1', '#4e4535'],
+    COLOR_RANGE: ['#BF6967', '#5A70A6', '#ED7D36', '#9B9A9A', '#A83A51', '#362B34', '#47919A', '#787073'],
     CAT_RESIDENTS: 'residents',
     CAT_HOUSING: 'housing',
     CAT_EDUCATION: 'education',
