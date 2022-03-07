@@ -690,7 +690,8 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                         });
                     }
                 }
-            }
+            },
+            toolbar: { show: false }
         },
         series: [{ name: CHART_LABELS.POPULATION, data: ageGroupLabels.map(k => agTotal[k]) }],
         xaxis: {

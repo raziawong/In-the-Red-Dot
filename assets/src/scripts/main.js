@@ -35,21 +35,21 @@ function main() {
 
     function initApexChartOptions() {
         window.Apex = {
-            animations: {
-                animateGradually: {
-                    enabled: true,
-                    delay: 150
-                },
-                dynamicAnimation: {
-                    enabled: true,
-                    speed: 350
-                },
-                enabled: true,
-                easing: 'easeinout',
-                speed: 800
-            },
             colors: CHART_CONF.COLOR_RANGE,
             chart: {
+                animations: {
+                    animateGradually: {
+                        enabled: true,
+                        delay: 150
+                    },
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 350
+                    },
+                    enabled: true,
+                    easing: 'easeinout',
+                    speed: 800
+                },
                 height: '100%',
                 fontFamily: 'Nunito Sans,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif',
                 redrawOnParentResize: true,
@@ -93,6 +93,22 @@ function main() {
                     enableShades: false
                 }
             },
+            responsive: [{
+                breakpoint: 640,
+                options: {
+                    plotOptions: { radar: { size: 110 } }
+                }
+            }, {
+                breakpoint: 768,
+                options: {
+                    plotOptions: { radar: { size: 130 } }
+                }
+            }, {
+                breakpoint: 4000,
+                options: {
+                    plotOptions: { radar: { size: 180 } }
+                }
+            }],
             stroke: {
                 curve: 'smooth'
             },
