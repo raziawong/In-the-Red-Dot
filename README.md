@@ -34,7 +34,7 @@ General public users who are interested should be able to easily comprehend rega
       - Able to compare between different datasets
       - No need to download tabulated data from DOS
    - Demographics:
-      - Individuals seeking to understant the population in Singapore for policies making or research
+      - Individuals seeking to understand the population in Singapore for policies making or research
       - Individuals seeking to study the population in Singapore for research purposes
       - Individuals seeking to analyst the population in Singapore for marketing purposes
    - Pain point: Tabulated information are hard to study and analysed
@@ -76,7 +76,7 @@ The site should at least contain data visualization of the population structure 
    - Past Years Trend: allow users to filter a range of years
    - Plan Area: allow users to see selected data for a particular region in Singapore
    - Compare Areas: allow users to select the areas and category to compare
-4. There is a Find Out More page to summarized the site and the data used
+4. There is a Find Out More page to summarize the site and the data used
 
 ### Skeleton
 <figure>
@@ -116,14 +116,16 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 ## Possible Enhancements
 
 - Slider: while working on the project, there was intention to change from prototype to put graphs and charts into carousels for mobile views due to concerns abour scrolling. This is still work in progress, as issues were found during implementation stage.
+- Age Group Data: inconsistencies in data makes it hard to plot against charts for comparison, will need to cross check between years to resolve this
+- Data: There are more data files that can be included to go deeper for users who have vested interest
 
 ---
 
 ## Challenges and Constraints
 
-1. As there was issue with calling DOS API using Axios due to CORS policy, the current dataset used is downloaded by accessing the endpoint directly. For this reason the site may continue to serve out of date Annaul Population data in future should the data be updated.
+1. As there was issue with calling DOS API using Axios due to CORS policy, the current dataset used is downloaded by accessing the endpoint directly. For this reason the site may continue to serve out of date Annual Population data in future should the data be updated.
 2. Geographic distribution dataset from DOS also have unique API, meaning to say that for each time a new survey is done, a new API or JSON file will be required to keep the site updated 
-3. As Geographic Distribution regions are based off of 2019 Master Plan, any changes done URA will not be updated
+3. As Geographic Distribution regions are based off of 2019 Master Plan, any changes done by URA will not be updated
 
 ---
 
@@ -144,15 +146,15 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 7. [Multi-select](https://github.com/varundewan/multiselect) for forms
 8. [Git](https://git-scm.com/) for version control
 9. [GitHub](http://github.com) for the repository
-10. [Visual Studio Code](https://code.visualstudio.com/)
-11. [Netlify](https://www.netlify.com/)
+10. [Visual Studio Code](https://code.visualstudio.com/) for code editing and local server
+11. [Netlify](https://www.netlify.com/) for deployment
    
 ### Data Sources
 
 1. Department of Statistics Singapore's Table Builder API
    - https://www.singstat.gov.sg/
    - https://tablebuilder.singstat.gov.sg/
-2. Data.gov.sg
+2. Data.gov.sg for URA 2019 Master Plan
    - https://data.gov.sg/dataset/master-plan-2019-planning-area-boundary-no-sea
 
 ### Other Attributions
@@ -189,7 +191,7 @@ node compress.js
 The web app is hosted using [Netlify](https://www.netlify.com/).
 
 Prerequisites:
-- Any edits were added, commited, and pushed to Github repository
+- Any edits done were added, commited, and pushed to Github repository
 - Netlify is connected and authorized to Github account
 - Netlify is connected to GitHub repository via "New site from Git"
 - "GitHub"  has been selected for continuous deployment
