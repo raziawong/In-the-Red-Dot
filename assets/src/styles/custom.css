@@ -158,6 +158,8 @@ main.tree-nav-content section {
     top: 0;
     right: 0;
     transform: translate(-110%, 0);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 main.tree-nav-content section.active {
@@ -165,9 +167,9 @@ main.tree-nav-content section.active {
     transition: width 4s, height 0.5s, ease-in, transform;
 }
 
-main.tree-nav-content section:not(#plan-area):not(#compare-areas) {
-    overflow-y: scroll;
-    overflow-x: hidden;
+main.tree-nav-content section #plan-area,
+main.tree-nav-content section #compare-areas {
+    overflow-y: hidden;
 }
 
 main.tree-nav-content section:not(#plan-area) .section-content {
