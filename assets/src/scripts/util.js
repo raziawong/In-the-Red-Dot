@@ -77,6 +77,16 @@ const UTIL = {
         }
         return ret;
     },
+    jobsToggleLabel: n => {
+        return n == GD_DATA_KEYS.ASC_PROF_TECH ? CHART_LABELS.ASC_PROF_TECH :
+            n == GD_DATA_KEYS.LABOUR_WORKERS ? CHART_LABELS.LABOUR_WORKERS :
+            n == GD_DATA_KEYS.CLERICAL_WORLKERS ? CHART_LABELS.CLERICAL_WORLKERS :
+            n == GD_DATA_KEYS.TRADE_WORKERS ? CHART_LABELS.TRADE_WORKERS :
+            n == GD_DATA_KEYS.LEGISLATORS_MANAGERS ? CHART_LABELS.LEGISLATORS_MANAGERS :
+            n == GD_DATA_KEYS.MACHINE_OPERATORS ? CHART_LABELS.MACHINE_OPERATORS :
+            n == GD_DATA_KEYS.OTHERS_1 ? CHART_LABELS.OTHERS :
+            false
+    },
     transportToggleLabel: n => {
         return n == GD_DATA_KEYS.CAR ? CHART_LABELS.CAR :
             n == GD_DATA_KEYS.LORRY_PICKUP ? CHART_LABELS.LORRY :
@@ -87,6 +97,7 @@ const UTIL = {
             n == GD_DATA_KEYS.PRIVATE_BUS_VAN ? CHART_LABELS.PRIVATE_BUS :
             n == GD_DATA_KEYS.PUBLIC_BUS ? CHART_LABELS.PUBLIC_BUS :
             n == GD_DATA_KEYS.PRIVATE_HIRE_CAR ? CHART_LABELS.PRIVATE_HIRE_CAR :
+            n == GD_DATA_KEYS.NO_TRANSPORT_REQ ? CHART_LABELS.NO_TRANSPORT_REQ :
             false
     },
     travelToggleLabel: (n) => {

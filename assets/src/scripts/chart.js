@@ -596,7 +596,7 @@ function initGeoDistrCharts() {
     geoCharts[ELEMENT_IDS.GEO_OCCUPATION] = renderApexChart(
         ELEMENT_IDS.GEO_OCCUPATION, CHART_TYPES.BAR, false, {
             dataLabels: { enabled: true },
-            xaxis: { labels: { show: false } },
+            xaxis: { labels: { show: true } },
             yaxis: { labels: { show: false } }
         }
     );
@@ -612,8 +612,8 @@ function initGeoDistrCharts() {
     geoCharts[ELEMENT_IDS.GEO_TRANSPORT] = renderApexChart(
         ELEMENT_IDS.GEO_TRANSPORT, CHART_TYPES.BAR, false, {
             plotOptions: { bar: { horizontal: true } },
-            xaxis: { labels: { show: false } },
-            yaxis: { show: false, labels: { show: true } }
+            xaxis: { show: false, labels: { show: false } },
+            yaxis: { show: false, labels: { show: false } }
         }
     );
 
@@ -798,11 +798,10 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             enabled: true,
             formatter: val => UTIL.getPercent(val, transportData[GD_DATA_KEYS.TOTAL]) + '%'
         },
-        xaxis: { categories: transportLabels.map(k => k.replace('1/', '')) },
-        yaxis: {
-            show: false,
-            labels: { show: false, formatter: val => (UTIL.transportToggleLabel(val) || val) }
-        }
+        xaxis: {
+            categories: transportLabels.map(k => (UTIL.transportToggleLabel(k) || k)),
+        },
+        yaxis: { show: true }
     });
 
     let travelLabels = Object.keys(travelTimeData).filter(k => !k.includes(GD_DATA_KEYS.TOTAL));
