@@ -113,7 +113,7 @@ function main() {
         }).addTo(map);
 
         L.control.zoom({
-            position: 'bottomright'
+            position: 'topright'
         }).addTo(map);
 
         map.options.zoomControl = true;

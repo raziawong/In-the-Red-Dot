@@ -645,7 +645,7 @@ function updateGeoDistrCharts(charts, mLayerProp) {
             events: {
                 dataPointSelection: (evt, mChart, op) => {
                     let agEle = document.getElementById(ELEMENT_IDS.GEO_AGE_GROUP);
-                    let genderEle = document.getElementById(ELEMENT_IDS.GEO_AGE_GENDER);
+                    let genderEle = document.getElementById(ELEMENT_IDS.TRANS_AGE_GENDER);
                     let selDataPoints = op.selectedDataPoints;
 
                     if (selDataPoints[0].length === 1) {
@@ -658,12 +658,26 @@ function updateGeoDistrCharts(charts, mLayerProp) {
                                     dataLabels: { total: { formatter: w => agTotal[key] } }
                                 }
                             },
-                            series: genderPrctArr
+                            series: genderPrctArr,
+                            responsive: [{
+                                breakpoint: 768,
+                                options: { chart: { width: '40%' } }
+                            }, {
+                                breakpoint: 4000,
+                                options: { chart: { width: '30%' } }
+                            }]
                         });
 
                         if (!genderEle.classList.contains(ELEMENT_STATES.ACTIVE)) {
                             mChart.updateOptions({
-                                chart: { width: '70%' }
+                                chart: { width: '70%' },
+                                responsive: [{
+                                    breakpoint: 768,
+                                    options: { chart: { width: '100%' } }
+                                }, {
+                                    breakpoint: 4000,
+                                    options: { chart: { width: '70%' } }
+                                }]
                             });
                             agEle.classList.add('gender-activated');
                             genderEle.classList.add(ELEMENT_STATES.ACTIVE);

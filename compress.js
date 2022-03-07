@@ -28,3 +28,12 @@ minify({
         console.log('Minified custom CSS', err);
     }
 });
+
+minify({
+    compressor: cleanCSS,
+    input: 'assets/libs/*/*.css',
+    output: 'assets/dist/libs.min.css',
+    callback: function(err, min) {
+        console.log('Minified libs CSS', err);
+    }
+});

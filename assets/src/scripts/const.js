@@ -240,6 +240,7 @@ const ELEMENT_IDS = {
     MAP_INFO: 'map-info',
     MAP_AREA_INFO: 'area-info',
     GEO_AGE_GROUP: 'geo-age-group',
+    TRANS_AGE_GENDER: 'trans-age-gender',
     GEO_AGE_GENDER: 'geo-age-gender',
     GEO_RACE: 'geo-race',
     GEO_EDUCATION: 'geo-education',

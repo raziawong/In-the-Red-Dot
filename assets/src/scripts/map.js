@@ -51,13 +51,16 @@ function doPlanAreaMapAndData(map, geoDistrData) {
         container.innerHTML = `<h5>${properties[GD_DATA_KEYS.DISPLAY_NAME]}</h5>
         <p>Population: <span>${subtext}</span></p>`;
 
-        updateGeoDistrCharts(geoCharts, properties);
         for (let ti of tabNavItemEle) {
             if (subtext == 'No Data') {
                 ti.classList.add(ELEMENT_STATES.DISABLED);
             } else {
                 ti.classList.remove(ELEMENT_STATES.DISABLED);
             }
+        }
+
+        if (subtext !== 'No Data') {
+            updateGeoDistrCharts(geoCharts, properties);
         }
     }
 
