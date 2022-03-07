@@ -109,7 +109,7 @@ Font awesome icons are also used to denote certain elements and to convey intent
 ---
 
 ## Testing
-Test Cases can be found (here)[/readme/test_cases.xlsx]
+Test Cases can be found [here](/readme/test_cases.xlsx)
 
 ---
 
@@ -169,10 +169,10 @@ Test Cases can be found (here)[/readme/test_cases.xlsx]
 ## Build and Deployment
 
 ### Build
-The project uses (npm @node-minify)[https://www.npmjs.com/package/node-minify] to minify JS and CSS files included in the HTML and (npm compress-images)[https://www.npmjs.com/package/compress-images] to compress images for web use.
+The project uses [npm @node-minify](https://www.npmjs.com/package/node-minify) to minify JS and CSS files included in the HTML and [npm compress-images](https://www.npmjs.com/package/compress-images) to compress images for web use.
 
 Prerequisites:
-- (node and npm)[https://nodejs.org/en/download/] is installed
+- [node and npm](https://nodejs.org/en/download/) is installed
 - @node-minfy/core, @node-minify/uglify-es, and @node-minify/clean-css packages are installed
 - compress-images and dependencies are installed
 
@@ -184,7 +184,7 @@ node compress.js
 ```
 
 ### Deployment
-[![Netlify Status](https://api.netlify.com/api/v1/badges/a4606763-89a7-4619-84aa-9e41d6d444e7/deploy-status)](https://app.netlify.com/sites/inthereddot/deploys)(https://app.netlify.com/sites/inthereddot/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a4606763-89a7-4619-84aa-9e41d6d444e7/deploy-status)](https://app.netlify.com/sites/inthereddot/deploys)
 
 The web app is hosted using [Netlify](https://www.netlify.com/).
 
