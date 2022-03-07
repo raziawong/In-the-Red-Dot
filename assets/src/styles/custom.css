@@ -573,6 +573,26 @@ main.tree-nav-content .form-group select.input-error {
         height: 100%;
         width: 100vw;
     }
+    main section div.section-content .row>[class*=' col-'].order-1,
+    main section div.section-content .row>[class^=col-].order-1 {
+        order: 1;
+    }
+    main section div.section-content .row>[class*=' col-'].order-2,
+    main section div.section-content .row>[class^=col-].order-2 {
+        order: 2;
+    }
+    main section div.section-content .row>[class*=' col-'].order-3,
+    main section div.section-content .row>[class^=col-].order-3 {
+        order: 3;
+    }
+    main section div.section-content .row>[class*=' col-'].order-4,
+    main section div.section-content .row>[class^=col-].order-4 {
+        order: 4;
+    }
+    main section div.section-content .row>[class*=' col-'].order-5,
+    main section div.section-content .row>[class^=col-].order-5 {
+        order: 5;
+    }
     /* --- start tab menu --- */
     main section .tab-container ul.row {
         height: 12vh;
@@ -600,6 +620,21 @@ main.tree-nav-content .form-group select.input-error {
     #trans-age-gender.chart-flex.active {
         justify-content: start;
         transform: translate(65%, -94%);
+    }
+    main.tree-nav-content .chart-lg {
+        height: 50vh;
+    }
+    main.tree-nav-content .chart-md {
+        height: 30vh;
+    }
+    main.tree-nav-content .chart-sm {
+        height: 25vh;
+    }
+    main.tree-nav-content .chart-xs {
+        height: 25vh;
+    }
+    main.tree-nav-content .chart-xxs {
+        height: 10vh;
     }
     #trans-age-gender.chart-flex.active #geo-age-gender {
         background-color: rgba(211, 211, 211, 0.45);
