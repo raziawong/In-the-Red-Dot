@@ -535,7 +535,37 @@ main.tree-nav-content .form-group select.input-error {
 }
 
 
-/* --- start compare modals --- */
+/* --- start find out more --- */
+
+#find-out-more .hero.hero-img {
+    background: url('../media/img/anniespratt-mural.jpg') no-repeat;
+    background-size: cover;
+}
+
+#find-out-more h1 {
+    color: var(--pri-color);
+}
+
+#find-out-more .hero-body>.content {
+    padding: 2rem;
+    background-color: var(--bg-color);
+}
+
+#find-out-more .card {
+    background-color: var(--sec-accent-o8);
+}
+
+#find-out-more .card .btn-link.outline {
+    border-color: var(--ter-color);
+}
+
+#find-out-more .attribution {
+    background-color: var(--bg-color);
+    padding: 0 1px;
+    border-radius: 2px;
+    bottom: 0;
+    right: 0;
+}
 
 
 /* --- start medium devices --- */

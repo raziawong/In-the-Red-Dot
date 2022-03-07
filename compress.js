@@ -1,6 +1,10 @@
 const minify = require('@node-minify/core');
 const uglifyes = require('@node-minify/uglify-es');
 const cleanCSS = require('@node-minify/clean-css');
+const cmprImg = require('compress-images');
+
+const imgSrcDir = 'assets/src/img/*.{jpg,JPG,jpeg,JPEG,png}';
+const imgDestDir = 'assets/media/img/';
 
 minify({
     compressor: uglifyes,
@@ -37,3 +41,27 @@ minify({
         console.log('Minified libs CSS', err);
     }
 });
+
+
+cmprImg(imgSrcDir, imgDestDir, {
+        compress_force: false,
+        statistic: true,
+        autoupdate: true
+    },
+    false, {
+        jpg: { engine: "mozjpeg", command: ["-quality", "60"] }
+    }, {
+        png: { engine: "pngquant", command: ["--quality=20-50", "-o"] }
+    }, {
+        svg: { engine: false, command: false }
+    }, {
+        gif: { engine: false, command: false }
+    },
+    function(error, completed, statistic) {
+        console.log("------ Compress Images -------");
+        console.log(error);
+        console.log(completed);
+        console.log(statistic);
+        console.log("-------------");
+    }
+);

@@ -19,6 +19,9 @@
   "dependencies": {
     "@node-minify/clean-css": "^6.2.0",
     "@node-minify/core": "^6.2.0",
-    "@node-minify/uglify-es": "^6.2.0"
+    "@node-minify/uglify-es": "^6.2.0",
+    "compress-images": "^2.0.5",
+    "gifsicle": "5.2.1",
+    "pngquant-bin": "6.0.1"
   }
 }
