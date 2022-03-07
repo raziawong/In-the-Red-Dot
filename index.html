@@ -27,62 +27,73 @@
                 <img src="assets/media/logo_sgmap.svg" alt="Menu Icon"/>
             </span>
         </a>
-        <!-- header + tree nav -->
-        <header class="tree-nav" id="sidebar">
-            <a href="#sidebar-close" id="sidebar-close" class="tree-nav-close" aria-label="Close Menu">
-                <span class="iclose icon">
-                    <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
-                </span>
-            </a>
-            <div class="content">
-                <a class="row" href="index.html">
-                    <div class="col-lg-7 col-xs-3 col-4"><img src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" /></div>
-                    <h1 class="col-lg-2 col-xs-3 col-4">In the red dot</h1>
+        <!-- tree nav -->
+        <div class="tree-nav" id="sidebar">
+            <header>
+                <a href="#sidebar-close" id="sidebar-close" class="tree-nav-close" aria-label="Close Menu">
+                    <span class="iclose icon">
+                        <i class="fa fa-thin fa-xmark" aria-hidden="true"></i>
+                    </span>
                 </a>
-            </div>
-            <div class="tree-nav-container">
-                <div class="tree">
-                    <div class="tree-item">
-                        <input type="checkbox" id="structure" class="u-none" name="structure" checked>
-                        <label class="tree-item-header" for="structure" aria-label="Expand">
-                            <span class="icon">
-                                <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
-                            </span>
-                            Population Structure
-                        </label>
-                        <nav class="tree-item-body">
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <a data-target="overview">Single Year Overview</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a data-target="trend">Past Years Trend</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="tree-item">
-                        <input type="checkbox" id="geodistribution" class="u-none" name="geodistribution" checked>
-                        <label class="tree-item-header" for="geodistribution" aria-label="Expand">
-                            <span class="icon">
-                                <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
-                            </span>
-                            Geographical Distribution
-                        </label>
-                        <nav class="tree-item-body">
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <a data-target="plan-area">By Plan Area</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a data-target="compare-areas">Compare Plan Areas</a>
-                                </li>
-                            </ul>
-                        </nav>
+                <div class="content">
+                    <a class="row" href="index.html">
+                        <div class="col-lg-7 col-xs-3 col-4"><img src="assets/media/logo_sgmap.svg" alt="In the Red Dot Logo" id="logo" /></div>
+                        <h1 class="col-lg-2 col-xs-3 col-4">In the red dot</h1>
+                    </a>
+                </div>
+                <div class="tree-nav-container">
+                    <div class="tree">
+                        <div class="tree-item">
+                            <input type="checkbox" id="structure" class="u-none" name="structure" checked>
+                            <label class="tree-item-header" for="structure" aria-label="Expand">
+                                <span class="icon">
+                                    <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
+                                </span>
+                                Population Structure
+                            </label>
+                            <nav class="tree-item-body">
+                                <ul class="menu">
+                                    <li class="menu-item">
+                                        <a data-target="overview">Single Year Overview</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-target="trend">Past Years Trend</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="tree-item">
+                            <input type="checkbox" id="geodistribution" class="u-none" name="geodistribution" checked>
+                            <label class="tree-item-header" for="geodistribution" aria-label="Expand">
+                                <span class="icon">
+                                    <i class="fa fa-wrapper fa-chevron-right small" aria-hidden="true"></i>
+                                </span>
+                                Geographical Distribution
+                            </label>
+                            <nav class="tree-item-body">
+                                <ul class="menu">
+                                    <li class="menu-item">
+                                        <a data-target="plan-area">By Plan Area</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-target="compare-areas">Compare Plan Areas</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
+            <footer class="footer footer--fixed">
+                <div>
+                    <a href="https://github.com/raziawong/In-the-Red-Dot" target="_blank">
+                        <span class="icon">
+                            <i class="fab fa-wrapper fa-github"></i>
+                        </span>
+                    </a>
+                </div>
+            </footer>
+        </div>
 
         <!-- main content -->
         <main class="tree-nav-content">

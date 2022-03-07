@@ -6,7 +6,7 @@
     --sec-color-o3: rgb(246, 174, 45, 0.3);
     --sec-accent: rgb(246, 240, 237);
     --sec-accent-o8: rgb(246, 240, 237, 0.8);
-    --ter-color: rgb(40, 89, 67, 0.5);
+    --ter-color: rgb(40, 89, 67, 0.8);
     --gen-text: #57423F;
     --bg-color: rgb(241, 238, 243, 0.95);
 }
@@ -32,45 +32,46 @@ body .iclose,
 
 /* --- start tree navigation menu --- */
 
-.tree-nav-body header.tree-nav {
+.tree-nav-body #sidebar.tree-nav {
     background-color: var(--pri-accent);
     padding: 1.5rem;
     z-index: 400002;
+    position: relative;
 }
 
-header.tree-nav ul .menu-item a {
+#sidebar.tree-nav ul .menu-item a {
     font-size: 0.9rem;
 }
 
-header.tree-nav .row {
+#sidebar.tree-nav .row {
     padding-left: 0;
     padding-right: 0;
     justify-content: center;
     align-items: center;
 }
 
-header.tree-nav .row img {
+#sidebar.tree-nav .row img {
     max-width: 12vw;
     padding-right: 0.5rem;
 }
 
-header.tree-nav .content a h1 {
+#sidebar.tree-nav .content a h1 {
     font-size: var(--font-size-l);
     color: var(--pri-color);
     text-transform: uppercase;
     text-shadow: -3px 3px var(--cirrus-light-gray);
 }
 
-header.tree-nav .tree-item-header {
+#sidebar.tree-nav .tree-item-header {
     margin: 0 0;
     font-size: 1.1rem;
 }
 
-header.tree-nav .menu-item:hover>a {
+#sidebar.tree-nav .menu-item:hover>a {
     color: var(--pri-color);
 }
 
-header.tree-nav .menu-item a.selected {
+#sidebar.tree-nav .menu-item a.selected {
     background-color: rgba(208, 208, 208, .3);
     color: var(--pri-color);
 }
@@ -101,6 +102,23 @@ header.tree-nav .menu-item a.selected {
 
 #sidebar-toggle .icon img {
     padding-top: 5px;
+}
+
+
+/* --- start footer --- */
+
+.tree-nav .footer {
+    padding: 0.8rem;
+    background-color: var(--ter-color);
+}
+
+.tree-nav .footer a .icon {
+    color: white;
+}
+
+.tree-nav .footer.footer--fixed {
+    position: absolute;
+    left: 0;
 }
 
 
@@ -503,7 +521,7 @@ main.tree-nav-content .form-group select.input-error {
 
 @media screen and (max-width: 1024px) {
     /* --- start tree navigation menu --- */
-    .tree-nav-body header.tree-nav {
+    .tree-nav-body #sidebar.tree-nav {
         padding: 1rem;
         height: 100%;
         left: 0;
@@ -514,23 +532,23 @@ main.tree-nav-content .form-group select.input-error {
         transform: translateX(-100%);
         transition: transform var(--animation-duration) ease, -webkit-transform var(--animation-duration) ease;
     }
-    .tree-nav-body header.tree-nav:target {
+    .tree-nav-body #sidebar.tree-nav:target {
         -webkit-transform: translateX(0);
         transform: translateX(0);
         transition: transform var(--animation-duration) ease, -webkit-transform var(--animation-duration) ease;
         transition: -webkit-transform var(--animation-duration) ease;
         transition: transform var(--animation-duration) ease
     }
-    header.tree-nav .content a h1 {
+    #sidebar.tree-nav .content a h1 {
         font-size: var(--font-size-m);
     }
-    header.tree-nav .tree-item-header {
+    #sidebar.tree-nav .tree-item-header {
         font-size: var(--font-size-s);
     }
-    header.tree-nav ul .menu-item a {
+    #sidebar.tree-nav ul .menu-item a {
         font-size: var(--font-size-xs);
     }
-    header.tree-nav .row img {
+    #sidebar.tree-nav .row img {
         max-width: 15vw;
     }
     #sidebar-close {
@@ -565,7 +583,7 @@ main.tree-nav-content .form-group select.input-error {
 
 @media screen and (max-width: 769px) {
     /* --- start tree navigation menu --- */
-    .tree-nav-body header.tree-nav {
+    .tree-nav-body #sidebar.tree-nav {
         padding: 0.5rem;
     }
     /* --- start main content body --- */
