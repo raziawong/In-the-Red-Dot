@@ -1,6 +1,8 @@
 function main() {
 
     function init() {
+        toggleLoader(false);
+
         initApexChartOptions();
         let map = initMap();
 
@@ -17,7 +19,18 @@ function main() {
             let geoDistrSeries = await initGeoDistribution();
             doPlanAreaMapAndData(map, geoDistrSeries);
             initPlanAreaCompareForm(geoDistrSeries, initComparisonCharts());
+
+            toggleLoader(true);
         });
+    }
+
+    function toggleLoader(isToHide) {
+        let loadEle = document.getElementById('loader');
+        if (isToHide) {
+            loadEle.classList.add(ELEMENT_STATES.DISABLED);
+        } else {
+            loadEle.classList.remove(ELEMENT_STATES.DISABLED);
+        }
     }
 
     function initApexChartOptions() {
