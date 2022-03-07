@@ -146,39 +146,6 @@ main section div.section-content #compare-form .row>* {
 }
 
 
-/* --- start filter form groups --- */
-
-main.tree-nav-content .form-group {
-    margin: 0 0;
-    color: var(--ter-color);
-}
-
-main.tree-nav-content .form-group .form-group-label {
-    background-color: var(--sec-color-o3);
-    border: 0;
-    color: var(--pri-color);
-    padding: 0.8rem 8vw;
-    font-weight: bold;
-}
-
-main.tree-nav-content .form-group select:not(.input-error) {
-    border-radius: 0;
-}
-
-main.tree-nav-content .form-group select.input-error {
-    color: #b31e1d;
-}
-
-#trend-sel {
-    text-align: center;
-}
-
-#trend-sel span {
-    display: none;
-    font-size: var(--font-size-m);
-}
-
-
 /* --- start charts / graphs --- */
 
 main.tree-nav-content .chart-flex {
@@ -383,6 +350,50 @@ section .trans-body.row>[class^=col-] {
 }
 
 
+/* --- start filter form groups --- */
+
+main.tree-nav-content .placeholder.filter {
+    background-color: var(--sec-color-o3);
+    padding: 1.1rem 3rem;
+}
+
+main.tree-nav-content .form-group {
+    margin: 0 0;
+}
+
+main.tree-nav-content .form-group .form-group-label:before {
+    font-family: 'Font Awesome 6 Free';
+    content: '\f0b0';
+    padding: 4px;
+}
+
+main.tree-nav-content .form-group .form-group-label {
+    background-color: transparent;
+    border: 0;
+    color: var(--pri-color);
+    padding: 0.8rem 8vw;
+    font-weight: bold;
+}
+
+main.tree-nav-content .form-group select:not(.input-error) {
+    border-radius: 3px;
+    border-color: var(--ter-color);
+}
+
+main.tree-nav-content .form-group select.input-error {
+    color: #b31e1d;
+}
+
+#trend-sel {
+    text-align: center;
+}
+
+#trend-sel span {
+    display: none;
+    font-size: var(--font-size-m);
+}
+
+
 /* --- start compare form --- */
 
 #compare-form {
@@ -448,6 +459,7 @@ section .trans-body.row>[class^=col-] {
     padding: .85rem 1.1rem;
     border: 1px solid var(--ter-color);
     background: transparent;
+    border-radius: 3px;
     height: 100%;
 }
 
@@ -528,10 +540,6 @@ section .trans-body.row>[class^=col-] {
     #sidebar-toggle {
         display: initial;
     }
-    /* --- start filter form groups --- */
-    main.tree-nav-content .form-group .form-group-label {
-        font-size: var(--font-size-s);
-    }
     /* --- start charts / graphs --- */
     main.tree-nav-content #trend .chart-flex {
         display: flex;
@@ -540,6 +548,10 @@ section .trans-body.row>[class^=col-] {
     }
     /* --- start tab menu --- */
     section .tab-container li .tab-item-content {
+        font-size: var(--font-size-s);
+    }
+    /* --- start filter form groups --- */
+    main.tree-nav-content .form-group .form-group-label {
         font-size: var(--font-size-s);
     }
     /* --- start compare form --- */
@@ -560,27 +572,6 @@ section .trans-body.row>[class^=col-] {
     main.tree-nav-content section {
         height: 100%;
         width: 100vw;
-    }
-    /* --- start filter form groups --- */
-    main.tree-nav-content .form-group {
-        flex-wrap: wrap;
-    }
-    main.tree-nav-content .form-group .form-group-label {
-        width: 100%;
-        padding: 0.4rem;
-        text-align: center;
-        font-size: var(--font-size-s);
-        flex: 100%;
-    }
-    main.tree-nav-content .form-group select {
-        width: 100%;
-        padding: 0.4rem 1rem;
-        text-align: center;
-        font-size: var(--font-size-s);
-        flex: 50%;
-    }
-    main.tree-nav-content .form-group span.info {
-        text-align: center;
     }
     /* --- start tab menu --- */
     main section .tab-container ul.row {
@@ -641,6 +632,30 @@ section .trans-body.row>[class^=col-] {
     .leaflet-touch .leaflet-control-zoom-in,
     .leaflet-touch .leaflet-control-zoom-out {
         font-size: var(--font-size-s);
+    }
+    /* --- start filter form groups --- */
+    main.tree-nav-content .placeholder.filter {
+        padding: 0.9rem 2rem;
+    }
+    main.tree-nav-content .form-group {
+        flex-wrap: wrap;
+    }
+    main.tree-nav-content .form-group .form-group-label {
+        width: 100%;
+        padding: 0.4rem;
+        text-align: center;
+        font-size: var(--font-size-s);
+        flex: 100%;
+    }
+    main.tree-nav-content .form-group select {
+        width: 100%;
+        padding: 0.4rem 1rem;
+        text-align: center;
+        font-size: var(--font-size-s);
+        flex: 50%;
+    }
+    main.tree-nav-content .form-group span.info {
+        text-align: center;
     }
     /* --- start compare form --- */
     #compare-form {

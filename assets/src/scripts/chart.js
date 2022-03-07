@@ -691,7 +691,6 @@ function updateGeoDistrCharts(charts, mLayerProp) {
         raceData[GD_DATA_KEYS.OTHERS]
     ]);
 
-    console.log(dwellData);
     let dwellOpt = {
         chart: { toolbar: { show: false } },
         dataLabels: {
